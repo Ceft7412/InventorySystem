@@ -65,39 +65,39 @@
             // 
             // userNameInput
             // 
-            userNameInput.Font = new Font("Segoe UI", 14F);
+            userNameInput.Font = new Font("Segoe UI", 16F);
             userNameInput.Location = new Point(12, 236);
             userNameInput.Name = "userNameInput";
-            userNameInput.Size = new Size(370, 32);
+            userNameInput.Size = new Size(370, 36);
             userNameInput.TabIndex = 1;
             // 
             // usernameLabel
             // 
             usernameLabel.AutoSize = true;
-            usernameLabel.Font = new Font("Segoe UI", 12F);
+            usernameLabel.Font = new Font("Segoe UI", 14F);
             usernameLabel.Location = new Point(12, 212);
             usernameLabel.Name = "usernameLabel";
-            usernameLabel.Size = new Size(91, 21);
+            usernameLabel.Size = new Size(109, 25);
             usernameLabel.TabIndex = 2;
             usernameLabel.Text = "User Name:";
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 12F);
+            label1.Font = new Font("Segoe UI", 14F);
             label1.Location = new Point(12, 289);
             label1.Name = "label1";
-            label1.Size = new Size(79, 21);
+            label1.Size = new Size(95, 25);
             label1.TabIndex = 4;
             label1.Text = "Password:";
             // 
             // passwordInput
             // 
-            passwordInput.Font = new Font("Segoe UI", 14F);
+            passwordInput.Font = new Font("Segoe UI", 16F);
             passwordInput.Location = new Point(12, 313);
             passwordInput.Name = "passwordInput";
             passwordInput.PasswordChar = '*';
-            passwordInput.Size = new Size(370, 32);
+            passwordInput.Size = new Size(370, 36);
             passwordInput.TabIndex = 3;
             // 
             // loginButton
@@ -107,10 +107,11 @@
             loginButton.ForeColor = SystemColors.ButtonHighlight;
             loginButton.Location = new Point(33, 393);
             loginButton.Name = "loginButton";
-            loginButton.Size = new Size(323, 44);
+            loginButton.Size = new Size(323, 54);
             loginButton.TabIndex = 5;
             loginButton.Text = "Login";
             loginButton.UseVisualStyleBackColor = false;
+            loginButton.Click += this.loginButton_Click;
             // 
             // pictureBox1
             // 
