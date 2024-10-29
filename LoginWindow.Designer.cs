@@ -70,6 +70,7 @@
             userNameInput.Name = "userNameInput";
             userNameInput.Size = new Size(370, 36);
             userNameInput.TabIndex = 1;
+            userNameInput.KeyDown += username_KeyDown;
             // 
             // usernameLabel
             // 
@@ -99,6 +100,7 @@
             passwordInput.PasswordChar = '*';
             passwordInput.Size = new Size(370, 36);
             passwordInput.TabIndex = 3;
+            passwordInput.KeyDown += password_KeyDown;
             // 
             // loginButton
             // 
@@ -111,7 +113,7 @@
             loginButton.TabIndex = 5;
             loginButton.Text = "Login";
             loginButton.UseVisualStyleBackColor = false;
-            loginButton.Click += this.loginButton_Click;
+            loginButton.Click += loginButton_Click;
             // 
             // pictureBox1
             // 

@@ -25,27 +25,53 @@ namespace InventoryManagementSystem
 
         public void loginButton_Click(object sender, EventArgs e)
         {
-            // This is the function that will be called when the login button is clicked.
-            // This function will check if the username and password are correct.
-            // If they are correct, the user will be logged in.
-            // If they are not correct, the user will be shown an error message.
-            if (userNameInput.Text == "" || passwordInput.Text == "")
+            
+            try
             {
-                MessageBox.Show("Please enter a username and password.", "Try again", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // This is the function that will be called when the login button is clicked.
+                // This function will check if the username and password are correct.
+                // If they are correct, the user will be logged in.
+                // If they are not correct, the user will be shown an error message.
+                if (userNameInput.Text == "" || passwordInput.Text == "")
+                {
+                    MessageBox.Show("Please enter a username and password.", "Try again", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                //else if (username == "admin" && password == "admin")
+                //{
+                //    MessageBox.Show("Login successful!");
+                //    this.Hide();
+                //    InventoryManagementSystem ims = new InventoryManagementSystem();
+                //    ims.Show();
+                //}
+                //else
+                //{
+                //    MessageBox.Show("Invalid username or password.");
+                //}
+                MessageBox.Show("Login Successful!", "Welcome", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
             }
-            //else if (username == "admin" && password == "admin")
-            //{
-            //    MessageBox.Show("Login successful!");
-            //    this.Hide();
-            //    InventoryManagementSystem ims = new InventoryManagementSystem();
-            //    ims.Show();
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Invalid username or password.");
-            //}
+            catch(Exception ex)
+            {
+                MessageBox.Show("Login failed with the message: " + ex.Message);
+            }
+        }   
+
+        private void username_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                loginButton_Click(sender, e);
+            }
         }
-           
+
+        private void password_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                loginButton_Click(sender, e);
+            }
+        }
     }
 }
         
