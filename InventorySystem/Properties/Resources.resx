@@ -139,6 +139,9 @@
   <data name="backupIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\backupIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="dateAndTimeIcon (3)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\dateAndTimeIcon (3).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="SettingsIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SettingsIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -169,8 +172,8 @@
   <data name="8641067" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\8641067.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="close-circle-icon-256x255-7gelhh31 (1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\close-circle-icon-256x255-7gelhh31 (1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="user" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\user.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="company_logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\company_logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -202,14 +205,17 @@
   <data name="lowIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\lowIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="settings (1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\settings (1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="logoutIcon (2)1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\logoutIcon (2)1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ArchiveIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ArchiveIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="dateAndTimeIcon (3)" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\dateAndTimeIcon (3).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="close-circle-icon-256x255-7gelhh31 (1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\close-circle-icon-256x255-7gelhh31 (1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="7656399" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\7656399.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -229,10 +235,13 @@
   <data name="stockInOutTransaction1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\stockInOutTransaction1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="employeeIcon (2)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\employeeIcon (2).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="1828407" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\1828407.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="employeeIcon (2)" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\employeeIcon (2).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="user (1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\user (1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

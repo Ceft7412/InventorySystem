@@ -21,6 +21,7 @@ namespace InventorySystem.Views.Modals.InventoryUser
         public ArchiveModal()
         {
             InitializeComponent();
+            archivePanelsComboBox.SelectedIndex = 0;    
             LoadInactiveProducts();
             LoadInactiveSuppliers();
         }

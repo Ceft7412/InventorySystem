@@ -11,11 +11,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Configuration;
 
 namespace InventorySystem.Views.Auth
 {
     public partial class Login : Form
     {
+        private string connectionString = ConfigurationManager.ConnectionStrings["InventoryDb"].ConnectionString;
         private AuthController AuthController = new AuthController();
         public Login()
         {
@@ -36,7 +38,7 @@ namespace InventorySystem.Views.Auth
                 }
 
                 // Attempt to log in and get role and first login status
-                var (Success, Role, IsFirstLogin) = AuthController.LOGINUSER(username, password);
+                var (Success, Role, UserID, IsFirstLogin) = AuthController.LOGINUSER(username, password);
                 if (Success)
                 {
                     if (IsFirstLogin)
@@ -52,18 +54,21 @@ namespace InventorySystem.Views.Auth
                         }
 
                         // Optional: Update is_first_login in database
-                        //UpdateFirstLoginStatus(username);
+                        AuthController.UpdateFirstLoginStatus(username);
+                        SessionData.UserId = UserID;
                     }
 
                     // Proceed based on role
                     if (Role == "admin")
                     {
+                        SessionData.UserId = UserID;
                         InventorySystem.Views.Admin.Admin adminWindow = new InventorySystem.Views.Admin.Admin();
                         adminWindow.Show();
                         this.Hide();
                     }
                     else if (Role == "employee")
                     {
+                        SessionData.UserId = UserID;
                         Inventory inventoryWindow = new Inventory();
                         inventoryWindow.Show();
                         this.Hide();

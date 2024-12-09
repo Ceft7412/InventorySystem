@@ -31,19 +31,26 @@
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EmployeeAdmin));
             topbarStockInOutPanel = new Panel();
             label1 = new Label();
             panel1 = new Panel();
+            panel4 = new Panel();
+            exportExcelBtn = new Button();
+            archiveEmployeeBtn = new Button();
+            updateEmployeeBtnRedirect = new Button();
             addEmployeeBtnRedirect = new Button();
             panel2 = new Panel();
             panel3 = new Panel();
             dataGridViewEmployees = new DataGridView();
             Column1 = new DataGridViewTextBoxColumn();
             Column2 = new DataGridViewTextBoxColumn();
+            Column5 = new DataGridViewTextBoxColumn();
             Column4 = new DataGridViewTextBoxColumn();
             Column3 = new DataGridViewTextBoxColumn();
             topbarStockInOutPanel.SuspendLayout();
             panel1.SuspendLayout();
+            panel4.SuspendLayout();
             panel2.SuspendLayout();
             panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewEmployees).BeginInit();
@@ -73,21 +80,72 @@
             // 
             // panel1
             // 
-            panel1.Controls.Add(addEmployeeBtnRedirect);
+            panel1.Controls.Add(panel4);
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 99);
             panel1.Name = "panel1";
             panel1.Size = new Size(1112, 97);
             panel1.TabIndex = 3;
             // 
+            // panel4
+            // 
+            panel4.Controls.Add(exportExcelBtn);
+            panel4.Controls.Add(archiveEmployeeBtn);
+            panel4.Controls.Add(updateEmployeeBtnRedirect);
+            panel4.Controls.Add(addEmployeeBtnRedirect);
+            panel4.Dock = DockStyle.Right;
+            panel4.Location = new Point(442, 0);
+            panel4.Name = "panel4";
+            panel4.Size = new Size(670, 97);
+            panel4.TabIndex = 1;
+            // 
+            // exportExcelBtn
+            // 
+            exportExcelBtn.BackColor = Color.Green;
+            exportExcelBtn.Font = new Font("Segoe UI", 14F);
+            exportExcelBtn.ForeColor = SystemColors.ButtonHighlight;
+            exportExcelBtn.Location = new Point(506, 13);
+            exportExcelBtn.Name = "exportExcelBtn";
+            exportExcelBtn.Size = new Size(139, 69);
+            exportExcelBtn.TabIndex = 3;
+            exportExcelBtn.Text = "Export Excel";
+            exportExcelBtn.UseVisualStyleBackColor = false;
+            exportExcelBtn.Click += exportExcelBtn_Click;
+            // 
+            // archiveEmployeeBtn
+            // 
+            archiveEmployeeBtn.BackColor = Color.Red;
+            archiveEmployeeBtn.Font = new Font("Segoe UI", 14F);
+            archiveEmployeeBtn.ForeColor = SystemColors.ButtonHighlight;
+            archiveEmployeeBtn.Location = new Point(344, 13);
+            archiveEmployeeBtn.Name = "archiveEmployeeBtn";
+            archiveEmployeeBtn.Size = new Size(139, 69);
+            archiveEmployeeBtn.TabIndex = 2;
+            archiveEmployeeBtn.Text = "Archive Employee";
+            archiveEmployeeBtn.UseVisualStyleBackColor = false;
+            archiveEmployeeBtn.Click += archiveEmployeeBtn_Click;
+            // 
+            // updateEmployeeBtnRedirect
+            // 
+            updateEmployeeBtnRedirect.BackColor = Color.Goldenrod;
+            updateEmployeeBtnRedirect.Font = new Font("Segoe UI", 14F);
+            updateEmployeeBtnRedirect.ForeColor = SystemColors.ButtonHighlight;
+            updateEmployeeBtnRedirect.Location = new Point(180, 13);
+            updateEmployeeBtnRedirect.Name = "updateEmployeeBtnRedirect";
+            updateEmployeeBtnRedirect.Size = new Size(139, 69);
+            updateEmployeeBtnRedirect.TabIndex = 1;
+            updateEmployeeBtnRedirect.Text = "Update Employee";
+            updateEmployeeBtnRedirect.UseVisualStyleBackColor = false;
+            updateEmployeeBtnRedirect.Click += updateEmployeeBtnRedirect_Click;
+            // 
             // addEmployeeBtnRedirect
             // 
             addEmployeeBtnRedirect.BackColor = Color.ForestGreen;
             addEmployeeBtnRedirect.Font = new Font("Segoe UI", 14F);
             addEmployeeBtnRedirect.ForeColor = SystemColors.ButtonHighlight;
-            addEmployeeBtnRedirect.Location = new Point(902, 23);
+            addEmployeeBtnRedirect.Location = new Point(19, 13);
             addEmployeeBtnRedirect.Name = "addEmployeeBtnRedirect";
-            addEmployeeBtnRedirect.Size = new Size(185, 52);
+            addEmployeeBtnRedirect.Size = new Size(139, 69);
             addEmployeeBtnRedirect.TabIndex = 0;
             addEmployeeBtnRedirect.Text = "Add Employee";
             addEmployeeBtnRedirect.UseVisualStyleBackColor = false;
@@ -101,7 +159,7 @@
             panel2.Location = new Point(0, 196);
             panel2.Name = "panel2";
             panel2.Padding = new Padding(25);
-            panel2.Size = new Size(1112, 765);
+            panel2.Size = new Size(1112, 565);
             panel2.TabIndex = 4;
             // 
             // panel3
@@ -111,8 +169,7 @@
             panel3.Dock = DockStyle.Fill;
             panel3.Location = new Point(25, 25);
             panel3.Name = "panel3";
-            panel3.Padding = new Padding(10, 0, 10, 10);
-            panel3.Size = new Size(1062, 715);
+            panel3.Size = new Size(1062, 515);
             panel3.TabIndex = 0;
             // 
             // dataGridViewEmployees
@@ -129,7 +186,7 @@
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
             dataGridViewEmployees.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dataGridViewEmployees.ColumnHeadersHeight = 40;
-            dataGridViewEmployees.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2, Column4, Column3 });
+            dataGridViewEmployees.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2, Column5, Column4, Column3 });
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = SystemColors.Window;
             dataGridViewCellStyle2.Font = new Font("Segoe UI", 16F);
@@ -140,7 +197,7 @@
             dataGridViewEmployees.DefaultCellStyle = dataGridViewCellStyle2;
             dataGridViewEmployees.Dock = DockStyle.Fill;
             dataGridViewEmployees.EnableHeadersVisualStyles = false;
-            dataGridViewEmployees.Location = new Point(10, 0);
+            dataGridViewEmployees.Location = new Point(0, 0);
             dataGridViewEmployees.Name = "dataGridViewEmployees";
             dataGridViewEmployees.ReadOnly = true;
             dataGridViewEmployees.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
@@ -149,8 +206,9 @@
             dataGridViewEmployees.RowsDefaultCellStyle = dataGridViewCellStyle3;
             dataGridViewEmployees.RowTemplate.Height = 30;
             dataGridViewEmployees.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridViewEmployees.Size = new Size(1042, 705);
+            dataGridViewEmployees.Size = new Size(1062, 515);
             dataGridViewEmployees.TabIndex = 2;
+            dataGridViewEmployees.CellClick += selectedRowCellClick;
             dataGridViewEmployees.CellContentClick += dataGridViewEmployees_CellContentClick;
             // 
             // Column1
@@ -166,6 +224,13 @@
             Column2.Name = "Column2";
             Column2.ReadOnly = true;
             Column2.Width = 250;
+            // 
+            // Column5
+            // 
+            Column5.HeaderText = "Username";
+            Column5.Name = "Column5";
+            Column5.ReadOnly = true;
+            Column5.Width = 200;
             // 
             // Column4
             // 
@@ -185,10 +250,11 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1112, 961);
+            ClientSize = new Size(1112, 761);
             Controls.Add(panel2);
             Controls.Add(panel1);
             Controls.Add(topbarStockInOutPanel);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "EmployeeAdmin";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Admin - Employee";
@@ -196,6 +262,7 @@
             topbarStockInOutPanel.ResumeLayout(false);
             topbarStockInOutPanel.PerformLayout();
             panel1.ResumeLayout(false);
+            panel4.ResumeLayout(false);
             panel2.ResumeLayout(false);
             panel3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dataGridViewEmployees).EndInit();
@@ -213,7 +280,12 @@
         private DataGridView dataGridViewEmployees;
         private DataGridViewTextBoxColumn Column1;
         private DataGridViewTextBoxColumn Column2;
+        private DataGridViewTextBoxColumn Column5;
         private DataGridViewTextBoxColumn Column4;
         private DataGridViewTextBoxColumn Column3;
+        private Panel panel4;
+        private Button updateEmployeeBtnRedirect;
+        private Button archiveEmployeeBtn;
+        private Button exportExcelBtn;
     }
 }

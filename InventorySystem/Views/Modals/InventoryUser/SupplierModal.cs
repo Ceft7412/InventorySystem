@@ -125,6 +125,13 @@ namespace InventorySystem.Views.Modals.InventoryUser
         {
             try
             {
+
+                var message = MessageBox.Show("Are you sure you want to export the data?", "Export to Excel", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (message == DialogResult.No)
+                {
+                    return;
+                }
                 // Create Excel application instance
                 Excel.Application excelApp = new Excel.Application();
                 excelApp.Visible = true;

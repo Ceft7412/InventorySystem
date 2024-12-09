@@ -5,21 +5,60 @@ using System.Text;
 using InventorySystem.Models;
 using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
+using System.Configuration;
 
 namespace InventorySystem.Controllers
 {
     public class EmployeeController
     {
 
-        private string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\cedri\Documents\inventoryDB.mdf;Integrated Security=True;Connect Timeout=30";
+        private string connectionString = ConfigurationManager.ConnectionStrings["InventoryDb"].ConnectionString;
 
-        
+
+        public Employee GET_EMPLOYEE_DATA(string employeeID)
+        {
+            try
+            {
+                string query = @"SELECT user_id, firstname, lastname, username, contact_number, address FROM tbUser WHERE user_id = @user_id";
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    SqlCommand command = new SqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@user_id", employeeID);
+                    SqlDataReader reader = command.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        return new Employee()
+                        {
+                            EmployeeID = reader["user_id"].ToString(),
+                            Firstname = reader["firstname"].ToString(),
+                            Lastname = reader["lastname"].ToString(),
+                            Username = reader["username"].ToString(),
+                            Contact = reader["contact_number"].ToString(),
+                            Address = reader["address"].ToString()
+                        };
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error message: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+
+        }
+
         public List<Employee> FETCH_EMPLOYEES()
         {
             try
             {
                 List<Employee> employees = new List<Employee>();
-                string query = @"SELECT user_id, firstname, lastname, contact_number, address FROM tbUser";
+                string query = @"SELECT user_id, firstname, lastname, username, contact_number, address FROM tbUser WHERE role = 'employee'";
                 using(SqlConnection connection = new SqlConnection(connectionString))
                 {
                     SqlCommand cmd = new SqlCommand(query, connection);
@@ -32,7 +71,8 @@ namespace InventorySystem.Controllers
                             EmployeeID = reader["user_id"].ToString(),
                             Firstname = reader["firstname"].ToString(),
                             Lastname = reader["lastname"].ToString(),
-                            Contact = (int)reader["contact_number"],
+                            Username = reader["username"].ToString(),
+                            Contact = reader["contact_number"].ToString(),
                             Address = reader["address"].ToString()
                         });
                     }
@@ -49,12 +89,11 @@ namespace InventorySystem.Controllers
         }
 
 
-        public void ADDEMPLOYEE(string firstname, string lastname, long contact, string address)
+        public void ADDEMPLOYEE(string firstname, string lastname, long? contact, string address)
         {
             try
             {
-
-                var employeeDetails = GENERATE_EMPLOYEE_DETAILS(firstname);
+                var employeeDetails = GENERATE_EMPLOYEE_DETAILS(firstname.ToLower());
                 string employeeId;
                 string username;
                 string default_password = BCrypt.Net.BCrypt.HashPassword("123");
@@ -94,7 +133,7 @@ namespace InventorySystem.Controllers
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string query = @"INSERT INTO tbUser(user_id, username, firstname, lastname, contact_number, password, address, role, is_first_login) VALUES (@user_id, @username, @firstname, @lastname, @contact_number, @password, @address, @role, @is_first_login)";
+                    string query = @"INSERT INTO tbUser(user_id, username, firstname, lastname, contact_number, password, address, role, is_first_login, status) VALUES (@user_id, @username, @firstname, @lastname, @contact_number, @password, @address, @role, @is_first_login, @status)";
 
                     SqlCommand command = new SqlCommand(query,connection);
                     command.Parameters.AddWithValue("@user_id", employeeId);
@@ -102,10 +141,12 @@ namespace InventorySystem.Controllers
                     command.Parameters.AddWithValue("@firstname", firstname);
                     command.Parameters.AddWithValue("@lastname", lastname);
                     command.Parameters.AddWithValue("@password", default_password);
-                    command.Parameters.AddWithValue("@contact_number", contact);
-                    command.Parameters.AddWithValue("@address", address);
+                    command.Parameters.AddWithValue("@contact_number", contact.HasValue ? (object)contact.Value : DBNull.Value);
+                    command.Parameters.AddWithValue("@address", string.IsNullOrEmpty(address) ? DBNull.Value : (object)address);
                     command.Parameters.AddWithValue("@role", role);
                     command.Parameters.AddWithValue("@is_first_login", 1);
+                    command.Parameters.AddWithValue("@status", "active");
+
 
                     command.ExecuteNonQuery();
 
@@ -117,6 +158,54 @@ namespace InventorySystem.Controllers
             {
                 MessageBox.Show("Error message: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
+            }
+        }
+
+        public bool UPDATE_EMPLOYEE(Employee employee)
+        {
+            try
+            {
+                string query = @"UPDATE tbUser SET firstname = @firstname, lastname = @lastname, contact_number = @contact_number, address = @address WHERE user_id = @user_id";
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    SqlCommand command = new SqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@user_id", employee.EmployeeID);
+                    command.Parameters.AddWithValue("@firstname", employee.Firstname);
+                    command.Parameters.AddWithValue("@lastname", employee.Lastname);
+                    command.Parameters.AddWithValue("@contact_number", string.IsNullOrEmpty(employee.Contact) ? DBNull.Value  : (object)employee.Contact);
+                    command.Parameters.AddWithValue("@address", string.IsNullOrEmpty(employee.Address) ? DBNull.Value : (object)employee.Address);
+                    command.ExecuteNonQuery();
+                    return true;
+                }
+
+
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Error message: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
+
+        public bool ARCHIVE_EMPLOYEE(string employeeID)
+        {
+            try
+            {
+                string query = @"UPDATE tbUser SET status = inactive WHERE user_id = @user_id";
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    SqlCommand command = new SqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@user_id", employeeID);
+                    command.ExecuteNonQuery();
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error message: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
             }
         }
 
@@ -138,13 +227,14 @@ namespace InventorySystem.Controllers
                     {
                         // Generate a 6-digit random number
                         employee_id = random.Next(100000, 1000000);
+                        string search_id = "E" + employee_id;
 
                         // Check if the generated ID exists in the database
                         string query = "SELECT COUNT(*) FROM tbUser WHERE user_id = @employee_id";
                         //
                         using (SqlCommand command = new SqlCommand(query, connection))
                         {
-                            command.Parameters.AddWithValue("@employee_id", employee_id);
+                            command.Parameters.AddWithValue("@employee_id", search_id);
                             int count = (int)command.ExecuteScalar();
 
                             if (count == 0) // If the ID is not found in the table, it's unique

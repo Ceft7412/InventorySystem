@@ -1808,7 +1808,7 @@
     "version": "1.0.0",
     "restore": {
       "projectUniqueName": "C:\\Users\\cedri\\source\\repos\\InventorySystem\\InventorySystem\\InventorySystem.csproj",
-      "projectName": "InventorySystem",
+      "projectName": "Inventory",
       "projectPath": "C:\\Users\\cedri\\source\\repos\\InventorySystem\\InventorySystem\\InventorySystem.csproj",
       "packagesPath": "C:\\Users\\cedri\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\cedri\\source\\repos\\InventorySystem\\InventorySystem\\obj\\",

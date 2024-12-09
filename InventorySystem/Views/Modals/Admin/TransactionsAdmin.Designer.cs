@@ -28,9 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TransactionsAdmin));
             topbarStockInOutPanel = new Panel();
             label1 = new Label();
             panel1 = new Panel();
@@ -65,7 +66,7 @@
             topbarStockInOutPanel.Dock = DockStyle.Top;
             topbarStockInOutPanel.Location = new Point(0, 0);
             topbarStockInOutPanel.Name = "topbarStockInOutPanel";
-            topbarStockInOutPanel.Size = new Size(1684, 99);
+            topbarStockInOutPanel.Size = new Size(1352, 99);
             topbarStockInOutPanel.TabIndex = 2;
             // 
             // label1
@@ -87,7 +88,7 @@
             panel1.Location = new Point(0, 99);
             panel1.Name = "panel1";
             panel1.Padding = new Padding(30, 20, 30, 20);
-            panel1.Size = new Size(1684, 862);
+            panel1.Size = new Size(1352, 662);
             panel1.TabIndex = 3;
             // 
             // panel2
@@ -98,17 +99,17 @@
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(30, 20);
             panel2.Name = "panel2";
-            panel2.Size = new Size(1624, 822);
+            panel2.Size = new Size(1292, 622);
             panel2.TabIndex = 0;
             // 
             // panel4
             // 
             panel4.Controls.Add(dataGridViewTransactions);
             panel4.Dock = DockStyle.Fill;
-            panel4.Location = new Point(0, 152);
+            panel4.Location = new Point(0, 146);
             panel4.Name = "panel4";
             panel4.Padding = new Padding(10);
-            panel4.Size = new Size(1624, 670);
+            panel4.Size = new Size(1292, 476);
             panel4.TabIndex = 2;
             // 
             // dataGridViewTransactions
@@ -116,24 +117,24 @@
             dataGridViewTransactions.AllowUserToAddRows = false;
             dataGridViewTransactions.BackgroundColor = SystemColors.ButtonHighlight;
             dataGridViewTransactions.BorderStyle = BorderStyle.None;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = SystemColors.ControlLight;
-            dataGridViewCellStyle1.Font = new Font("Arial", 16F);
-            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.ControlLight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            dataGridViewTransactions.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = SystemColors.ControlLight;
+            dataGridViewCellStyle4.Font = new Font("Arial", 16F);
+            dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = SystemColors.ControlLight;
+            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            dataGridViewTransactions.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             dataGridViewTransactions.ColumnHeadersHeight = 40;
             dataGridViewTransactions.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2, Column3, Column4, Column5, Column6, Column7 });
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = SystemColors.Window;
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 16F);
-            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
-            dataGridViewTransactions.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = SystemColors.Window;
+            dataGridViewCellStyle5.Font = new Font("Segoe UI", 16F);
+            dataGridViewCellStyle5.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.False;
+            dataGridViewTransactions.DefaultCellStyle = dataGridViewCellStyle5;
             dataGridViewTransactions.Dock = DockStyle.Fill;
             dataGridViewTransactions.EnableHeadersVisualStyles = false;
             dataGridViewTransactions.Location = new Point(10, 10);
@@ -141,11 +142,11 @@
             dataGridViewTransactions.ReadOnly = true;
             dataGridViewTransactions.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
             dataGridViewTransactions.RowHeadersVisible = false;
-            dataGridViewCellStyle3.BackColor = SystemColors.ButtonHighlight;
-            dataGridViewTransactions.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle6.BackColor = SystemColors.ButtonHighlight;
+            dataGridViewTransactions.RowsDefaultCellStyle = dataGridViewCellStyle6;
             dataGridViewTransactions.RowTemplate.Height = 30;
             dataGridViewTransactions.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridViewTransactions.Size = new Size(1604, 650);
+            dataGridViewTransactions.Size = new Size(1272, 456);
             dataGridViewTransactions.TabIndex = 2;
             // 
             // Column1
@@ -207,13 +208,13 @@
             panel3.Location = new Point(0, 0);
             panel3.Name = "panel3";
             panel3.Padding = new Padding(10);
-            panel3.Size = new Size(1624, 152);
+            panel3.Size = new Size(1292, 146);
             panel3.TabIndex = 1;
             // 
             // refreshData
             // 
             refreshData.Font = new Font("Segoe UI", 16F);
-            refreshData.Location = new Point(25, 92);
+            refreshData.Location = new Point(25, 82);
             refreshData.Name = "refreshData";
             refreshData.Size = new Size(123, 47);
             refreshData.TabIndex = 3;
@@ -224,32 +225,32 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 20.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label2.Location = new Point(485, 34);
+            label2.Font = new Font("Segoe UI", 16F);
+            label2.Location = new Point(469, 34);
             label2.Name = "label2";
-            label2.Size = new Size(79, 37);
+            label2.Size = new Size(65, 30);
             label2.TabIndex = 2;
             label2.Text = "Type:";
             // 
             // typeCmb
             // 
             typeCmb.DropDownStyle = ComboBoxStyle.DropDownList;
-            typeCmb.Font = new Font("Segoe UI", 19F);
+            typeCmb.Font = new Font("Segoe UI", 16F);
             typeCmb.FormattingEnabled = true;
             typeCmb.Items.AddRange(new object[] { "IN", "OUT" });
-            typeCmb.Location = new Point(570, 31);
+            typeCmb.Location = new Point(540, 34);
             typeCmb.Name = "typeCmb";
-            typeCmb.Size = new Size(274, 43);
+            typeCmb.Size = new Size(274, 38);
             typeCmb.TabIndex = 1;
             typeCmb.SelectedIndexChanged += typeCmb_SelectedIndexChanged;
             // 
             // serachBatchItem
             // 
-            serachBatchItem.Font = new Font("Segoe UI", 20F);
+            serachBatchItem.Font = new Font("Segoe UI", 16F);
             serachBatchItem.Location = new Point(25, 31);
             serachBatchItem.Name = "serachBatchItem";
             serachBatchItem.PlaceholderText = "Search";
-            serachBatchItem.Size = new Size(404, 43);
+            serachBatchItem.Size = new Size(404, 36);
             serachBatchItem.TabIndex = 0;
             serachBatchItem.TextChanged += serachBatchItem_TextChanged;
             // 
@@ -257,9 +258,10 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1684, 961);
+            ClientSize = new Size(1352, 761);
             Controls.Add(panel1);
             Controls.Add(topbarStockInOutPanel);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "TransactionsAdmin";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Admin - Transactions";

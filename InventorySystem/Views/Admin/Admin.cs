@@ -12,18 +12,39 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+ using System.Configuration;
+using InventorySystem.Views.Auth;
+using InventorySystem.Services;
 
 namespace InventorySystem.Views.Admin
 {
     public partial class Admin : Form
     {
-        private string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\cedri\Documents\inventoryDB.mdf;Integrated Security=True;Connect Timeout=30";
+        private AuthenticationService AuthenticationService = new AuthenticationService();
+        private string connectionString = ConfigurationManager.ConnectionStrings["InventoryDb"].ConnectionString;
         private DashboardController InventoryProcessor = new DashboardController();
         private BatchController BatchController = new BatchController();
+        private AuthenticationService AuthService = new AuthenticationService();
         private BatchItemController BatchItemController = new BatchItemController();
+        private bool alreadyAsked = false;
+        private bool isLoggingOut = false;
         public Admin()
         {
             InitializeComponent();
+
+            // Check authentication
+            if (!AuthenticationService.IsAuthenticated)
+            {
+                MessageBox.Show("You are not authenticated. Please login.", "Authentication Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Load += (s, e) => this.Close(); // Close the form if not authenticated
+                Login login = new Login();
+                login.Show();
+            }
+            else
+            {
+                // Load user-specific data or configurations
+                //lblUsername.Text = AuthenticationService.CurrentUser.Username;
+            }
             InitializeChart("daily");
             InitializePieChart();
             InitializeRecentTransactionData();
@@ -33,6 +54,48 @@ namespace InventorySystem.Views.Admin
 
 
         }
+
+        private void Admin_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.WindowsShutDown) return;
+
+            // Check why the form is closing, decide if the application should exit
+            //if (e.CloseReason == CloseReason.UserClosing)
+            //{
+            //    AuthenticationService.Destroy();
+            //    Application.Exit(); // Exit application only if the user explicitly closes the form
+            //}
+            if (!isLoggingOut)  // If not logging out, then ask for confirmation
+            {
+                if (e.CloseReason == CloseReason.UserClosing)
+                {
+                    if (!alreadyAsked)  // Check if the user has not already been asked
+                    {
+                        var response = MessageBox.Show(this, "Are you sure you want to exit?", "Confirm Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        if (response == DialogResult.No)
+                        {
+                            e.Cancel = true;  // Cancel the form close
+                                              // Do not set the flag here because we want to ask again next time
+                        }
+                        else
+                        {
+                            alreadyAsked = true; // User wants to close, allow the form to close without asking again
+                            Application.Exit();
+
+                        }
+                    }
+                }
+            }
+            // Reset the flag always
+            isLoggingOut = false;
+        }
+
+        private void Admin_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            alreadyAsked = false;
+        }
+
+
 
         private void InitializeRecentTransactionData()
         {
@@ -222,6 +285,34 @@ namespace InventorySystem.Views.Admin
         {
             EmployeeAdmin employeeAdmin = new EmployeeAdmin();
             employeeAdmin.ShowDialog();
+        }
+
+        private void logoutBtn_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var result = MessageBox.Show("Are you sure you want to logout?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
+                {
+                    isLoggingOut = true;
+                    AuthenticationService.Destroy();
+                    this.Close();
+                    Login login = new Login();
+                    login.Show();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error message: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+        }
+
+        private void settingsBtn_Click(object sender, EventArgs e)
+        {
+            SettingsAdmin settingAdmin = new SettingsAdmin();
+            settingAdmin.ShowDialog();
         }
     }
 }

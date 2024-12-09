@@ -31,6 +31,7 @@
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Inventory));
             navigationPanel = new Panel();
             logoutNavigationButton = new Button();
             settingsNavigationButton = new Button();
@@ -83,7 +84,7 @@
             navigationPanel.Dock = DockStyle.Top;
             navigationPanel.Location = new Point(0, 0);
             navigationPanel.Name = "navigationPanel";
-            navigationPanel.Size = new Size(1924, 170);
+            navigationPanel.Size = new Size(1604, 170);
             navigationPanel.TabIndex = 0;
             // 
             // logoutNavigationButton
@@ -211,75 +212,74 @@
             // 
             // searchItemTxt
             // 
-            searchItemTxt.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            searchItemTxt.Font = new Font("Segoe UI", 22F);
+            searchItemTxt.Font = new Font("Segoe UI", 16F);
             searchItemTxt.Location = new Point(20, 58);
             searchItemTxt.Name = "searchItemTxt";
             searchItemTxt.PlaceholderText = "Search item...";
-            searchItemTxt.Size = new Size(424, 47);
+            searchItemTxt.Size = new Size(400, 36);
             searchItemTxt.TabIndex = 1;
             searchItemTxt.TextChanged += searchItemTxt_TextChanged;
             // 
             // categoryComboBox
             // 
             categoryComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            categoryComboBox.Font = new Font("Segoe UI", 20F);
+            categoryComboBox.Font = new Font("Segoe UI", 16F);
             categoryComboBox.FormattingEnabled = true;
-            categoryComboBox.Location = new Point(502, 60);
+            categoryComboBox.Location = new Point(461, 56);
             categoryComboBox.Name = "categoryComboBox";
-            categoryComboBox.Size = new Size(408, 45);
+            categoryComboBox.Size = new Size(306, 38);
             categoryComboBox.TabIndex = 2;
             categoryComboBox.SelectedIndexChanged += categoryComboBox_SelectedIndexChanged;
             // 
             // supplierComboBox
             // 
             supplierComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            supplierComboBox.Font = new Font("Segoe UI", 20F);
+            supplierComboBox.Font = new Font("Segoe UI", 16F);
             supplierComboBox.FormattingEnabled = true;
-            supplierComboBox.Location = new Point(955, 58);
+            supplierComboBox.Location = new Point(818, 56);
             supplierComboBox.Name = "supplierComboBox";
-            supplierComboBox.Size = new Size(408, 45);
+            supplierComboBox.Size = new Size(325, 38);
             supplierComboBox.TabIndex = 3;
             supplierComboBox.SelectedIndexChanged += supplierComboBox_SelectedIndexChanged;
             // 
             // unitComboBox
             // 
             unitComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            unitComboBox.Font = new Font("Segoe UI", 20F);
+            unitComboBox.Font = new Font("Segoe UI", 16F);
             unitComboBox.FormattingEnabled = true;
-            unitComboBox.Location = new Point(1411, 58);
+            unitComboBox.Location = new Point(1194, 56);
             unitComboBox.Name = "unitComboBox";
-            unitComboBox.Size = new Size(321, 45);
+            unitComboBox.Size = new Size(163, 38);
             unitComboBox.TabIndex = 4;
             unitComboBox.SelectedIndexChanged += unitComboBox_SelectedIndexChanged;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 20F);
-            label2.Location = new Point(493, 20);
+            label2.Font = new Font("Segoe UI", 16F);
+            label2.Location = new Point(461, 20);
             label2.Name = "label2";
-            label2.Size = new Size(131, 37);
+            label2.Size = new Size(107, 30);
             label2.TabIndex = 5;
             label2.Text = "Category:";
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 20F);
-            label3.Location = new Point(945, 20);
+            label3.Font = new Font("Segoe UI", 16F);
+            label3.Location = new Point(818, 25);
             label3.Name = "label3";
-            label3.Size = new Size(121, 37);
+            label3.Size = new Size(98, 30);
             label3.TabIndex = 6;
             label3.Text = "Supplier:";
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font = new Font("Segoe UI", 20F);
-            label4.Location = new Point(1406, 20);
+            label4.Font = new Font("Segoe UI", 16F);
+            label4.Location = new Point(1194, 25);
             label4.Name = "label4";
-            label4.Size = new Size(73, 37);
+            label4.Size = new Size(57, 30);
             label4.TabIndex = 7;
             label4.Text = "Unit:";
             // 
@@ -301,13 +301,13 @@
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 170);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1924, 223);
+            panel1.Size = new Size(1604, 258);
             panel1.TabIndex = 8;
             // 
             // refreshData
             // 
             refreshData.Font = new Font("Segoe UI", 16F);
-            refreshData.Location = new Point(1766, 56);
+            refreshData.Location = new Point(20, 113);
             refreshData.Name = "refreshData";
             refreshData.Size = new Size(123, 47);
             refreshData.TabIndex = 22;
@@ -318,10 +318,10 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI", 20F);
-            label5.Location = new Point(12, 18);
+            label5.Font = new Font("Segoe UI", 16F);
+            label5.Location = new Point(20, 25);
             label5.Name = "label5";
-            label5.Size = new Size(161, 37);
+            label5.Size = new Size(133, 30);
             label5.TabIndex = 12;
             label5.Text = "Search Item:";
             // 
@@ -330,9 +330,9 @@
             exportItemsButton.BackColor = Color.ForestGreen;
             exportItemsButton.Font = new Font("Segoe UI", 14F);
             exportItemsButton.ForeColor = SystemColors.ButtonHighlight;
-            exportItemsButton.Location = new Point(546, 135);
+            exportItemsButton.Location = new Point(547, 184);
             exportItemsButton.Name = "exportItemsButton";
-            exportItemsButton.Size = new Size(142, 64);
+            exportItemsButton.Size = new Size(142, 55);
             exportItemsButton.TabIndex = 11;
             exportItemsButton.Text = "Export Excel";
             exportItemsButton.UseVisualStyleBackColor = false;
@@ -343,9 +343,9 @@
             archiveItemButton.BackColor = Color.Red;
             archiveItemButton.Font = new Font("Segoe UI", 14F);
             archiveItemButton.ForeColor = SystemColors.ButtonHighlight;
-            archiveItemButton.Location = new Point(367, 133);
+            archiveItemButton.Location = new Point(368, 182);
             archiveItemButton.Name = "archiveItemButton";
-            archiveItemButton.Size = new Size(142, 66);
+            archiveItemButton.Size = new Size(142, 57);
             archiveItemButton.TabIndex = 10;
             archiveItemButton.Text = "Archive Item";
             archiveItemButton.UseVisualStyleBackColor = false;
@@ -356,9 +356,9 @@
             updateItemButton.BackColor = Color.DarkGoldenrod;
             updateItemButton.Font = new Font("Segoe UI", 14F);
             updateItemButton.ForeColor = SystemColors.ButtonHighlight;
-            updateItemButton.Location = new Point(189, 131);
+            updateItemButton.Location = new Point(190, 180);
             updateItemButton.Name = "updateItemButton";
-            updateItemButton.Size = new Size(142, 68);
+            updateItemButton.Size = new Size(142, 59);
             updateItemButton.TabIndex = 9;
             updateItemButton.Text = "Update Item";
             updateItemButton.UseVisualStyleBackColor = false;
@@ -369,9 +369,9 @@
             addItemButton.BackColor = Color.ForestGreen;
             addItemButton.Font = new Font("Segoe UI", 14F);
             addItemButton.ForeColor = SystemColors.ButtonHighlight;
-            addItemButton.Location = new Point(19, 131);
+            addItemButton.Location = new Point(20, 180);
             addItemButton.Name = "addItemButton";
-            addItemButton.Size = new Size(142, 68);
+            addItemButton.Size = new Size(142, 59);
             addItemButton.TabIndex = 8;
             addItemButton.Text = "Add Item";
             addItemButton.UseVisualStyleBackColor = false;
@@ -381,10 +381,10 @@
             // 
             panel2.Controls.Add(dataGridViewItems);
             panel2.Dock = DockStyle.Fill;
-            panel2.Location = new Point(0, 393);
+            panel2.Location = new Point(0, 428);
             panel2.Name = "panel2";
             panel2.Padding = new Padding(20, 0, 20, 10);
-            panel2.Size = new Size(1924, 415);
+            panel2.Size = new Size(1604, 380);
             panel2.TabIndex = 9;
             // 
             // dataGridViewItems
@@ -420,7 +420,7 @@
             dataGridViewCellStyle3.BackColor = SystemColors.ButtonHighlight;
             dataGridViewItems.RowsDefaultCellStyle = dataGridViewCellStyle3;
             dataGridViewItems.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridViewItems.Size = new Size(1884, 405);
+            dataGridViewItems.Size = new Size(1564, 370);
             dataGridViewItems.TabIndex = 0;
             dataGridViewItems.CellClick += SelectedItemCodeRowClick;
             // 
@@ -477,14 +477,17 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1924, 808);
+            ClientSize = new Size(1604, 808);
             Controls.Add(panel2);
             Controls.Add(panel1);
             Controls.Add(navigationPanel);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Inventory";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Inventory";
             WindowState = FormWindowState.Maximized;
+            FormClosing += Inventory_FormClosing;
+            FormClosed += Inventory_FormClosed;
             navigationPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)companyLogo).EndInit();
             panel1.ResumeLayout(false);

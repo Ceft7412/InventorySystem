@@ -28,17 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsModal));
             panel1 = new Panel();
             closeSettingsWindow = new Button();
             label1 = new Label();
             panel2 = new Panel();
-            button3 = new Button();
-            button2 = new Button();
-            button1 = new Button();
+            restoreBtn = new Button();
+            backupBtn = new Button();
             label7 = new Label();
             label8 = new Label();
-            label3 = new Label();
+            accountBtn = new Button();
             label2 = new Label();
+            label3 = new Label();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             SuspendLayout();
@@ -51,7 +52,7 @@
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(800, 570);
+            panel1.Size = new Size(800, 540);
             panel1.TabIndex = 0;
             // 
             // closeSettingsWindow
@@ -59,7 +60,7 @@
             closeSettingsWindow.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             closeSettingsWindow.Image = Properties.Resources.close_circle_icon_256x255_7gelhh31__1_;
             closeSettingsWindow.ImageAlign = ContentAlignment.MiddleLeft;
-            closeSettingsWindow.Location = new Point(668, 516);
+            closeSettingsWindow.Location = new Point(670, 483);
             closeSettingsWindow.Name = "closeSettingsWindow";
             closeSettingsWindow.Padding = new Padding(10, 0, 10, 0);
             closeSettingsWindow.Size = new Size(118, 45);
@@ -68,6 +69,7 @@
             closeSettingsWindow.Text = "Close";
             closeSettingsWindow.TextImageRelation = TextImageRelation.ImageBeforeText;
             closeSettingsWindow.UseVisualStyleBackColor = true;
+            closeSettingsWindow.Click += closeSettingsWindow_Click;
             // 
             // label1
             // 
@@ -82,67 +84,54 @@
             // panel2
             // 
             panel2.BackColor = SystemColors.ControlLightLight;
-            panel2.Controls.Add(button3);
-            panel2.Controls.Add(button2);
-            panel2.Controls.Add(button1);
+            panel2.Controls.Add(accountBtn);
+            panel2.Controls.Add(label2);
+            panel2.Controls.Add(label3);
+            panel2.Controls.Add(restoreBtn);
+            panel2.Controls.Add(backupBtn);
             panel2.Controls.Add(label7);
             panel2.Controls.Add(label8);
-            panel2.Controls.Add(label3);
-            panel2.Controls.Add(label2);
             panel2.Location = new Point(12, 66);
             panel2.Name = "panel2";
-            panel2.Size = new Size(776, 439);
+            panel2.Size = new Size(776, 402);
             panel2.TabIndex = 2;
             // 
-            // button3
+            // restoreBtn
             // 
-            button3.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            button3.Image = Properties.Resources.restoreIcon;
-            button3.ImageAlign = ContentAlignment.TopCenter;
-            button3.Location = new Point(163, 290);
-            button3.Name = "button3";
-            button3.Size = new Size(110, 105);
-            button3.TabIndex = 7;
-            button3.TabStop = false;
-            button3.Text = "Restore";
-            button3.TextAlign = ContentAlignment.BottomCenter;
-            button3.TextImageRelation = TextImageRelation.ImageAboveText;
-            button3.UseVisualStyleBackColor = true;
+            restoreBtn.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            restoreBtn.Image = Properties.Resources.restoreIcon;
+            restoreBtn.ImageAlign = ContentAlignment.TopCenter;
+            restoreBtn.Location = new Point(164, 74);
+            restoreBtn.Name = "restoreBtn";
+            restoreBtn.Size = new Size(110, 105);
+            restoreBtn.TabIndex = 7;
+            restoreBtn.TabStop = false;
+            restoreBtn.Text = "Restore";
+            restoreBtn.TextAlign = ContentAlignment.BottomCenter;
+            restoreBtn.TextImageRelation = TextImageRelation.ImageAboveText;
+            restoreBtn.UseVisualStyleBackColor = true;
+            restoreBtn.Click += restoreBtn_Click;
             // 
-            // button2
+            // backupBtn
             // 
-            button2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            button2.Image = Properties.Resources.backupIcon;
-            button2.ImageAlign = ContentAlignment.TopCenter;
-            button2.Location = new Point(21, 290);
-            button2.Name = "button2";
-            button2.Size = new Size(110, 105);
-            button2.TabIndex = 2;
-            button2.TabStop = false;
-            button2.Text = "Backup";
-            button2.TextAlign = ContentAlignment.BottomCenter;
-            button2.TextImageRelation = TextImageRelation.ImageAboveText;
-            button2.UseVisualStyleBackColor = true;
-            // 
-            // button1
-            // 
-            button1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            button1.Image = Properties.Resources.dateAndTimeIcon__3_;
-            button1.ImageAlign = ContentAlignment.TopCenter;
-            button1.Location = new Point(21, 85);
-            button1.Name = "button1";
-            button1.Size = new Size(110, 105);
-            button1.TabIndex = 1;
-            button1.TabStop = false;
-            button1.Text = "Date and Time";
-            button1.TextAlign = ContentAlignment.BottomCenter;
-            button1.TextImageRelation = TextImageRelation.ImageAboveText;
-            button1.UseVisualStyleBackColor = true;
+            backupBtn.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            backupBtn.Image = Properties.Resources.backupIcon;
+            backupBtn.ImageAlign = ContentAlignment.TopCenter;
+            backupBtn.Location = new Point(22, 74);
+            backupBtn.Name = "backupBtn";
+            backupBtn.Size = new Size(110, 105);
+            backupBtn.TabIndex = 2;
+            backupBtn.TabStop = false;
+            backupBtn.Text = "Backup";
+            backupBtn.TextAlign = ContentAlignment.BottomCenter;
+            backupBtn.TextImageRelation = TextImageRelation.ImageAboveText;
+            backupBtn.UseVisualStyleBackColor = true;
+            backupBtn.Click += backupBtn_Click;
             // 
             // label7
             // 
             label7.BorderStyle = BorderStyle.Fixed3D;
-            label7.Location = new Point(21, 267);
+            label7.Location = new Point(22, 51);
             label7.Name = "label7";
             label7.Size = new Size(734, 1);
             label7.TabIndex = 6;
@@ -151,37 +140,54 @@
             // 
             label8.AutoSize = true;
             label8.Font = new Font("Segoe UI", 16F);
-            label8.Location = new Point(16, 228);
+            label8.Location = new Point(17, 12);
             label8.Name = "label8";
             label8.Size = new Size(204, 30);
             label8.TabIndex = 5;
             label8.Text = "Backup and Restore";
             // 
-            // label3
+            // accountBtn
             // 
-            label3.BorderStyle = BorderStyle.Fixed3D;
-            label3.Location = new Point(21, 66);
-            label3.Name = "label3";
-            label3.Size = new Size(734, 1);
-            label3.TabIndex = 1;
+            accountBtn.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            accountBtn.Image = Properties.Resources.user__1_;
+            accountBtn.ImageAlign = ContentAlignment.TopCenter;
+            accountBtn.Location = new Point(24, 267);
+            accountBtn.Name = "accountBtn";
+            accountBtn.Size = new Size(110, 105);
+            accountBtn.TabIndex = 13;
+            accountBtn.TabStop = false;
+            accountBtn.Text = "Account";
+            accountBtn.TextAlign = ContentAlignment.BottomCenter;
+            accountBtn.TextImageRelation = TextImageRelation.ImageAboveText;
+            accountBtn.UseVisualStyleBackColor = true;
+            accountBtn.Click += accountBtn_Click;
             // 
             // label2
             // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 16F);
-            label2.Location = new Point(16, 27);
+            label2.BorderStyle = BorderStyle.Fixed3D;
+            label2.Location = new Point(22, 247);
             label2.Name = "label2";
-            label2.Size = new Size(220, 30);
-            label2.TabIndex = 0;
-            label2.Text = "System Configuration";
+            label2.Size = new Size(734, 1);
+            label2.TabIndex = 12;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI", 16F);
+            label3.Location = new Point(17, 208);
+            label3.Name = "label3";
+            label3.Size = new Size(75, 30);
+            label3.TabIndex = 11;
+            label3.Text = "Profile";
             // 
             // SettingsModal
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 570);
+            ClientSize = new Size(800, 540);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             Name = "SettingsModal";
             StartPosition = FormStartPosition.CenterScreen;
@@ -199,12 +205,12 @@
         private Button closeSettingsWindow;
         private Label label1;
         private Panel panel2;
-        private Button button3;
-        private Button button2;
-        private Button button1;
+        private Button restoreBtn;
+        private Button backupBtn;
         private Label label7;
         private Label label8;
-        private Label label3;
+        private Button accountBtn;
         private Label label2;
+        private Label label3;
     }
 }

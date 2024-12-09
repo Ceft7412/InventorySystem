@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using InventorySystem.Controllers;
+using System.Configuration;
 
 namespace InventorySystem.Views.Modals.Admin
 {
@@ -55,15 +56,20 @@ namespace InventorySystem.Views.Modals.Admin
                             return;
                         }
                         contact = parsedContact; // Only set contact if parsing is successful
-                    }
 
+                    }
                     // Proceed with adding the employee
-                    employeeController.ADDEMPLOYEE(firstname, lastname, (long)contact, address);
+                    employeeController.ADDEMPLOYEE(firstname, lastname, contact, address);
+                    firstnameTxt.Clear();
+                    lastnameTxt.Clear();        
+                    contactTxt.Clear();
+                    addressTxt.Clear();
+
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error message: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error messages: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 

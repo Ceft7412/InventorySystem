@@ -11,12 +11,13 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using InventorySystem.Models;
 using Microsoft.Data.SqlClient;
-
+using System.Configuration;
 namespace InventorySystem.Views.Modals.InventoryUser
 {
     public partial class StockInOutModal : Form
     {
-        SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\cedri\Documents\inventoryDB.mdf;Integrated Security=True;Connect Timeout=30");
+        private string connectionString = ConfigurationManager.ConnectionStrings["InventoryDb"].ConnectionString;
+
         private string batchSelectedItemCode;
         private BatchItemController batchItemController = new BatchItemController();
         private ItemController itemController = new ItemController();
@@ -54,13 +55,13 @@ namespace InventorySystem.Views.Modals.InventoryUser
                     stockInPanel.Visible = true;
                 }
             }
-            catch(Exception ex)
-            {   
+            catch (Exception ex)
+            {
                 MessageBox.Show("Error message: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
 
             }
-            
+
         }
 
         private void stockOutButton_Click(object sender, EventArgs e)
@@ -104,7 +105,6 @@ namespace InventorySystem.Views.Modals.InventoryUser
                             item.Date.ToString());
                     }
                 }
-
             }
             catch (Exception ex)
             {
@@ -117,10 +117,14 @@ namespace InventorySystem.Views.Modals.InventoryUser
         {
             try
             {
+                var message = MessageBox.Show("Are you sure you want to save all stock in items?", "Save Stock In Items", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (message == DialogResult.No)
+                {
+                    return;
+                }
                 string transaction_type = "IN";
                 batchItemController.SaveBatchItemsToDatabase(transaction_type);
                 RefreshDataGridView();
-
             }
             catch (Exception ex)
             {
@@ -128,45 +132,15 @@ namespace InventorySystem.Views.Modals.InventoryUser
             }
         }
 
-        private void btnClearStockInItems_Click(object sender, EventArgs e)
-        {
-            if (batchSelectedItemCode == null)
-            {
-                MessageBox.Show("No items to clear.", "No items", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            batchItemController.ClearBatchItems();
-            RefreshDataGridView();
-        }
-
-        private void btnRemoveBatchItem_Click(object sender, EventArgs e)
-        {
-            if (batchSelectedItemCode == null)
-            {
-                MessageBox.Show("Please select an item to remove.", "Select item", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-
-            }
-
-            batchItemController.RemoveBatchItem(batchSelectedItemCode);
-            RefreshDataGridView();
-        }
-
-        private void btnClearStockOutItems_Click(object sender, EventArgs e)
-        {
-            if (batchSelectedItemCode == null)
-            {
-                MessageBox.Show("No items to clear.", "No items", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            batchItemController.ClearBatchItems();
-            RefreshDataGridView();
-        }
-
         private void btnSaveAllStockOutItems_Click(object sender, EventArgs e)
         {
             try
             {
+                var message = MessageBox.Show("Are you sure you want to save all stock out items?", "Save Stock Out Items", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (message == DialogResult.No)
+                {
+                    return;
+                }
                 string transaction_type = "OUT";
                 batchItemController.SaveBatchItemsToDatabase(transaction_type);
                 RefreshDataGridView();
@@ -176,6 +150,111 @@ namespace InventorySystem.Views.Modals.InventoryUser
                 MessageBox.Show($"An error occurred: {ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void btnClearStockInItems_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                
+                var selectedRows = dataGridViewBatchItems.SelectedRows;
+                if (selectedRows.Count < 0)
+                {
+                    MessageBox.Show("No items to clear.", "No items", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                else
+                {
+                    
+                    batchItemController.ClearBatchItems();
+                    RefreshDataGridView();
+                }
+                
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            
+        }
+        private void btnClearStockOutItems_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var selectedRows = dataGridViewBatchItems.SelectedRows;
+                if (selectedRows.Count < 0)
+                {
+                    MessageBox.Show("No items to clear.", "No items", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                else
+                {
+                    var message = MessageBox.Show("Are you sure you want to clear all stock in items?", "Clear Stock In Items", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (message == DialogResult.No)
+                    {
+                        return;
+                    }
+                    batchItemController.ClearBatchItems();
+                    RefreshDataGridView();
+                }
+           
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+        }
+        private void btnRemoveBatchItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var selectedRows = dataGridViewBatchItems.SelectedRows;
+                if (selectedRows.Count > 0)
+                {
+                    var results = MessageBox.Show($"Are you sure you want to remove {selectedRows.Count} item(s)?", "Remove Item", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    if (results == DialogResult.Yes)
+                    {
+                        foreach (DataGridViewRow row in selectedRows)
+                        {
+                            var itemCode = row.Cells[0].Value.ToString();
+                            try
+                            {
+                                batchItemController.RemoveBatchItem(itemCode);
+                                
+                            }
+                            catch(Exception ex)
+                            {
+                                MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+                            }
+                        }
+                        RefreshDataGridView();
+                    }
+                    
+                }
+                else
+                {
+                    MessageBox.Show("Please select an item/s to remove.", "Select item", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            
+
+           
+        }
+
+        
+
+       
 
         private void stockInSaveButton_Click(object sender, EventArgs e)
         {
@@ -233,63 +312,58 @@ namespace InventorySystem.Views.Modals.InventoryUser
 
             try
             {
-                connection.Open();
-
-                // Step 1: Check the current quantity in tbProduct
-                string checkQuantityQuery = "SELECT productQuantity FROM tbItem WHERE productCode = @productCode";
-                int currentQuantity = 0;
-
-                using (SqlCommand checkCommand = new SqlCommand(checkQuantityQuery, connection))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    checkCommand.Parameters.AddWithValue("@productCode", productCode);
-                    object result = checkCommand.ExecuteScalar();
+                    connection.Open();
 
-                    if (result != null)
+                    // Step 1: Check the current quantity in tbProduct
+                    string checkQuantityQuery = "SELECT productQuantity FROM tbItem WHERE productCode = @productCode";
+                    int currentQuantity = 0;
+
+                    using (SqlCommand checkCommand = new SqlCommand(checkQuantityQuery, connection))
                     {
-                        currentQuantity = Convert.ToInt32(result);
+                        checkCommand.Parameters.AddWithValue("@productCode", productCode);
+                        object result = checkCommand.ExecuteScalar();
+
+                        if (result != null)
+                        {
+                            currentQuantity = Convert.ToInt32(result);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Error message: Product not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            connection.Close();
+                            return;
+                        }
                     }
-                    else
+                    // Step 2: Ensure there is enough stock to perform the operation
+                    if (currentQuantity < quantity)
                     {
-                        MessageBox.Show("Error message: Product not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Error message: Insufficient stock. Unable to process the stock out.", "Stock Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         connection.Close();
                         return;
                     }
-                }
+                    try
+                    {
+                        batchItemController.AddBatchItem(productCode, quantity, reason, transactionDate, transaction_type);
+                        stockOutProductCodeInput.Clear();
+                        stockOutProductQuantity.Clear();
+                        stockOutReasonInput.Text = "";
+                        stockOutDateInput.ResetText();
+                        RefreshDataGridView();
 
-                // Step 2: Ensure there is enough stock to perform the operation
-                if (currentQuantity < quantity)
-                {
-                    MessageBox.Show("Error message: Insufficient stock. Unable to process the stock out.", "Stock Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    connection.Close();
-                    return;
-                }
-
-                try
-                {
-                    batchItemController.AddBatchItem(productCode, quantity, reason, transactionDate, transaction_type);
-                    stockOutProductCodeInput.Clear();
-                    stockOutProductQuantity.Clear();
-                    stockOutReasonInput.Text = "";
-                    stockOutDateInput.ResetText();
-                    RefreshDataGridView();
-
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"An error occurred: {ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"An error occurred: {ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"An error occurred: {ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            finally
-            {
-                if (connection.State == System.Data.ConnectionState.Open)
-                {
-                    connection.Close();
-                }
-            }
+
         }
 
         private void stockOutClear_Click(object sender, EventArgs e)
@@ -298,6 +372,24 @@ namespace InventorySystem.Views.Modals.InventoryUser
             stockOutProductQuantity.Clear();
             stockOutReasonInput.SelectedIndex = -1;
             stockOutDateInput.ResetText();
+        }
+
+        private void selectedItemCode(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                if (e.RowIndex >= 0)
+                {
+                    DataGridViewRow row = this.dataGridViewBatchItems.Rows[e.RowIndex];
+                    batchSelectedItemCode = row.Cells[0].Value.ToString();
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
         }
     }
 }

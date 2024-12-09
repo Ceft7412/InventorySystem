@@ -5,15 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
+using System.Configuration;
 
 namespace InventorySystem.Controllers
 {
     public class BatchController
     {
-        private string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\cedri\Documents\inventoryDB.mdf;Integrated Security=True;Connect Timeout=30";
-        
+        private string connectionString = ConfigurationManager.ConnectionStrings["InventoryDb"].ConnectionString;
 
-       
+
 
         public List<Batch> GetBatches()
         {

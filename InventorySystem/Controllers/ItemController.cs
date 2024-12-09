@@ -6,13 +6,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+ using System.Configuration;
 
 namespace InventorySystem.Controllers
 {
     public class ItemController
     {
-        private string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\cedri\Documents\inventoryDB.mdf;Integrated Security=True;Connect Timeout=30";
-        Item item;
+        private string connectionString = ConfigurationManager.ConnectionStrings["InventoryDb"].ConnectionString; Item item;
 
 
         

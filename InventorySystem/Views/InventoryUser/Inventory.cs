@@ -1,6 +1,8 @@
 
 using InventorySystem.Controllers;
 using InventorySystem.Models;
+using InventorySystem.Services;
+using InventorySystem.Views.Auth;
 using InventorySystem.Views.Modals.InventoryUser;
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
@@ -10,17 +12,86 @@ namespace InventorySystem
     {
         private ItemController itemController = new ItemController();
         private SupplierController supplierController = new SupplierController();
+        private AuthenticationService AuthenticationService = new AuthenticationService();
         private string selectedItemCodeRow;
         private string selectedRows;
+        private bool alreadyAsked = false;
+        private bool isLoggingOut = false;
         public Inventory()
         {
-            InitializeComponent();
 
-            LoadItems();
-            LoadSupplierNamesIntoComboBox();
-            LoadUnitsIntoComboBox();
-            LoadCategoriesIntoComboBox();
+            // TO CHECK IF USER IS AUTHENTICATED
+            if (!AuthenticationService.IsAuthenticated)
+            {
+                CHECKAUTHENTICATION();
+            }
+            // IF AUTHENTICATED, LOAD ALL THE COMPONENTS
+            else
+            {
+                InitializeComponent();
+                LoadItems();
+                LoadSupplierNamesIntoComboBox();
+                LoadUnitsIntoComboBox();
+                LoadCategoriesIntoComboBox();
+            }
+            
         }
+
+
+        // METHOD TO CHECK IF USER IS AUTHENTICATED
+        private void CHECKAUTHENTICATION()
+        {
+            try
+            {
+                MessageBox.Show("You are not authenticated. Please login.", "Authentication Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Load += (s, e) => this.Close(); // Close the form if not authenticated
+                Login login = new Login();
+                login.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error message: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+        }
+
+        // TO PREVENT THE FORM FROM CLOSING WHEN USER CLICKS THE CLOSE BUTTON   
+        private void Inventory_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
+            if (e.CloseReason == CloseReason.WindowsShutDown) return;
+            //
+            if (!isLoggingOut) 
+            {
+                if (e.CloseReason == CloseReason.UserClosing)
+                {
+                    if (!alreadyAsked)  
+                    {
+                        var response = MessageBox.Show(this, "Are you sure you want to exit?", "Confirm Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        if (response == DialogResult.No)
+                        {
+                            e.Cancel = true; 
+                        }
+                        else
+                        {
+                            alreadyAsked = true; 
+                            Application.Exit();
+
+                        }
+                    }
+                }
+            }
+            isLoggingOut = false;
+
+        }
+
+        // To reset the flag when the form is closed.
+        private void Inventory_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            alreadyAsked = false;
+        }
+
+
 
         private void LoadItems()
         {
@@ -201,9 +272,12 @@ namespace InventorySystem
             var result = MessageBox.Show("Are you sure you want to logout?", "Logout", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
+                // Set the logout flag
+                isLoggingOut = true;
+                AuthenticationService.Destroy();
                 this.Close();
-                //Login login = new Login();
-                //login.Show();
+                Login login = new Login();
+                login.Show();
             }
 
         }
@@ -243,7 +317,7 @@ namespace InventorySystem
         {
             if (e.RowIndex == -1) return;
             selectedItemCodeRow = dataGridViewItems.Rows[e.RowIndex].Cells[0].Value.ToString();
-            
+
         }
 
         private void archiveItemButton_Click(object sender, EventArgs e)
@@ -256,7 +330,7 @@ namespace InventorySystem
                 {
                     foreach (DataGridViewRow row in selectedRows)
                     {
-                        var itemCode = row.Cells[0].Value.ToString(); // Ensure you use the correct column name for the product code
+                        var itemCode = row.Cells[0].Value.ToString();
                         try
                         {
                             itemController.ArchiveItem(itemCode);
@@ -264,17 +338,17 @@ namespace InventorySystem
                         catch (Exception ex)
                         {
                             MessageBox.Show($"Failed to archive item {itemCode}. Error: {ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            // Optionally break the loop if one fails or continue based on your requirements
+                            return;
                         }
                     }
 
-                    LoadItems(); // Reload items to reflect the changes
-                                 // LoadInactiveProducts(); // Optional, if you need to load inactive products somewhere
+                    LoadItems(); 
+                  
                 }
             }
             else
             {
-                MessageBox.Show("Please select one or more products to archive.", "Archive Product", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Please select one or more items to archive.", "Archive Product", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -282,6 +356,14 @@ namespace InventorySystem
         {
             try
             {
+
+                var message = MessageBox.Show("Are you sure you want to export the data?", "Export to Excel", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (message == DialogResult.No)
+                {
+                    return;
+                }
+
                 // Create Excel application instance
                 Excel.Application excelApp = new Excel.Application();
                 excelApp.Visible = true;
@@ -362,14 +444,14 @@ namespace InventorySystem
             foreach (Item item in items)
             {
                 dataGridViewItems.Rows.Add(new object[] {
-            item.ProductCode,
-            item.ProductDescription,
-            item.Quantity.ToString(),
-            item.Unit,
-            item.Supplier,
-            item.Category,
-            item.MinimumStock.ToString()
-             });
+                    item.ProductCode,
+                    item.ProductDescription,
+                    item.Quantity.ToString(),
+                    item.Unit,
+                    item.Supplier,
+                    item.Category,
+                    item.MinimumStock.ToString()
+                 });
             }
         }
 
@@ -377,7 +459,7 @@ namespace InventorySystem
         {
             try
             {
-                
+
                 searchItemTxt.Text = "";
                 categoryComboBox.SelectedIndex = -1;
                 supplierComboBox.SelectedIndex = -1;
@@ -390,5 +472,7 @@ namespace InventorySystem
                 return;
             }
         }
+
+        
     }
 }

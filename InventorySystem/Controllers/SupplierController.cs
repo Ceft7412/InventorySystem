@@ -5,12 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Configuration;
 
 namespace InventorySystem.Controllers
 {
     public class SupplierController
     {
-        private string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\cedri\Documents\inventoryDB.mdf;Integrated Security=True;Connect Timeout=30";
+        private string connectionString = ConfigurationManager.ConnectionStrings["InventoryDb"].ConnectionString;
         Supplier supplier;
         public List<Supplier> GetAllSuppliers(string status)
         {

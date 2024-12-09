@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NewSupplier));
             panel1 = new Panel();
             cancelCreateSupplierButton = new Button();
             createNewSupplierButton = new Button();
@@ -167,6 +168,7 @@
             Controls.Add(supplierIdInput);
             Controls.Add(label2);
             Controls.Add(panel1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "NewSupplier";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Supplier - New Supplier";

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddItemModal));
             panel1 = new Panel();
             label1 = new Label();
             panel2 = new Panel();
@@ -242,6 +243,7 @@
             ClientSize = new Size(598, 709);
             Controls.Add(panel2);
             Controls.Add(panel1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "AddItemModal";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Inventory - Add Item";

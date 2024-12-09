@@ -5,14 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
+using System.Configuration;
 
 namespace InventorySystem.Controllers
 {
     public class BatchItemController
     {
-        private string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\cedri\Documents\inventoryDB.mdf;Integrated Security=True;Connect Timeout=30";
-
-        private List<BatchItem> batchItems = new List<BatchItem>();
+        private string connectionString = ConfigurationManager.ConnectionStrings["InventoryDb"].ConnectionString;
+    private List<BatchItem> batchItems = new List<BatchItem>();
         public List<BatchItem> GetBatchItems()
         {
             return batchItems;
@@ -296,12 +296,12 @@ namespace InventorySystem.Controllers
                 throw new ArgumentException("Product code does not exist.");
             }
 
-            var existingItem = batchItems.FirstOrDefault(i => i.ProductCode == productCode);
+            var existingItem = batchItems.FirstOrDefault(i => i.ProductCode == productCode && i.Reason == reason);
             if (existingItem != null)
             {
+                // If an item exists with the same reason, update the quantity and possibly the date
                 existingItem.Quantity += quantity;
-                existingItem.Date = date;
-                existingItem.Reason = reason;
+                existingItem.Date = date;  // Consider whether updating the date is appropriate in all cases
             }
             else
             {
@@ -353,8 +353,8 @@ namespace InventorySystem.Controllers
                     using (SqlCommand checkCmd = new SqlCommand(checkIdQuery, connection))
                     {
                         checkCmd.Parameters.AddWithValue("@batchItemId", newId);
-                        int count = Convert.ToInt32(checkCmd.ExecuteScalar());  // Ensure the conversion to int is handled in C#
-                        isUnique = (count == 0);  // Unique if no existing record with this ID
+                        int count = Convert.ToInt32(checkCmd.ExecuteScalar());
+                        isUnique = (count == 0); 
                     }
                 }
                 return newId;

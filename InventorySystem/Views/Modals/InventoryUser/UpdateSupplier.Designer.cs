@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UpdateSupplier));
             panel1 = new Panel();
             cancelUpdateSupplierButton = new Button();
             updateSupplierButton = new Button();
@@ -169,6 +170,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(555, 506);
             Controls.Add(panel1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "UpdateSupplier";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "UpdateSupplier";

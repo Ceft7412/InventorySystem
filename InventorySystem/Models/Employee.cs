@@ -12,7 +12,9 @@ namespace InventorySystem.Models
         public string Firstname { get; set; }
         public string Lastname { get; set; }
 
-        public int Contact { get; set; }
+        public string Username { get; set; }
+
+        public string Contact { get; set; }
 
         public string Address { get; set; }
     }

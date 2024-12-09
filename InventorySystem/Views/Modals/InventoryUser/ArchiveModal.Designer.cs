@@ -28,12 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ArchiveModal));
             topbarStockInOutPanel = new Panel();
             label1 = new Label();
             panel25 = new Panel();
@@ -45,12 +46,6 @@
             unarchiveSupplierButton = new Button();
             unarchiveProductButton = new Button();
             archivePanels = new Panel();
-            supplierArchivePanel = new Panel();
-            dataGridViewArchiveSupplier = new DataGridView();
-            dataGridViewTextBoxColumn16 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn17 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn18 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn19 = new DataGridViewTextBoxColumn();
             productmaterialArchivePanel = new Panel();
             dataGridViewProductArchive = new DataGridView();
             dataGridViewTextBoxColumn8 = new DataGridViewTextBoxColumn();
@@ -60,14 +55,20 @@
             dataGridViewTextBoxColumn12 = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn13 = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn15 = new DataGridViewTextBoxColumn();
+            supplierArchivePanel = new Panel();
+            dataGridViewArchiveSupplier = new DataGridView();
+            dataGridViewTextBoxColumn16 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn17 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn18 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn19 = new DataGridViewTextBoxColumn();
             topbarStockInOutPanel.SuspendLayout();
             panel25.SuspendLayout();
             panel1.SuspendLayout();
             archivePanels.SuspendLayout();
-            supplierArchivePanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridViewArchiveSupplier).BeginInit();
             productmaterialArchivePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewProductArchive).BeginInit();
+            supplierArchivePanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewArchiveSupplier).BeginInit();
             SuspendLayout();
             // 
             // topbarStockInOutPanel
@@ -79,7 +80,7 @@
             topbarStockInOutPanel.Dock = DockStyle.Top;
             topbarStockInOutPanel.Location = new Point(0, 0);
             topbarStockInOutPanel.Name = "topbarStockInOutPanel";
-            topbarStockInOutPanel.Size = new Size(1684, 99);
+            topbarStockInOutPanel.Size = new Size(1352, 99);
             topbarStockInOutPanel.TabIndex = 2;
             // 
             // label1
@@ -104,19 +105,19 @@
             panel25.Dock = DockStyle.Top;
             panel25.Location = new Point(0, 99);
             panel25.Name = "panel25";
-            panel25.Size = new Size(1684, 82);
+            panel25.Size = new Size(1352, 76);
             panel25.TabIndex = 4;
             // 
             // archivePanelsComboBox
             // 
             archivePanelsComboBox.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             archivePanelsComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            archivePanelsComboBox.Font = new Font("Segoe UI", 25F);
+            archivePanelsComboBox.Font = new Font("Segoe UI", 16F);
             archivePanelsComboBox.FormattingEnabled = true;
             archivePanelsComboBox.Items.AddRange(new object[] { "Items/Materials", "Suppliers" });
-            archivePanelsComboBox.Location = new Point(1318, 16);
+            archivePanelsComboBox.Location = new Point(986, 19);
             archivePanelsComboBox.Name = "archivePanelsComboBox";
-            archivePanelsComboBox.Size = new Size(334, 53);
+            archivePanelsComboBox.Size = new Size(334, 38);
             archivePanelsComboBox.TabIndex = 3;
             archivePanelsComboBox.SelectedIndexChanged += archivePanelsComboBox_SelectedIndexChanged;
             // 
@@ -127,40 +128,41 @@
             archiveComboBox.Font = new Font("Segoe UI", 25F);
             archiveComboBox.FormattingEnabled = true;
             archiveComboBox.Items.AddRange(new object[] { "Product/Materials", "Suppliers" });
-            archiveComboBox.Location = new Point(2798, 12);
+            archiveComboBox.Location = new Point(2466, 12);
             archiveComboBox.Name = "archiveComboBox";
             archiveComboBox.Size = new Size(334, 53);
             archiveComboBox.TabIndex = 0;
             // 
             // archiveSearchSupplierId
             // 
-            archiveSearchSupplierId.Font = new Font("Segoe UI", 24F);
+            archiveSearchSupplierId.Font = new Font("Segoe UI", 16F);
             archiveSearchSupplierId.Location = new Point(30, 19);
             archiveSearchSupplierId.Name = "archiveSearchSupplierId";
             archiveSearchSupplierId.PlaceholderText = "Supplier Id";
-            archiveSearchSupplierId.Size = new Size(338, 50);
+            archiveSearchSupplierId.Size = new Size(338, 36);
             archiveSearchSupplierId.TabIndex = 2;
             archiveSearchSupplierId.Visible = false;
             archiveSearchSupplierId.TextChanged += archiveSearchSupplierId_TextChanged;
             // 
             // archiveSearchByItemCode
             // 
-            archiveSearchByItemCode.Font = new Font("Segoe UI", 24F);
+            archiveSearchByItemCode.Font = new Font("Segoe UI", 16F);
             archiveSearchByItemCode.Location = new Point(30, 19);
             archiveSearchByItemCode.Name = "archiveSearchByItemCode";
             archiveSearchByItemCode.PlaceholderText = "Item code";
-            archiveSearchByItemCode.Size = new Size(338, 50);
+            archiveSearchByItemCode.Size = new Size(338, 36);
             archiveSearchByItemCode.TabIndex = 1;
             archiveSearchByItemCode.TextChanged += archiveSearchByItemCode_TextChanged;
             // 
             // panel1
             // 
+            panel1.BorderStyle = BorderStyle.FixedSingle;
             panel1.Controls.Add(unarchiveSupplierButton);
             panel1.Controls.Add(unarchiveProductButton);
             panel1.Dock = DockStyle.Bottom;
-            panel1.Location = new Point(0, 849);
+            panel1.Location = new Point(0, 649);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1684, 112);
+            panel1.Size = new Size(1352, 112);
             panel1.TabIndex = 7;
             // 
             // unarchiveSupplierButton
@@ -170,7 +172,7 @@
             unarchiveSupplierButton.FlatStyle = FlatStyle.Flat;
             unarchiveSupplierButton.Font = new Font("Segoe UI", 14F);
             unarchiveSupplierButton.ForeColor = SystemColors.ButtonHighlight;
-            unarchiveSupplierButton.Location = new Point(1480, 24);
+            unarchiveSupplierButton.Location = new Point(1146, 24);
             unarchiveSupplierButton.Name = "unarchiveSupplierButton";
             unarchiveSupplierButton.Size = new Size(174, 67);
             unarchiveSupplierButton.TabIndex = 3;
@@ -186,7 +188,7 @@
             unarchiveProductButton.FlatStyle = FlatStyle.Flat;
             unarchiveProductButton.Font = new Font("Segoe UI", 14F);
             unarchiveProductButton.ForeColor = SystemColors.ButtonHighlight;
-            unarchiveProductButton.Location = new Point(1479, 24);
+            unarchiveProductButton.Location = new Point(1145, 24);
             unarchiveProductButton.Name = "unarchiveProductButton";
             unarchiveProductButton.Size = new Size(174, 67);
             unarchiveProductButton.TabIndex = 2;
@@ -199,85 +201,10 @@
             archivePanels.Controls.Add(productmaterialArchivePanel);
             archivePanels.Controls.Add(supplierArchivePanel);
             archivePanels.Dock = DockStyle.Fill;
-            archivePanels.Location = new Point(0, 181);
+            archivePanels.Location = new Point(0, 175);
             archivePanels.Name = "archivePanels";
-            archivePanels.Size = new Size(1684, 668);
+            archivePanels.Size = new Size(1352, 474);
             archivePanels.TabIndex = 8;
-            // 
-            // supplierArchivePanel
-            // 
-            supplierArchivePanel.Controls.Add(dataGridViewArchiveSupplier);
-            supplierArchivePanel.Dock = DockStyle.Fill;
-            supplierArchivePanel.Location = new Point(0, 0);
-            supplierArchivePanel.Name = "supplierArchivePanel";
-            supplierArchivePanel.Padding = new Padding(30, 10, 30, 10);
-            supplierArchivePanel.Size = new Size(1684, 668);
-            supplierArchivePanel.TabIndex = 2;
-            supplierArchivePanel.Visible = false;
-            // 
-            // dataGridViewArchiveSupplier
-            // 
-            dataGridViewArchiveSupplier.AllowUserToAddRows = false;
-            dataGridViewArchiveSupplier.BackgroundColor = SystemColors.ButtonHighlight;
-            dataGridViewArchiveSupplier.BorderStyle = BorderStyle.None;
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = SystemColors.ControlLight;
-            dataGridViewCellStyle4.Font = new Font("Segoe UI", 15F);
-            dataGridViewCellStyle4.ForeColor = SystemColors.ActiveCaptionText;
-            dataGridViewCellStyle4.SelectionBackColor = Color.Transparent;
-            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
-            dataGridViewArchiveSupplier.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
-            dataGridViewArchiveSupplier.ColumnHeadersHeight = 40;
-            dataGridViewArchiveSupplier.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn16, dataGridViewTextBoxColumn17, dataGridViewTextBoxColumn18, dataGridViewTextBoxColumn19 });
-            dataGridViewArchiveSupplier.Dock = DockStyle.Fill;
-            dataGridViewArchiveSupplier.EnableHeadersVisualStyles = false;
-            dataGridViewArchiveSupplier.Location = new Point(30, 10);
-            dataGridViewArchiveSupplier.Name = "dataGridViewArchiveSupplier";
-            dataGridViewArchiveSupplier.ReadOnly = true;
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = SystemColors.Control;
-            dataGridViewCellStyle5.Font = new Font("Segoe UI", 30F);
-            dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
-            dataGridViewArchiveSupplier.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
-            dataGridViewArchiveSupplier.RowHeadersVisible = false;
-            dataGridViewCellStyle6.Font = new Font("Microsoft Sans Serif", 15F);
-            dataGridViewArchiveSupplier.RowsDefaultCellStyle = dataGridViewCellStyle6;
-            dataGridViewArchiveSupplier.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridViewArchiveSupplier.Size = new Size(1624, 648);
-            dataGridViewArchiveSupplier.TabIndex = 5;
-            dataGridViewArchiveSupplier.CellClick += rowArchiveSupplierClick;
-            // 
-            // dataGridViewTextBoxColumn16
-            // 
-            dataGridViewTextBoxColumn16.HeaderText = "Supplier ID";
-            dataGridViewTextBoxColumn16.Name = "dataGridViewTextBoxColumn16";
-            dataGridViewTextBoxColumn16.ReadOnly = true;
-            dataGridViewTextBoxColumn16.Width = 200;
-            // 
-            // dataGridViewTextBoxColumn17
-            // 
-            dataGridViewTextBoxColumn17.HeaderText = "Supplier Name";
-            dataGridViewTextBoxColumn17.Name = "dataGridViewTextBoxColumn17";
-            dataGridViewTextBoxColumn17.ReadOnly = true;
-            dataGridViewTextBoxColumn17.Width = 500;
-            // 
-            // dataGridViewTextBoxColumn18
-            // 
-            dataGridViewTextBoxColumn18.HeaderText = "Contact";
-            dataGridViewTextBoxColumn18.Name = "dataGridViewTextBoxColumn18";
-            dataGridViewTextBoxColumn18.ReadOnly = true;
-            dataGridViewTextBoxColumn18.Width = 200;
-            // 
-            // dataGridViewTextBoxColumn19
-            // 
-            dataGridViewTextBoxColumn19.HeaderText = "Address";
-            dataGridViewTextBoxColumn19.Name = "dataGridViewTextBoxColumn19";
-            dataGridViewTextBoxColumn19.ReadOnly = true;
-            dataGridViewTextBoxColumn19.Width = 200;
             // 
             // productmaterialArchivePanel
             // 
@@ -286,7 +213,7 @@
             productmaterialArchivePanel.Location = new Point(0, 0);
             productmaterialArchivePanel.Name = "productmaterialArchivePanel";
             productmaterialArchivePanel.Padding = new Padding(30, 10, 30, 10);
-            productmaterialArchivePanel.Size = new Size(1684, 668);
+            productmaterialArchivePanel.Size = new Size(1352, 474);
             productmaterialArchivePanel.TabIndex = 3;
             // 
             // dataGridViewProductArchive
@@ -321,7 +248,7 @@
             dataGridViewCellStyle3.Font = new Font("Microsoft Sans Serif", 15F);
             dataGridViewProductArchive.RowsDefaultCellStyle = dataGridViewCellStyle3;
             dataGridViewProductArchive.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridViewProductArchive.Size = new Size(1624, 648);
+            dataGridViewProductArchive.Size = new Size(1292, 454);
             dataGridViewProductArchive.TabIndex = 4;
             dataGridViewProductArchive.CellClick += rowArchiveItemCodeClick;
             dataGridViewProductArchive.CellContentClick += dataGridViewProductArchive_CellContentClick_1;
@@ -373,15 +300,91 @@
             dataGridViewTextBoxColumn15.ReadOnly = true;
             dataGridViewTextBoxColumn15.Width = 250;
             // 
+            // supplierArchivePanel
+            // 
+            supplierArchivePanel.Controls.Add(dataGridViewArchiveSupplier);
+            supplierArchivePanel.Dock = DockStyle.Fill;
+            supplierArchivePanel.Location = new Point(0, 0);
+            supplierArchivePanel.Name = "supplierArchivePanel";
+            supplierArchivePanel.Padding = new Padding(30, 10, 30, 10);
+            supplierArchivePanel.Size = new Size(1352, 474);
+            supplierArchivePanel.TabIndex = 2;
+            supplierArchivePanel.Visible = false;
+            // 
+            // dataGridViewArchiveSupplier
+            // 
+            dataGridViewArchiveSupplier.AllowUserToAddRows = false;
+            dataGridViewArchiveSupplier.BackgroundColor = SystemColors.ButtonHighlight;
+            dataGridViewArchiveSupplier.BorderStyle = BorderStyle.None;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = SystemColors.ControlLight;
+            dataGridViewCellStyle4.Font = new Font("Segoe UI", 15F);
+            dataGridViewCellStyle4.ForeColor = SystemColors.ActiveCaptionText;
+            dataGridViewCellStyle4.SelectionBackColor = Color.Transparent;
+            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            dataGridViewArchiveSupplier.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewArchiveSupplier.ColumnHeadersHeight = 40;
+            dataGridViewArchiveSupplier.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn16, dataGridViewTextBoxColumn17, dataGridViewTextBoxColumn18, dataGridViewTextBoxColumn19 });
+            dataGridViewArchiveSupplier.Dock = DockStyle.Fill;
+            dataGridViewArchiveSupplier.EnableHeadersVisualStyles = false;
+            dataGridViewArchiveSupplier.Location = new Point(30, 10);
+            dataGridViewArchiveSupplier.Name = "dataGridViewArchiveSupplier";
+            dataGridViewArchiveSupplier.ReadOnly = true;
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = SystemColors.Control;
+            dataGridViewCellStyle5.Font = new Font("Segoe UI", 30F);
+            dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
+            dataGridViewArchiveSupplier.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewArchiveSupplier.RowHeadersVisible = false;
+            dataGridViewCellStyle6.Font = new Font("Microsoft Sans Serif", 15F);
+            dataGridViewArchiveSupplier.RowsDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewArchiveSupplier.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridViewArchiveSupplier.Size = new Size(1292, 454);
+            dataGridViewArchiveSupplier.TabIndex = 5;
+            dataGridViewArchiveSupplier.CellClick += rowArchiveSupplierClick;
+            // 
+            // dataGridViewTextBoxColumn16
+            // 
+            dataGridViewTextBoxColumn16.HeaderText = "Supplier ID";
+            dataGridViewTextBoxColumn16.Name = "dataGridViewTextBoxColumn16";
+            dataGridViewTextBoxColumn16.ReadOnly = true;
+            dataGridViewTextBoxColumn16.Width = 200;
+            // 
+            // dataGridViewTextBoxColumn17
+            // 
+            dataGridViewTextBoxColumn17.HeaderText = "Supplier Name";
+            dataGridViewTextBoxColumn17.Name = "dataGridViewTextBoxColumn17";
+            dataGridViewTextBoxColumn17.ReadOnly = true;
+            dataGridViewTextBoxColumn17.Width = 500;
+            // 
+            // dataGridViewTextBoxColumn18
+            // 
+            dataGridViewTextBoxColumn18.HeaderText = "Contact";
+            dataGridViewTextBoxColumn18.Name = "dataGridViewTextBoxColumn18";
+            dataGridViewTextBoxColumn18.ReadOnly = true;
+            dataGridViewTextBoxColumn18.Width = 200;
+            // 
+            // dataGridViewTextBoxColumn19
+            // 
+            dataGridViewTextBoxColumn19.HeaderText = "Address";
+            dataGridViewTextBoxColumn19.Name = "dataGridViewTextBoxColumn19";
+            dataGridViewTextBoxColumn19.ReadOnly = true;
+            dataGridViewTextBoxColumn19.Width = 200;
+            // 
             // ArchiveModal
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1684, 961);
+            ClientSize = new Size(1352, 761);
             Controls.Add(archivePanels);
             Controls.Add(panel1);
             Controls.Add(panel25);
             Controls.Add(topbarStockInOutPanel);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "ArchiveModal";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Inventory - Archive";
@@ -391,10 +394,10 @@
             panel25.PerformLayout();
             panel1.ResumeLayout(false);
             archivePanels.ResumeLayout(false);
-            supplierArchivePanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dataGridViewArchiveSupplier).EndInit();
             productmaterialArchivePanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dataGridViewProductArchive).EndInit();
+            supplierArchivePanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dataGridViewArchiveSupplier).EndInit();
             ResumeLayout(false);
         }
 
