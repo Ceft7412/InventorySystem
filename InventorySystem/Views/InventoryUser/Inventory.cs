@@ -34,7 +34,7 @@ namespace InventorySystem
                 LoadUnitsIntoComboBox();
                 LoadCategoriesIntoComboBox();
             }
-            
+
         }
 
 
@@ -61,20 +61,20 @@ namespace InventorySystem
 
             if (e.CloseReason == CloseReason.WindowsShutDown) return;
             //
-            if (!isLoggingOut) 
+            if (!isLoggingOut)
             {
                 if (e.CloseReason == CloseReason.UserClosing)
                 {
-                    if (!alreadyAsked)  
+                    if (!alreadyAsked)
                     {
                         var response = MessageBox.Show(this, "Are you sure you want to exit?", "Confirm Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                         if (response == DialogResult.No)
                         {
-                            e.Cancel = true; 
+                            e.Cancel = true;
                         }
                         else
                         {
-                            alreadyAsked = true; 
+                            alreadyAsked = true;
                             Application.Exit();
 
                         }
@@ -202,12 +202,15 @@ namespace InventorySystem
 
         private void PerformSearch(string searchQuery)
         {
+            string category = categoryComboBox.SelectedItem as string;
+            string supplier = supplierComboBox.SelectedItem as string;
+            string unit = unitComboBox.SelectedItem as string;
             if (searchQuery != null)
             {
                 try
                 {
                     dataGridViewItems.Rows.Clear();
-                    List<Item> items = itemController.SearchItem(searchQuery, "active");
+                    List<Item> items = itemController.SearchItem(searchQuery, "active", category, supplier, unit);
                     if (items != null && items.Count > 0)
                     {
                         foreach (var item in items)
@@ -342,8 +345,8 @@ namespace InventorySystem
                         }
                     }
 
-                    LoadItems(); 
-                  
+                    LoadItems();
+
                 }
             }
             else
@@ -473,6 +476,187 @@ namespace InventorySystem
             }
         }
 
-        
+        private void importExcelBtn_Click(object sender, EventArgs e)
+        {
+            // Open File Dialog to Select Excel File
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "Excel Files|*.xls;*.xlsx;*.xlsm",
+                Title = "Select an Excel File"
+            };
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string filePath = openFileDialog.FileName;
+
+                // Load Excel Data
+                LoadExcelIntoDataGridView(filePath);
+            }
+        }
+
+        private void LoadExcelIntoDataGridView(string filePath)
+        {
+            Excel.Application excelApp = null;
+            Excel.Workbook workbook = null;
+            Excel.Worksheet worksheet = null;
+
+            try
+            {
+                // Start Excel Application
+                excelApp = new Excel.Application();
+                workbook = excelApp.Workbooks.Open(filePath);
+                worksheet = workbook.Sheets[1]; // Assume data is in the first sheet
+
+                // Get the headers (first row)
+                string headerItemCode = worksheet.Cells[1, 1]?.Value?.ToString().Trim();
+                string headerItemName = worksheet.Cells[1, 2]?.Value?.ToString().Trim();
+                string headerUnit = worksheet.Cells[1, 3]?.Value?.ToString().Trim();
+
+                // Validate headers
+                if (headerItemCode != "Item Code" || headerItemName != "Item Description" || headerUnit != "Unit")
+                {
+                    MessageBox.Show("Invalid Excel format. The file must have headers: 'Item Code', 'Item Description', and 'Unit'.",
+                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // Find the last used row in the Excel sheet
+                Excel.Range usedRange = worksheet.UsedRange;
+                int rows = usedRange.Rows.Count;
+
+                // Clear existing data in DataGridView
+                dataGridViewItems.Rows.Clear();
+
+                // Loop through rows in Excel starting from row 2 (assuming headers in row 1)
+                for (int i = 2; i <= rows; i++)
+                {
+                    // Read specific columns from Excel
+                    string itemCode = worksheet.Cells[i, 1]?.Value?.ToString(); // Column A
+                    string itemName = worksheet.Cells[i, 2]?.Value?.ToString(); // Column B
+                    string unit = worksheet.Cells[i, 3]?.Value?.ToString();     // Column C
+
+                    // Add data to DataGridView
+                    int rowIndex = dataGridViewItems.Rows.Add();
+                    dataGridViewItems.Rows[rowIndex].Cells[0].Value = itemCode;
+                    dataGridViewItems.Rows[rowIndex].Cells[1].Value = itemName;
+                    dataGridViewItems.Rows[rowIndex].Cells[3].Value = unit;
+                }
+                btnSaveToDatabase.Visible = true;
+
+                MessageBox.Show("Excel data successfully imported!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                // Clean up resources
+                workbook?.Close(false);
+                excelApp?.Quit();
+
+                // Release COM objects
+                ReleaseObject(worksheet);
+                ReleaseObject(workbook);
+                ReleaseObject(excelApp);
+            }
+        }
+
+
+        private void ReleaseObject(object obj)
+        {
+            try
+            {
+                if (obj != null)
+                {
+                    System.Runtime.InteropServices.Marshal.ReleaseComObject(obj);
+                    obj = null;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error releasing object: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                GC.Collect();
+            }
+        }
+
+        private void btnSaveToDatabase_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var result = MessageBox.Show("Are you sure you want to save the data to the database? You cannot undo these changes.", "Save to Database", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.No)
+                {
+                    return;
+                }
+
+                List<Item> items = new List<Item>();
+                HashSet<string> existingItemCodesAndUnits = new HashSet<string>(); // Track unique combinations of itemCode and unit
+                HashSet<string> exportedItemCodesAndUnits = new HashSet<string>(); // Track itemCode and unit combinations for exported items
+
+                // First, populate the HashSet with the existing itemCode and unit combinations in the DataGridView
+                foreach (DataGridViewRow row in dataGridViewItems.Rows)
+                {
+                    if (row.IsNewRow || row.Cells[0].Value == null || row.Cells[3].Value == null) continue;
+                    string itemCode = row.Cells[0].Value.ToString();
+                    string unit = row.Cells[3].Value.ToString();
+                    string itemCodeUnitCombo = $"{itemCode}|{unit}"; // Combine itemCode and unit
+
+                    existingItemCodesAndUnits.Add(itemCodeUnitCombo); // Add to HashSet for checking duplicates
+                }
+
+                foreach (DataGridViewRow row in dataGridViewItems.Rows)
+                {
+                    if (row.IsNewRow || row.Cells[0].Value == null || row.Cells[3].Value == null) continue;
+                    string itemCode = row.Cells[0].Value.ToString();
+                    string unit = row.Cells[3].Value.ToString();
+                    string itemCodeUnitCombo = $"{itemCode}|{unit}"; // Combine itemCode and unit
+
+                    // Check for duplicate Item Code and Unit combination
+                    if (exportedItemCodesAndUnits.Contains(itemCodeUnitCombo))
+                    {
+                        MessageBox.Show($"Duplicate Item Code and Unit found: {itemCode} - {unit}. Skipping this item.", "Duplicate Detected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        continue;
+                    }
+
+                    exportedItemCodesAndUnits.Add(itemCodeUnitCombo); // Add to the set for tracking
+
+                    items.Add(new Item
+                    {
+                        ProductCode = itemCode,
+                        ProductDescription = row.Cells[1].Value?.ToString() ?? "",
+                        Unit = unit,
+                        Quantity = int.TryParse(row.Cells[2].Value?.ToString(), out int quantity) ? quantity : 0,
+                        Supplier = row.Cells[4].Value?.ToString() ?? "",
+                        Category = row.Cells[5].Value?.ToString() ?? "",
+                        MinimumStock = int.TryParse(row.Cells[6].Value?.ToString(), out int minStock) ? minStock : 0
+                    });
+                }
+
+                if (items.Count == 0)
+                {
+                    MessageBox.Show("No items to save. Please check for duplicates or empty data.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                // Pass the list to the controller for saving
+                itemController.SaveItemsToDatabase(items);
+                LoadItems();
+                LoadCategoriesIntoComboBox();
+                LoadUnitsIntoComboBox();
+                LoadSupplierNamesIntoComboBox();
+
+                MessageBox.Show("Data successfully saved to the database!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                btnSaveToDatabase.Visible = false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
     }
 }

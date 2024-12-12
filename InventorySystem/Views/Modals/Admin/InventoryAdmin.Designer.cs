@@ -31,6 +31,7 @@
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InventoryAdmin));
             topbarStockInOutPanel = new Panel();
             label1 = new Label();
@@ -72,17 +73,17 @@
             topbarStockInOutPanel.Dock = DockStyle.Top;
             topbarStockInOutPanel.Location = new Point(0, 0);
             topbarStockInOutPanel.Name = "topbarStockInOutPanel";
-            topbarStockInOutPanel.Size = new Size(1352, 99);
+            topbarStockInOutPanel.Size = new Size(1579, 99);
             topbarStockInOutPanel.TabIndex = 1;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Arial", 26F);
+            label1.Font = new Font("Calibri", 26F);
             label1.ForeColor = SystemColors.ButtonHighlight;
             label1.Location = new Point(24, 31);
             label1.Name = "label1";
-            label1.Size = new Size(156, 40);
+            label1.Size = new Size(153, 42);
             label1.TabIndex = 0;
             label1.Text = "Inventory";
             // 
@@ -95,7 +96,7 @@
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 99);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1352, 169);
+            panel1.Size = new Size(1579, 169);
             panel1.TabIndex = 2;
             // 
             // panel4
@@ -104,17 +105,19 @@
             panel4.Dock = DockStyle.Bottom;
             panel4.Location = new Point(0, 102);
             panel4.Name = "panel4";
-            panel4.Size = new Size(1352, 67);
+            panel4.Size = new Size(1579, 67);
             panel4.TabIndex = 23;
             // 
             // refreshData
             // 
             refreshData.Font = new Font("Segoe UI", 16F);
+            refreshData.Image = Properties.Resources.refresh__1_;
             refreshData.Location = new Point(12, 8);
             refreshData.Name = "refreshData";
-            refreshData.Size = new Size(123, 47);
+            refreshData.Size = new Size(140, 47);
             refreshData.TabIndex = 21;
             refreshData.Text = "Refresh";
+            refreshData.TextImageRelation = TextImageRelation.ImageBeforeText;
             refreshData.UseVisualStyleBackColor = true;
             refreshData.Click += refreshData_Click;
             // 
@@ -131,89 +134,89 @@
             panel3.Dock = DockStyle.Top;
             panel3.Location = new Point(0, 0);
             panel3.Name = "panel3";
-            panel3.Size = new Size(1352, 104);
+            panel3.Size = new Size(1579, 104);
             panel3.TabIndex = 22;
             // 
             // label6
             // 
             label6.AutoSize = true;
-            label6.Font = new Font("Segoe UI", 16F);
+            label6.Font = new Font("Calibri", 16F);
             label6.Location = new Point(1175, 25);
             label6.Name = "label6";
-            label6.Size = new Size(57, 30);
+            label6.Size = new Size(56, 27);
             label6.TabIndex = 21;
             label6.Text = "Unit:";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 16F);
+            label2.Font = new Font("Calibri", 16F);
             label2.Location = new Point(427, 25);
             label2.Name = "label2";
-            label2.Size = new Size(107, 30);
+            label2.Size = new Size(99, 27);
             label2.TabIndex = 17;
             label2.Text = "Category:";
             // 
             // supplierComboBox
             // 
             supplierComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            supplierComboBox.Font = new Font("Segoe UI", 16F);
+            supplierComboBox.Font = new Font("Calibri", 18F);
             supplierComboBox.FormattingEnabled = true;
             supplierComboBox.Location = new Point(812, 58);
             supplierComboBox.Name = "supplierComboBox";
-            supplierComboBox.Size = new Size(319, 38);
+            supplierComboBox.Size = new Size(319, 37);
             supplierComboBox.TabIndex = 15;
             supplierComboBox.SelectedIndexChanged += supplierComboBox_SelectedIndexChanged;
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI", 16F);
+            label5.Font = new Font("Calibri", 16F);
             label5.Location = new Point(12, 27);
             label5.Name = "label5";
-            label5.Size = new Size(133, 30);
+            label5.Size = new Size(126, 27);
             label5.TabIndex = 20;
             label5.Text = "Search Item:";
             // 
             // unitComboBox
             // 
             unitComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            unitComboBox.Font = new Font("Segoe UI", 16F);
+            unitComboBox.Font = new Font("Calibri", 18F);
             unitComboBox.FormattingEnabled = true;
             unitComboBox.Location = new Point(1175, 58);
             unitComboBox.Name = "unitComboBox";
-            unitComboBox.Size = new Size(141, 38);
+            unitComboBox.Size = new Size(141, 37);
             unitComboBox.TabIndex = 16;
             unitComboBox.SelectedIndexChanged += unitComboBox_SelectedIndexChanged;
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 16F);
+            label3.Font = new Font("Calibri", 16F);
             label3.Location = new Point(812, 25);
             label3.Name = "label3";
-            label3.Size = new Size(98, 30);
+            label3.Size = new Size(93, 27);
             label3.TabIndex = 18;
             label3.Text = "Supplier:";
             // 
             // searchItemTxt
             // 
-            searchItemTxt.Font = new Font("Segoe UI", 16F);
+            searchItemTxt.Font = new Font("Calibri", 18F);
             searchItemTxt.Location = new Point(12, 60);
             searchItemTxt.Name = "searchItemTxt";
             searchItemTxt.PlaceholderText = "Search item...";
-            searchItemTxt.Size = new Size(370, 36);
+            searchItemTxt.Size = new Size(370, 37);
             searchItemTxt.TabIndex = 13;
             searchItemTxt.TextChanged += searchItemTxt_TextChanged;
             // 
             // categoryComboBox
             // 
             categoryComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            categoryComboBox.Font = new Font("Segoe UI", 16F);
+            categoryComboBox.Font = new Font("Calibri", 18F);
             categoryComboBox.FormattingEnabled = true;
             categoryComboBox.Location = new Point(427, 58);
             categoryComboBox.Name = "categoryComboBox";
-            categoryComboBox.Size = new Size(340, 38);
+            categoryComboBox.Size = new Size(340, 37);
             categoryComboBox.TabIndex = 14;
             categoryComboBox.SelectedIndexChanged += categoryComboBox_SelectedIndexChanged;
             // 
@@ -234,8 +237,8 @@
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(0, 268);
             panel2.Name = "panel2";
-            panel2.Padding = new Padding(30, 10, 30, 10);
-            panel2.Size = new Size(1352, 493);
+            panel2.Padding = new Padding(30, 10, 30, 25);
+            panel2.Size = new Size(1579, 493);
             panel2.TabIndex = 3;
             // 
             // dataGridViewItems
@@ -243,12 +246,13 @@
             dataGridViewItems.AllowUserToAddRows = false;
             dataGridViewItems.BackgroundColor = SystemColors.ButtonHighlight;
             dataGridViewItems.BorderStyle = BorderStyle.None;
+            dataGridViewItems.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = SystemColors.ControlLight;
-            dataGridViewCellStyle1.Font = new Font("Arial", 16F);
-            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.ControlLight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.BackColor = Color.SteelBlue;
+            dataGridViewCellStyle1.Font = new Font("Calibri", 16F);
+            dataGridViewCellStyle1.ForeColor = SystemColors.ButtonHighlight;
+            dataGridViewCellStyle1.SelectionBackColor = Color.SteelBlue;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.ButtonHighlight;
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
             dataGridViewItems.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dataGridViewItems.ColumnHeadersHeight = 40;
@@ -263,16 +267,25 @@
             dataGridViewItems.DefaultCellStyle = dataGridViewCellStyle2;
             dataGridViewItems.Dock = DockStyle.Fill;
             dataGridViewItems.EnableHeadersVisualStyles = false;
+            dataGridViewItems.GridColor = SystemColors.ScrollBar;
             dataGridViewItems.Location = new Point(30, 10);
             dataGridViewItems.Name = "dataGridViewItems";
             dataGridViewItems.ReadOnly = true;
-            dataGridViewItems.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dataGridViewItems.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = SystemColors.Control;
+            dataGridViewCellStyle3.Font = new Font("Calibri", 9F);
+            dataGridViewCellStyle3.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
+            dataGridViewItems.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             dataGridViewItems.RowHeadersVisible = false;
-            dataGridViewCellStyle3.BackColor = SystemColors.ButtonHighlight;
-            dataGridViewItems.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle4.BackColor = SystemColors.ButtonHighlight;
+            dataGridViewItems.RowsDefaultCellStyle = dataGridViewCellStyle4;
             dataGridViewItems.RowTemplate.Height = 30;
             dataGridViewItems.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridViewItems.Size = new Size(1292, 473);
+            dataGridViewItems.Size = new Size(1519, 458);
             dataGridViewItems.TabIndex = 1;
             // 
             // Column1
@@ -328,7 +341,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1352, 761);
+            ClientSize = new Size(1579, 761);
             Controls.Add(panel2);
             Controls.Add(panel1);
             Controls.Add(topbarStockInOutPanel);

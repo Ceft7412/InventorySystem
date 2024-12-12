@@ -29,7 +29,7 @@ namespace InventorySystem.Views.Modals.Admin
             try
             {
                 OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Filter = "Backup Files (*.bak)|*.bak";
+                openFileDialog.Filter = "Backup Files (*.sql)|*.sql";
                 openFileDialog.Title = "Select a Backup File";
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)

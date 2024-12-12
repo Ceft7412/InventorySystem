@@ -189,17 +189,61 @@ namespace InventorySystem.Controllers
             return filteredItems;
         }
 
-        public List<Item> SearchItem(string searchQuery, string status)
+        public List<Item> SearchItem(string searchQuery, string status, string category = null, string supplier = null, string unit = null)
         {
             List<Item> results = new List<Item>();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = "SELECT * FROM tbItem WHERE (productCode LIKE @searchQuery OR productDescription LIKE @searchQuery) AND status = @status";
-                SqlCommand searchCommand = new SqlCommand(query, connection);
-                searchCommand.Parameters.AddWithValue("@searchQuery", "%" + searchQuery + "%");
-                searchCommand.Parameters.AddWithValue("@status", status);
+                StringBuilder query = new StringBuilder("SELECT * FROM tbItem WHERE status = @status");
+
+                // Add search query if provided
+                if (!string.IsNullOrEmpty(searchQuery))
+                {
+                    query.Append(" AND (productCode LIKE @searchQuery OR productDescription LIKE @searchQuery)");
+                }
+
+                // Add category filter if provided
+                if (!string.IsNullOrEmpty(category))
+                {
+                    query.Append(" AND category = @category");
+                }
+
+                // Add supplier filter if provided
+                if (!string.IsNullOrEmpty(supplier))
+                {
+                    query.Append(" AND supplier = @supplier");
+                }
+
+                // Add unit filter if provided
+                if (!string.IsNullOrEmpty(unit))
+                {
+                    query.Append(" AND unit = @unit");
+                }
+
+                SqlCommand command = new SqlCommand(query.ToString(), connection);
+
+                // Add parameters to avoid SQL injection    
+                command.Parameters.AddWithValue("@status", status);
+                if (!string.IsNullOrEmpty(searchQuery))
+                {
+                    command.Parameters.AddWithValue("@searchQuery", "%" + searchQuery + "%");
+                }
+                if (!string.IsNullOrEmpty(category))
+                {
+                    command.Parameters.AddWithValue("@category", category);
+                }
+                if (!string.IsNullOrEmpty(supplier))
+                {
+                    command.Parameters.AddWithValue("@supplier", supplier);
+                }
+                if (!string.IsNullOrEmpty(unit))
+                {
+                    command.Parameters.AddWithValue("@unit", unit);
+                }
+
                 connection.Open();
-                SqlDataReader reader = searchCommand.ExecuteReader();
+                SqlDataReader reader = command.ExecuteReader();
+
                 while (reader.Read())
                 {
                     results.Add(new Item
@@ -213,10 +257,12 @@ namespace InventorySystem.Controllers
                         MinimumStock = reader["minimumstocklevel"] != DBNull.Value ? Convert.ToInt32(reader["minimumstocklevel"]) : 0
                     });
                 }
+
                 reader.Close();
             }
             return results;
         }
+
 
         // Set inactive status for an item
         public void ArchiveItem(string productCode)
@@ -305,6 +351,7 @@ namespace InventorySystem.Controllers
                     updateCommand.Parameters.AddWithValue("@category", category);
                     updateCommand.Parameters.AddWithValue("@supplier", supplier);
                     updateCommand.Parameters.AddWithValue("@minimumstocklevel", minimumstocklevel);
+                    updateCommand.Parameters.AddWithValue("@updated_at", dateTime);
                     connection.Open();
                     updateCommand.ExecuteNonQuery();
                 }
@@ -315,6 +362,81 @@ namespace InventorySystem.Controllers
                 MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        // Method to save a list of items to the database
+        public void SaveItemsToDatabase(List<Item> items)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                DateTime dateTime = DateTime.Now;
+
+                bool skipAllDuplicates = false; // Flag to track whether the user wants to skip all duplicates
+
+                foreach (var item in items)
+                {
+                    // Check if the item already exists in the database with the same productCode and unit
+                    string checkQuery = "SELECT COUNT(*) FROM tbItem WHERE productCode = @ItemCode AND unit = @Unit";
+                    using (SqlCommand checkCmd = new SqlCommand(checkQuery, connection))
+                    {
+                        checkCmd.Parameters.AddWithValue("@ItemCode", item.ProductCode);
+                        checkCmd.Parameters.AddWithValue("@Unit", item.Unit);
+                        int count = (int)checkCmd.ExecuteScalar();
+
+                        // If the item already exists (count > 0) with the same productCode and unit
+                        if (count > 0)
+                        {
+                            if (!skipAllDuplicates) // Check if we are not skipping all
+                            {
+                                // Show a MessageBox with Yes, No, and Skip All options
+                                var result = MessageBox.Show($"Item code {item.ProductCode} with unit {item.Unit} already exists in the database. Do you want to skip this item, skip all duplicates, or continue?",
+                                                             "Duplicate Detected",
+                                                             MessageBoxButtons.YesNoCancel,
+                                                             MessageBoxIcon.Warning);
+
+                                if (result == DialogResult.No)
+                                {
+                                    return; // Exit the process if the user clicks "No"
+                                }
+
+                                if (result == DialogResult.Cancel)
+                                {
+                                    skipAllDuplicates = true; // Set the flag to skip all duplicates
+                                    continue; // Skip the current duplicate and proceed to the next
+                                }
+                            }
+                            else
+                            {
+                                continue; // Skip all duplicates if the flag is set
+                            }
+                        }
+                    }
+
+                    // If item doesn't exist with the same productCode and unit, insert the new item
+                    string query = @"
+                INSERT INTO tbItem (productCode, productDescription, unit, productQuantity, supplier, category, minimumstocklevel, status, created_at)
+                VALUES (@ItemCode, @ItemName, @Unit, @Quantity, @Supplier, @Category, @MinimumStockLevel, @Status, @Created_at)";
+
+                    using (SqlCommand cmd = new SqlCommand(query, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@ItemCode", item.ProductCode);
+                        cmd.Parameters.AddWithValue("@ItemName", item.ProductDescription);
+                        cmd.Parameters.AddWithValue("@Unit", item.Unit);
+                        cmd.Parameters.AddWithValue("@Quantity", item.Quantity);
+                        cmd.Parameters.AddWithValue("@Supplier", item.Supplier);
+                        cmd.Parameters.AddWithValue("@Category", item.Category);
+                        cmd.Parameters.AddWithValue("@MinimumStockLevel", item.MinimumStock);
+                        cmd.Parameters.AddWithValue("@Status", "active");
+                        cmd.Parameters.AddWithValue("@Created_at", dateTime);
+
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+        }
+
+
+
 
     }
 }

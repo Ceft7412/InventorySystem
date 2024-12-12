@@ -55,7 +55,7 @@
             cancelCreateSupplierButton.BackColor = Color.Firebrick;
             cancelCreateSupplierButton.Cursor = Cursors.Hand;
             cancelCreateSupplierButton.FlatStyle = FlatStyle.Flat;
-            cancelCreateSupplierButton.Font = new Font("Segoe UI", 15F);
+            cancelCreateSupplierButton.Font = new Font("Calibri", 15F);
             cancelCreateSupplierButton.ForeColor = SystemColors.ButtonHighlight;
             cancelCreateSupplierButton.Location = new Point(233, 434);
             cancelCreateSupplierButton.Name = "cancelCreateSupplierButton";
@@ -70,7 +70,7 @@
             createNewSupplierButton.BackColor = Color.SeaGreen;
             createNewSupplierButton.Cursor = Cursors.Hand;
             createNewSupplierButton.FlatStyle = FlatStyle.Flat;
-            createNewSupplierButton.Font = new Font("Segoe UI", 15F);
+            createNewSupplierButton.Font = new Font("Calibri", 15F);
             createNewSupplierButton.ForeColor = SystemColors.ButtonHighlight;
             createNewSupplierButton.Location = new Point(393, 434);
             createNewSupplierButton.Name = "createNewSupplierButton";
@@ -82,73 +82,73 @@
             // 
             // supplierAddressInput
             // 
-            supplierAddressInput.Font = new Font("Segoe UI", 13F);
+            supplierAddressInput.Font = new Font("Calibri", 16F);
             supplierAddressInput.Location = new Point(19, 346);
             supplierAddressInput.Name = "supplierAddressInput";
-            supplierAddressInput.Size = new Size(516, 31);
+            supplierAddressInput.Size = new Size(516, 34);
             supplierAddressInput.TabIndex = 21;
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label4.Font = new Font("Calibri", 18F);
             label4.Location = new Point(19, 311);
             label4.Name = "label4";
-            label4.Size = new Size(98, 32);
+            label4.Size = new Size(91, 29);
             label4.TabIndex = 20;
             label4.Text = "Address";
             // 
             // supplierContactInput
             // 
-            supplierContactInput.Font = new Font("Segoe UI", 13F);
+            supplierContactInput.Font = new Font("Calibri", 16F);
             supplierContactInput.Location = new Point(19, 242);
             supplierContactInput.Name = "supplierContactInput";
-            supplierContactInput.Size = new Size(516, 31);
+            supplierContactInput.Size = new Size(516, 34);
             supplierContactInput.TabIndex = 19;
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label3.Font = new Font("Calibri", 18F);
             label3.Location = new Point(19, 207);
             label3.Name = "label3";
-            label3.Size = new Size(96, 32);
+            label3.Size = new Size(90, 29);
             label3.TabIndex = 18;
             label3.Text = "Contact";
             // 
             // supplierNameInput
             // 
-            supplierNameInput.Font = new Font("Segoe UI", 13F);
+            supplierNameInput.Font = new Font("Calibri", 16F);
             supplierNameInput.Location = new Point(19, 148);
             supplierNameInput.Name = "supplierNameInput";
-            supplierNameInput.Size = new Size(516, 31);
+            supplierNameInput.Size = new Size(516, 34);
             supplierNameInput.TabIndex = 17;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label1.Font = new Font("Calibri", 18F);
             label1.Location = new Point(19, 113);
             label1.Name = "label1";
-            label1.Size = new Size(173, 32);
+            label1.Size = new Size(159, 29);
             label1.TabIndex = 16;
             label1.Text = "Supplier Name";
             // 
             // supplierIdInput
             // 
-            supplierIdInput.Font = new Font("Segoe UI", 13F);
+            supplierIdInput.Font = new Font("Calibri", 16F);
             supplierIdInput.Location = new Point(19, 54);
             supplierIdInput.Name = "supplierIdInput";
-            supplierIdInput.Size = new Size(516, 31);
+            supplierIdInput.Size = new Size(516, 34);
             supplierIdInput.TabIndex = 15;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label2.Font = new Font("Calibri", 18F);
             label2.Location = new Point(19, 19);
             label2.Name = "label2";
-            label2.Size = new Size(132, 32);
+            label2.Size = new Size(121, 29);
             label2.TabIndex = 14;
             label2.Text = "Supplier ID";
             // 

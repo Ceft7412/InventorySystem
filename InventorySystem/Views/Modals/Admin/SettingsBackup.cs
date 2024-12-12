@@ -51,7 +51,7 @@ namespace InventorySystem.Views.Modals.Admin
                     return;
                 }
 
-                string backupFilePath = Path.Combine(folderpathLbl.Text, databasenameTxt.Text + ".bak");
+                string backupFilePath = Path.Combine(folderpathLbl.Text, databasenameTxt.Text + ".sql");
                 try
                 {
                     bool result = SettingsController.BackupDatabase(backupFilePath);

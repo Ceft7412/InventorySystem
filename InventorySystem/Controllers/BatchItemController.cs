@@ -274,26 +274,27 @@ namespace InventorySystem.Controllers
             }
         }
 
-        public bool ProductCodeExists(string productCode)
+        public bool ProductCodeExists(string productCode, string unit)
         {
-            string query = "SELECT COUNT(*) FROM tbItem WHERE productCode = @productCode";
+            string query = "SELECT COUNT(*) FROM tbItem WHERE productCode = @productCode AND unit = @unit";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@productCode", productCode);
+                command.Parameters.AddWithValue("@unit", unit);
                 int count = (int)command.ExecuteScalar();
                 return count > 0;
             }
-
         }
 
-        public void AddBatchItem(string productCode, int quantity, string reason, DateTime date, string transaction_type)
+
+        public void AddBatchItem(string productCode, int quantity, string unit, string reason, DateTime date, string transaction_type)
         {
-            if (!ProductCodeExists(productCode))
+            if (!ProductCodeExists(productCode, unit))
             {
-                throw new ArgumentException("Product code does not exist.");
+                throw new ArgumentException("Product code and unit combination does not exist.");
             }
 
             var existingItem = batchItems.FirstOrDefault(i => i.ProductCode == productCode && i.Reason == reason);
@@ -309,6 +310,7 @@ namespace InventorySystem.Controllers
                 {
                     ProductCode = productCode,
                     Quantity = quantity,
+                    Unit = unit,
                     Reason = reason,
                     Date = date,
                     TransactionType = transaction_type
@@ -365,8 +367,8 @@ namespace InventorySystem.Controllers
             }
         }
 
-            public void SaveBatchItemsToDatabase(string transaction_type)
-            {
+        public void SaveBatchItemsToDatabase(string transaction_type)
+        {
             try
             {
                 if (batchItems.Count == 0)
@@ -374,13 +376,14 @@ namespace InventorySystem.Controllers
                     MessageBox.Show("No items to save. You need to add data to the table to save it into the database.", "No batch items found", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
+
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
 
                     // First, create the batch and get the batch ID
                     string batchId = GenerateUniqueBatchId(connection);
-                    string batchItemId = GenerateUniqueBatchItemId(connection); 
+                    string batchItemId = GenerateUniqueBatchItemId(connection);
                     string batchQuery = "INSERT INTO tbBatches(batchId, date, transaction_type) VALUES(@batchId, @date, @transaction_type)";
                     using (SqlCommand addCommand = new SqlCommand(batchQuery, connection))
                     {
@@ -390,16 +393,17 @@ namespace InventorySystem.Controllers
                         addCommand.ExecuteNonQuery();
                     }
 
-
                     foreach (BatchItem item in batchItems)
                     {
                         // Check current stock if the transaction is "OUT"
                         if (transaction_type == "OUT")
                         {
-                            string checkStockQuery = "SELECT productQuantity FROM tbItem WHERE productCode = @productCode";
+                            // Modified query to check stock for both productCode and unit combination
+                            string checkStockQuery = "SELECT productQuantity FROM tbItem WHERE productCode = @productCode AND unit = @unit";
                             using (SqlCommand checkStockCommand = new SqlCommand(checkStockQuery, connection))
                             {
                                 checkStockCommand.Parameters.AddWithValue("@productCode", item.ProductCode);
+                                checkStockCommand.Parameters.AddWithValue("@unit", item.Unit);
                                 int currentQuantity = (int)checkStockCommand.ExecuteScalar();
 
                                 if (currentQuantity < item.Quantity)
@@ -408,41 +412,49 @@ namespace InventorySystem.Controllers
                                 }
                             }
                         }
-                        string batchItemsQuery = "INSERT INTO tbBatchItems(batchItemId, batchId, productCode, quantity, type, reason, date) VALUES(@batchItemId, @batchId, @productCode, @quantity, @type, @reason, @date)";
+
+                        // Insert batch item
+                        string batchItemsQuery = "INSERT INTO tbBatchItems(batchItemId, batchId, productCode, quantity, type, reason, date, unit) " +
+                                                  "VALUES(@batchItemId, @batchId, @productCode, @quantity, @type, @reason, @date, @unit)";
                         using (SqlCommand addCommand = new SqlCommand(batchItemsQuery, connection))
                         {
                             addCommand.Parameters.AddWithValue("@batchItemId", batchItemId);
                             addCommand.Parameters.AddWithValue("@batchId", batchId);
                             addCommand.Parameters.AddWithValue("@productCode", item.ProductCode);
                             addCommand.Parameters.AddWithValue("@quantity", item.Quantity);
+                            addCommand.Parameters.AddWithValue("@unit", item.Unit);
                             addCommand.Parameters.AddWithValue("@type", transaction_type);
                             addCommand.Parameters.AddWithValue("@reason", item.Reason);
                             addCommand.Parameters.AddWithValue("@date", item.Date);
+                            
                             addCommand.ExecuteNonQuery();
                         }
 
-                        string updateProductQuery = "UPDATE tbItem SET productQuantity = productQuantity + @quantity WHERE productCode = @productCode";
+                        // Update product stock considering unit
+                        string updateProductQuery = "UPDATE tbItem SET productQuantity = productQuantity + @quantity WHERE productCode = @productCode AND unit = @unit";
                         if (transaction_type == "OUT")
                         {
-                            updateProductQuery = "UPDATE tbItem SET productQuantity = productQuantity - @quantity WHERE productCode = @productCode";
+                            updateProductQuery = "UPDATE tbItem SET productQuantity = productQuantity - @quantity WHERE productCode = @productCode AND unit = @unit";
                         }
+
                         using (SqlCommand updateCommand = new SqlCommand(updateProductQuery, connection))
                         {
                             updateCommand.Parameters.AddWithValue("@productCode", item.ProductCode);
+                            updateCommand.Parameters.AddWithValue("@unit", item.Unit);  // Add unit to stock update
                             updateCommand.Parameters.AddWithValue("@quantity", item.Quantity);
                             updateCommand.ExecuteNonQuery();
                         }
                     }
+
                     MessageBox.Show("Batch items added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     ClearBatchItems();
-
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"An error occurred: {ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
         }
+
     }
 }

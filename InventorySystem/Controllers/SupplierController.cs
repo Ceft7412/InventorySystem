@@ -48,8 +48,6 @@ namespace InventorySystem.Controllers
             }
         }
 
-       
-
         public List<string> GetAllSupplierNames()
         {
             List<string> supplierNames = new List<string>();

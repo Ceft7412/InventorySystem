@@ -15,6 +15,8 @@ namespace InventorySystem.Models
         public string BatchId { get; set; }
         public string ProductCode { get; set; }
         public int Quantity { get; set; }
+
+        public string Unit { get; set; }
         public string Reason { get; set; }
 
         public string Type { get; set; }

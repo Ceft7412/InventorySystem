@@ -27,9 +27,46 @@ namespace InventorySystem.Views.Modals.InventoryUser
         {
             InitializeComponent();
         }
+
+        private void StockInOutModal_Load(object sender, EventArgs e)
+        {
+            LOAD_UNITS_COMBOBOX();
+        }
+
         public List<BatchItem> GetBatchItems()
         {
             return batchItems;
+        }
+
+
+
+        public void LOAD_UNITS_COMBOBOX()
+        {
+            try
+            {
+                stockOutUnitCmb.Items.Clear();
+                stockInUnitCmb.Items.Clear();
+                List<string> units = itemController.GetAllUnits();
+                if (units != null && units.Count > 0)
+                {
+                    foreach (var unit in units)
+                    {
+                        stockInUnitCmb.Items.Add(unit);
+                        stockOutUnitCmb.Items.Add(unit);
+                    }
+                }
+                else
+                {
+                    return;
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Error message: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+
         }
         private void stockInButton_Click(object sender, EventArgs e)
         {
@@ -101,6 +138,7 @@ namespace InventorySystem.Views.Modals.InventoryUser
                         dataGridViewBatchItems.Rows.Add(
                             item.ProductCode,
                             item.Quantity.ToString(),
+                            item.Unit,
                             item.Reason,
                             item.Date.ToString());
                     }
@@ -155,7 +193,7 @@ namespace InventorySystem.Views.Modals.InventoryUser
         {
             try
             {
-                
+
                 var selectedRows = dataGridViewBatchItems.SelectedRows;
                 if (selectedRows.Count < 0)
                 {
@@ -164,18 +202,18 @@ namespace InventorySystem.Views.Modals.InventoryUser
                 }
                 else
                 {
-                    
+
                     batchItemController.ClearBatchItems();
                     RefreshDataGridView();
                 }
-                
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show($"An error occurred: {ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            
+
         }
         private void btnClearStockOutItems_Click(object sender, EventArgs e)
         {
@@ -197,7 +235,7 @@ namespace InventorySystem.Views.Modals.InventoryUser
                     batchItemController.ClearBatchItems();
                     RefreshDataGridView();
                 }
-           
+
             }
             catch (Exception ex)
             {
@@ -222,9 +260,9 @@ namespace InventorySystem.Views.Modals.InventoryUser
                             try
                             {
                                 batchItemController.RemoveBatchItem(itemCode);
-                                
+
                             }
-                            catch(Exception ex)
+                            catch (Exception ex)
                             {
                                 MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 return;
@@ -232,7 +270,7 @@ namespace InventorySystem.Views.Modals.InventoryUser
                         }
                         RefreshDataGridView();
                     }
-                    
+
                 }
                 else
                 {
@@ -247,19 +285,20 @@ namespace InventorySystem.Views.Modals.InventoryUser
                 return;
             }
 
-            
 
-           
+
+
         }
 
-        
 
-       
+
+
 
         private void stockInSaveButton_Click(object sender, EventArgs e)
         {
             string productCode = stockInProductCodeInput.Text.Trim();
             int quantity;
+            string unit = stockInUnitCmb.Text.Trim();
             bool isQuantityValid = int.TryParse(stockInProductQuantity.Text.Trim(), out quantity);
             string transaction_type = "IN";
             string reason = stockInReasonInput.Text.Trim();
@@ -271,7 +310,7 @@ namespace InventorySystem.Views.Modals.InventoryUser
             }
             try
             {
-                batchItemController.AddBatchItem(productCode, quantity, reason, transactionDate, transaction_type);
+                batchItemController.AddBatchItem(productCode, quantity, unit,  reason, transactionDate, transaction_type);
                 stockInProductCodeInput.Clear();
                 stockInProductQuantity.Clear();
                 stockInReasonInput.Text = "";
@@ -291,6 +330,7 @@ namespace InventorySystem.Views.Modals.InventoryUser
         {
             stockInProductCodeInput.Clear();
             stockInProductQuantity.Clear();
+            stockInUnitCmb.SelectedIndex = -1;
             stockInReasonInput.SelectedIndex = -1;
             stockInDateInput.ResetText();
         }
@@ -299,6 +339,7 @@ namespace InventorySystem.Views.Modals.InventoryUser
         {
             string productCode = stockOutProductCodeInput.Text.Trim();
             int quantity;
+            string unit = stockOutUnitCmb.Text.Trim();
             bool isQuantityValid = int.TryParse(stockOutProductQuantity.Text.Trim(), out quantity);
             string transaction_type = "OUT";
             string reason = stockOutReasonInput.Text.Trim();
@@ -316,13 +357,14 @@ namespace InventorySystem.Views.Modals.InventoryUser
                 {
                     connection.Open();
 
-                    // Step 1: Check the current quantity in tbProduct
-                    string checkQuantityQuery = "SELECT productQuantity FROM tbItem WHERE productCode = @productCode";
+                    // Step 1: Check if the productCode and unit combination exists in tbItem
+                    string checkQuantityQuery = "SELECT productQuantity FROM tbItem WHERE productCode = @productCode AND unit = @unit";
                     int currentQuantity = 0;
 
                     using (SqlCommand checkCommand = new SqlCommand(checkQuantityQuery, connection))
                     {
                         checkCommand.Parameters.AddWithValue("@productCode", productCode);
+                        checkCommand.Parameters.AddWithValue("@unit", unit);
                         object result = checkCommand.ExecuteScalar();
 
                         if (result != null)
@@ -331,27 +373,29 @@ namespace InventorySystem.Views.Modals.InventoryUser
                         }
                         else
                         {
-                            MessageBox.Show("Error message: Product not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("Error: Product code and unit combination not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             connection.Close();
                             return;
                         }
                     }
+
                     // Step 2: Ensure there is enough stock to perform the operation
                     if (currentQuantity < quantity)
                     {
-                        MessageBox.Show("Error message: Insufficient stock. Unable to process the stock out.", "Stock Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("Error: Insufficient stock. Unable to process the stock out.", "Stock Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         connection.Close();
                         return;
                     }
+
+                    // Step 3: Call AddBatchItem to log the stock out operation
                     try
                     {
-                        batchItemController.AddBatchItem(productCode, quantity, reason, transactionDate, transaction_type);
+                        batchItemController.AddBatchItem(productCode, quantity, unit, reason, transactionDate, transaction_type);
                         stockOutProductCodeInput.Clear();
                         stockOutProductQuantity.Clear();
                         stockOutReasonInput.Text = "";
                         stockOutDateInput.ResetText();
                         RefreshDataGridView();
-
                     }
                     catch (Exception ex)
                     {
@@ -363,13 +407,13 @@ namespace InventorySystem.Views.Modals.InventoryUser
             {
                 MessageBox.Show($"An error occurred: {ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
         }
 
         private void stockOutClear_Click(object sender, EventArgs e)
         {
             stockOutProductCodeInput.Clear();
             stockOutProductQuantity.Clear();
+            stockOutUnitCmb.SelectedIndex = -1;
             stockOutReasonInput.SelectedIndex = -1;
             stockOutDateInput.ResetText();
         }
@@ -384,12 +428,14 @@ namespace InventorySystem.Views.Modals.InventoryUser
                     batchSelectedItemCode = row.Cells[0].Value.ToString();
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show($"An error occurred: {ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
         }
+
+        
     }
 }

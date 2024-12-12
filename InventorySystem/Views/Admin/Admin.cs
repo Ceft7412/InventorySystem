@@ -47,7 +47,7 @@ namespace InventorySystem.Views.Admin
             }
             InitializeChart("daily");
             InitializePieChart();
-            InitializeRecentTransactionData();
+            //InitializeRecentTransactionData();
             InitializeBestSellerData("weekly");
             inventoryRestockingCmb.SelectedIndex = 0;
             periodCmb.SelectedIndex = 0;
@@ -97,23 +97,23 @@ namespace InventorySystem.Views.Admin
 
 
 
-        private void InitializeRecentTransactionData()
-        {
-            try
-            {
-                List<Batch> batches = BatchController.GetBatches();
-                recentTransactionsGrid.Rows.Clear();
-                foreach (var batch in batches)
-                {
-                    recentTransactionsGrid.Rows.Add(batch.BatchID, batch.date, batch.TransactionType);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error message: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-        }
+        //private void InitializeRecentTransactionData()
+        //{
+        //    try
+        //    {
+        //        List<Batch> batches = BatchController.GetBatches();
+        //        recentTransactionsGrid.Rows.Clear();
+        //        foreach (var batch in batches)
+        //        {
+        //            recentTransactionsGrid.Rows.Add(batch.BatchID, batch.date, batch.TransactionType);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show("Error message: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //        return;
+        //    }
+        //}
 
         private void InitializeBestSellerData(string period)
         {
@@ -246,7 +246,7 @@ namespace InventorySystem.Views.Admin
         {
             InitializeChart("daily");
             InitializePieChart();
-            InitializeRecentTransactionData();
+            //InitializeRecentTransactionData();
             inventoryRestockingCmb.SelectedIndex = 0;
         }
 

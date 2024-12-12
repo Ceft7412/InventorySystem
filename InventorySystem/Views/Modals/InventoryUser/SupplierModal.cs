@@ -99,7 +99,7 @@ namespace InventorySystem.Views.Modals.InventoryUser
 
                     foreach (DataGridViewRow row in selectedRows)
                     {
-                        var supplierCode = row.Cells["SupplierCodeColumn"].Value.ToString();
+                        var supplierCode = row.Cells[0].Value.ToString();
                         try
                         {
                             supplierController.ArchiveSupplier(supplierCode);

@@ -64,11 +64,11 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 20F);
+            label1.Font = new Font("Calibri", 20F);
             label1.ForeColor = SystemColors.ButtonHighlight;
-            label1.Location = new Point(40, 22);
+            label1.Location = new Point(37, 25);
             label1.Name = "label1";
-            label1.Size = new Size(165, 37);
+            label1.Size = new Size(152, 33);
             label1.TabIndex = 0;
             label1.Text = "Update Item";
             // 
@@ -96,77 +96,78 @@
             // 
             // updateItemSupplierInput
             // 
-            updateItemSupplierInput.Font = new Font("Segoe UI", 13F);
+            updateItemSupplierInput.DropDownStyle = ComboBoxStyle.DropDownList;
+            updateItemSupplierInput.Font = new Font("Calibri", 17F);
             updateItemSupplierInput.FormattingEnabled = true;
             updateItemSupplierInput.Location = new Point(40, 397);
             updateItemSupplierInput.Name = "updateItemSupplierInput";
-            updateItemSupplierInput.Size = new Size(514, 31);
+            updateItemSupplierInput.Size = new Size(514, 36);
             updateItemSupplierInput.TabIndex = 16;
             // 
             // label6
             // 
             label6.AutoSize = true;
-            label6.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label6.Font = new Font("Calibri", 18F);
             label6.Location = new Point(38, 277);
             label6.Name = "label6";
-            label6.Size = new Size(58, 32);
+            label6.Size = new Size(55, 29);
             label6.TabIndex = 15;
             label6.Text = "Unit";
             // 
             // updateItemUnitInput
             // 
             updateItemUnitInput.DropDownStyle = ComboBoxStyle.DropDownList;
-            updateItemUnitInput.Font = new Font("Segoe UI", 13F);
+            updateItemUnitInput.Font = new Font("Calibri", 17F);
             updateItemUnitInput.FormattingEnabled = true;
             updateItemUnitInput.Items.AddRange(new object[] { "PCS", "FT", "SETS", "UNITS", "MTRS", "ROLLS", "PC", "DOZEN", "LEGNTH", "BOXES" });
             updateItemUnitInput.Location = new Point(38, 312);
             updateItemUnitInput.Name = "updateItemUnitInput";
-            updateItemUnitInput.Size = new Size(516, 31);
+            updateItemUnitInput.Size = new Size(516, 36);
             updateItemUnitInput.TabIndex = 14;
             // 
             // updateMinimumStockLevelInput
             // 
-            updateMinimumStockLevelInput.Font = new Font("Segoe UI", 13F);
+            updateMinimumStockLevelInput.Font = new Font("Calibri", 17F);
             updateMinimumStockLevelInput.Location = new Point(38, 481);
             updateMinimumStockLevelInput.Name = "updateMinimumStockLevelInput";
-            updateMinimumStockLevelInput.Size = new Size(516, 31);
+            updateMinimumStockLevelInput.Size = new Size(516, 35);
             updateMinimumStockLevelInput.TabIndex = 13;
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label5.Font = new Font("Calibri", 18F);
             label5.Location = new Point(38, 446);
             label5.Name = "label5";
-            label5.Size = new Size(244, 32);
+            label5.Size = new Size(224, 29);
             label5.TabIndex = 12;
             label5.Text = "Minimum Stock Level";
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label3.Font = new Font("Calibri", 18F);
             label3.Location = new Point(38, 362);
             label3.Name = "label3";
-            label3.Size = new Size(157, 32);
+            label3.Size = new Size(145, 29);
             label3.TabIndex = 10;
             label3.Text = "Item Supplier";
             // 
             // updateItemCategoryInput
             // 
-            updateItemCategoryInput.Font = new Font("Segoe UI", 13F);
+            updateItemCategoryInput.Font = new Font("Calibri", 17F);
             updateItemCategoryInput.Location = new Point(38, 224);
             updateItemCategoryInput.Name = "updateItemCategoryInput";
-            updateItemCategoryInput.Size = new Size(516, 31);
+            updateItemCategoryInput.Size = new Size(516, 35);
             updateItemCategoryInput.TabIndex = 9;
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label4.Font = new Font("Calibri", 18F);
             label4.Location = new Point(38, 189);
             label4.Name = "label4";
-            label4.Size = new Size(165, 32);
+            label4.Size = new Size(151, 29);
             label4.TabIndex = 8;
             label4.Text = "Item Category";
             // 
@@ -175,7 +176,7 @@
             cancelUpdateItemButton.BackColor = Color.Firebrick;
             cancelUpdateItemButton.Cursor = Cursors.Hand;
             cancelUpdateItemButton.FlatStyle = FlatStyle.Flat;
-            cancelUpdateItemButton.Font = new Font("Segoe UI", 15F);
+            cancelUpdateItemButton.Font = new Font("Calibri", 15F);
             cancelUpdateItemButton.ForeColor = SystemColors.ButtonHighlight;
             cancelUpdateItemButton.Location = new Point(248, 550);
             cancelUpdateItemButton.Name = "cancelUpdateItemButton";
@@ -190,7 +191,7 @@
             updateItemButton.BackColor = Color.SeaGreen;
             updateItemButton.Cursor = Cursors.Hand;
             updateItemButton.FlatStyle = FlatStyle.Flat;
-            updateItemButton.Font = new Font("Segoe UI", 15F);
+            updateItemButton.Font = new Font("Calibri", 15F);
             updateItemButton.ForeColor = SystemColors.ButtonHighlight;
             updateItemButton.Location = new Point(408, 550);
             updateItemButton.Name = "updateItemButton";
@@ -202,38 +203,38 @@
             // 
             // updateItemCodeInput
             // 
-            updateItemCodeInput.Font = new Font("Segoe UI", 13F);
+            updateItemCodeInput.Font = new Font("Calibri", 17F);
             updateItemCodeInput.Location = new Point(38, 56);
             updateItemCodeInput.Name = "updateItemCodeInput";
             updateItemCodeInput.ReadOnly = true;
-            updateItemCodeInput.Size = new Size(516, 31);
+            updateItemCodeInput.Size = new Size(516, 35);
             updateItemCodeInput.TabIndex = 3;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label2.Font = new Font("Calibri", 18F);
             label2.Location = new Point(38, 21);
             label2.Name = "label2";
-            label2.Size = new Size(125, 32);
+            label2.Size = new Size(114, 29);
             label2.TabIndex = 2;
             label2.Text = "Item Code";
             // 
             // updateItemDescriptionInput
             // 
-            updateItemDescriptionInput.Font = new Font("Segoe UI", 13F);
+            updateItemDescriptionInput.Font = new Font("Calibri", 17F);
             updateItemDescriptionInput.Location = new Point(38, 144);
             updateItemDescriptionInput.Name = "updateItemDescriptionInput";
-            updateItemDescriptionInput.Size = new Size(516, 31);
+            updateItemDescriptionInput.Size = new Size(516, 35);
             updateItemDescriptionInput.TabIndex = 1;
             // 
             // label7
             // 
             label7.AutoSize = true;
-            label7.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label7.Font = new Font("Calibri", 18F);
             label7.Location = new Point(38, 109);
             label7.Name = "label7";
-            label7.Size = new Size(190, 32);
+            label7.Size = new Size(175, 29);
             label7.TabIndex = 0;
             label7.Text = "Item Description";
             // 

@@ -64,11 +64,11 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 20F);
+            label1.Font = new Font("Calibri", 20F);
             label1.ForeColor = SystemColors.ButtonHighlight;
-            label1.Location = new Point(40, 22);
+            label1.Location = new Point(40, 24);
             label1.Name = "label1";
-            label1.Size = new Size(126, 37);
+            label1.Size = new Size(116, 33);
             label1.TabIndex = 0;
             label1.Text = "Add Item";
             // 
@@ -96,77 +96,78 @@
             // 
             // itemSupplierInput
             // 
-            itemSupplierInput.Font = new Font("Segoe UI", 13F);
+            itemSupplierInput.DropDownStyle = ComboBoxStyle.DropDownList;
+            itemSupplierInput.Font = new Font("Calibri", 16F);
             itemSupplierInput.FormattingEnabled = true;
             itemSupplierInput.Location = new Point(40, 397);
             itemSupplierInput.Name = "itemSupplierInput";
-            itemSupplierInput.Size = new Size(514, 31);
+            itemSupplierInput.Size = new Size(514, 34);
             itemSupplierInput.TabIndex = 16;
             // 
             // label6
             // 
             label6.AutoSize = true;
-            label6.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label6.Font = new Font("Calibri", 18F);
             label6.Location = new Point(38, 277);
             label6.Name = "label6";
-            label6.Size = new Size(58, 32);
+            label6.Size = new Size(55, 29);
             label6.TabIndex = 15;
             label6.Text = "Unit";
             // 
             // itemUnitInput
             // 
             itemUnitInput.DropDownStyle = ComboBoxStyle.DropDownList;
-            itemUnitInput.Font = new Font("Segoe UI", 13F);
+            itemUnitInput.Font = new Font("Calibri", 16F);
             itemUnitInput.FormattingEnabled = true;
             itemUnitInput.Items.AddRange(new object[] { "PCS", "FT", "SETS", "UNITS", "MTRS", "ROLLS", "PC", "DOZEN", "LEGNTH", "BOXES" });
             itemUnitInput.Location = new Point(38, 312);
             itemUnitInput.Name = "itemUnitInput";
-            itemUnitInput.Size = new Size(516, 31);
+            itemUnitInput.Size = new Size(516, 34);
             itemUnitInput.TabIndex = 14;
             // 
             // itemMSLInput
             // 
-            itemMSLInput.Font = new Font("Segoe UI", 13F);
+            itemMSLInput.Font = new Font("Calibri", 16F);
             itemMSLInput.Location = new Point(38, 481);
             itemMSLInput.Name = "itemMSLInput";
-            itemMSLInput.Size = new Size(516, 31);
+            itemMSLInput.Size = new Size(516, 34);
             itemMSLInput.TabIndex = 13;
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label5.Font = new Font("Calibri", 18F);
             label5.Location = new Point(38, 446);
             label5.Name = "label5";
-            label5.Size = new Size(244, 32);
+            label5.Size = new Size(224, 29);
             label5.TabIndex = 12;
             label5.Text = "Minimum Stock Level";
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label3.Font = new Font("Calibri", 18F);
             label3.Location = new Point(38, 362);
             label3.Name = "label3";
-            label3.Size = new Size(157, 32);
+            label3.Size = new Size(145, 29);
             label3.TabIndex = 10;
             label3.Text = "Item Supplier";
             // 
             // itemCategoryInput
             // 
-            itemCategoryInput.Font = new Font("Segoe UI", 13F);
+            itemCategoryInput.Font = new Font("Calibri", 16F);
             itemCategoryInput.Location = new Point(38, 224);
             itemCategoryInput.Name = "itemCategoryInput";
-            itemCategoryInput.Size = new Size(516, 31);
+            itemCategoryInput.Size = new Size(516, 34);
             itemCategoryInput.TabIndex = 9;
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label4.Font = new Font("Calibri", 18F);
             label4.Location = new Point(38, 189);
             label4.Name = "label4";
-            label4.Size = new Size(165, 32);
+            label4.Size = new Size(151, 29);
             label4.TabIndex = 8;
             label4.Text = "Item Category";
             // 
@@ -175,7 +176,7 @@
             cancelCreateItemButton.BackColor = Color.Firebrick;
             cancelCreateItemButton.Cursor = Cursors.Hand;
             cancelCreateItemButton.FlatStyle = FlatStyle.Flat;
-            cancelCreateItemButton.Font = new Font("Segoe UI", 15F);
+            cancelCreateItemButton.Font = new Font("Calibri", 15F);
             cancelCreateItemButton.ForeColor = SystemColors.ButtonHighlight;
             cancelCreateItemButton.Location = new Point(248, 550);
             cancelCreateItemButton.Name = "cancelCreateItemButton";
@@ -190,7 +191,7 @@
             createNewItemButton.BackColor = Color.SeaGreen;
             createNewItemButton.Cursor = Cursors.Hand;
             createNewItemButton.FlatStyle = FlatStyle.Flat;
-            createNewItemButton.Font = new Font("Segoe UI", 15F);
+            createNewItemButton.Font = new Font("Calibri", 15F);
             createNewItemButton.ForeColor = SystemColors.ButtonHighlight;
             createNewItemButton.Location = new Point(408, 550);
             createNewItemButton.Name = "createNewItemButton";
@@ -202,37 +203,37 @@
             // 
             // itemCodeInput
             // 
-            itemCodeInput.Font = new Font("Segoe UI", 13F);
+            itemCodeInput.Font = new Font("Calibri", 16F);
             itemCodeInput.Location = new Point(38, 56);
             itemCodeInput.Name = "itemCodeInput";
-            itemCodeInput.Size = new Size(516, 31);
+            itemCodeInput.Size = new Size(516, 34);
             itemCodeInput.TabIndex = 3;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label2.Font = new Font("Calibri", 18F);
             label2.Location = new Point(38, 21);
             label2.Name = "label2";
-            label2.Size = new Size(125, 32);
+            label2.Size = new Size(114, 29);
             label2.TabIndex = 2;
             label2.Text = "Item Code";
             // 
             // itemDescriptionInput
             // 
-            itemDescriptionInput.Font = new Font("Segoe UI", 13F);
+            itemDescriptionInput.Font = new Font("Calibri", 16F);
             itemDescriptionInput.Location = new Point(38, 144);
             itemDescriptionInput.Name = "itemDescriptionInput";
-            itemDescriptionInput.Size = new Size(516, 31);
+            itemDescriptionInput.Size = new Size(516, 34);
             itemDescriptionInput.TabIndex = 1;
             // 
             // label7
             // 
             label7.AutoSize = true;
-            label7.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label7.Font = new Font("Calibri", 18F);
             label7.Location = new Point(38, 109);
             label7.Name = "label7";
-            label7.Size = new Size(190, 32);
+            label7.Size = new Size(175, 29);
             label7.TabIndex = 0;
             label7.Text = "Item Description";
             // 

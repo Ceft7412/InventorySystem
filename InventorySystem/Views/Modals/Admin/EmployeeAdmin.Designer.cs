@@ -31,6 +31,7 @@
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EmployeeAdmin));
             topbarStockInOutPanel = new Panel();
             label1 = new Label();
@@ -64,17 +65,17 @@
             topbarStockInOutPanel.Dock = DockStyle.Top;
             topbarStockInOutPanel.Location = new Point(0, 0);
             topbarStockInOutPanel.Name = "topbarStockInOutPanel";
-            topbarStockInOutPanel.Size = new Size(1112, 99);
+            topbarStockInOutPanel.Size = new Size(1665, 99);
             topbarStockInOutPanel.TabIndex = 2;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Arial", 26F);
+            label1.Font = new Font("Calibri", 26F);
             label1.ForeColor = SystemColors.ButtonHighlight;
             label1.Location = new Point(24, 31);
             label1.Name = "label1";
-            label1.Size = new Size(166, 40);
+            label1.Size = new Size(157, 42);
             label1.TabIndex = 0;
             label1.Text = "Employee";
             // 
@@ -84,7 +85,7 @@
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 99);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1112, 97);
+            panel1.Size = new Size(1665, 91);
             panel1.TabIndex = 3;
             // 
             // panel4
@@ -94,21 +95,24 @@
             panel4.Controls.Add(updateEmployeeBtnRedirect);
             panel4.Controls.Add(addEmployeeBtnRedirect);
             panel4.Dock = DockStyle.Right;
-            panel4.Location = new Point(442, 0);
+            panel4.Location = new Point(615, 0);
             panel4.Name = "panel4";
-            panel4.Size = new Size(670, 97);
+            panel4.Size = new Size(1050, 91);
             panel4.TabIndex = 1;
             // 
             // exportExcelBtn
             // 
-            exportExcelBtn.BackColor = Color.Green;
+            exportExcelBtn.BackColor = Color.FromArgb(64, 64, 64);
             exportExcelBtn.Font = new Font("Segoe UI", 14F);
             exportExcelBtn.ForeColor = SystemColors.ButtonHighlight;
-            exportExcelBtn.Location = new Point(506, 13);
+            exportExcelBtn.Image = Properties.Resources.upload;
+            exportExcelBtn.Location = new Point(811, 19);
             exportExcelBtn.Name = "exportExcelBtn";
-            exportExcelBtn.Size = new Size(139, 69);
+            exportExcelBtn.Padding = new Padding(10, 4, 10, 4);
+            exportExcelBtn.Size = new Size(214, 53);
             exportExcelBtn.TabIndex = 3;
-            exportExcelBtn.Text = "Export Excel";
+            exportExcelBtn.Text = "Export Employee";
+            exportExcelBtn.TextImageRelation = TextImageRelation.ImageBeforeText;
             exportExcelBtn.UseVisualStyleBackColor = false;
             exportExcelBtn.Click += exportExcelBtn_Click;
             // 
@@ -117,11 +121,14 @@
             archiveEmployeeBtn.BackColor = Color.Red;
             archiveEmployeeBtn.Font = new Font("Segoe UI", 14F);
             archiveEmployeeBtn.ForeColor = SystemColors.ButtonHighlight;
-            archiveEmployeeBtn.Location = new Point(344, 13);
+            archiveEmployeeBtn.Image = Properties.Resources.archive_button_icon;
+            archiveEmployeeBtn.Location = new Point(556, 19);
             archiveEmployeeBtn.Name = "archiveEmployeeBtn";
-            archiveEmployeeBtn.Size = new Size(139, 69);
+            archiveEmployeeBtn.Padding = new Padding(10, 4, 10, 4);
+            archiveEmployeeBtn.Size = new Size(225, 53);
             archiveEmployeeBtn.TabIndex = 2;
             archiveEmployeeBtn.Text = "Archive Employee";
+            archiveEmployeeBtn.TextImageRelation = TextImageRelation.ImageBeforeText;
             archiveEmployeeBtn.UseVisualStyleBackColor = false;
             archiveEmployeeBtn.Click += archiveEmployeeBtn_Click;
             // 
@@ -130,11 +137,14 @@
             updateEmployeeBtnRedirect.BackColor = Color.Goldenrod;
             updateEmployeeBtnRedirect.Font = new Font("Segoe UI", 14F);
             updateEmployeeBtnRedirect.ForeColor = SystemColors.ButtonHighlight;
-            updateEmployeeBtnRedirect.Location = new Point(180, 13);
+            updateEmployeeBtnRedirect.Image = Properties.Resources.pen;
+            updateEmployeeBtnRedirect.Location = new Point(300, 19);
             updateEmployeeBtnRedirect.Name = "updateEmployeeBtnRedirect";
-            updateEmployeeBtnRedirect.Size = new Size(139, 69);
+            updateEmployeeBtnRedirect.Padding = new Padding(10, 4, 10, 4);
+            updateEmployeeBtnRedirect.Size = new Size(222, 53);
             updateEmployeeBtnRedirect.TabIndex = 1;
             updateEmployeeBtnRedirect.Text = "Update Employee";
+            updateEmployeeBtnRedirect.TextImageRelation = TextImageRelation.ImageBeforeText;
             updateEmployeeBtnRedirect.UseVisualStyleBackColor = false;
             updateEmployeeBtnRedirect.Click += updateEmployeeBtnRedirect_Click;
             // 
@@ -143,11 +153,14 @@
             addEmployeeBtnRedirect.BackColor = Color.ForestGreen;
             addEmployeeBtnRedirect.Font = new Font("Segoe UI", 14F);
             addEmployeeBtnRedirect.ForeColor = SystemColors.ButtonHighlight;
-            addEmployeeBtnRedirect.Location = new Point(19, 13);
+            addEmployeeBtnRedirect.Image = Properties.Resources.plus;
+            addEmployeeBtnRedirect.Location = new Point(70, 19);
             addEmployeeBtnRedirect.Name = "addEmployeeBtnRedirect";
-            addEmployeeBtnRedirect.Size = new Size(139, 69);
+            addEmployeeBtnRedirect.Padding = new Padding(10, 4, 10, 4);
+            addEmployeeBtnRedirect.Size = new Size(198, 53);
             addEmployeeBtnRedirect.TabIndex = 0;
             addEmployeeBtnRedirect.Text = "Add Employee";
+            addEmployeeBtnRedirect.TextImageRelation = TextImageRelation.ImageBeforeText;
             addEmployeeBtnRedirect.UseVisualStyleBackColor = false;
             addEmployeeBtnRedirect.Click += addEmployeeBtnRedirect_Click;
             // 
@@ -156,10 +169,10 @@
             panel2.BackColor = SystemColors.ControlLight;
             panel2.Controls.Add(panel3);
             panel2.Dock = DockStyle.Fill;
-            panel2.Location = new Point(0, 196);
+            panel2.Location = new Point(0, 190);
             panel2.Name = "panel2";
             panel2.Padding = new Padding(25);
-            panel2.Size = new Size(1112, 565);
+            panel2.Size = new Size(1665, 638);
             panel2.TabIndex = 4;
             // 
             // panel3
@@ -169,7 +182,7 @@
             panel3.Dock = DockStyle.Fill;
             panel3.Location = new Point(25, 25);
             panel3.Name = "panel3";
-            panel3.Size = new Size(1062, 515);
+            panel3.Size = new Size(1615, 588);
             panel3.TabIndex = 0;
             // 
             // dataGridViewEmployees
@@ -177,12 +190,13 @@
             dataGridViewEmployees.AllowUserToAddRows = false;
             dataGridViewEmployees.BackgroundColor = SystemColors.ButtonHighlight;
             dataGridViewEmployees.BorderStyle = BorderStyle.None;
+            dataGridViewEmployees.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = SystemColors.ControlLight;
-            dataGridViewCellStyle1.Font = new Font("Arial", 16F);
-            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.ControlLight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.BackColor = Color.SteelBlue;
+            dataGridViewCellStyle1.Font = new Font("Calibri", 16F);
+            dataGridViewCellStyle1.ForeColor = SystemColors.ButtonHighlight;
+            dataGridViewCellStyle1.SelectionBackColor = Color.SteelBlue;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.ButtonHighlight;
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
             dataGridViewEmployees.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dataGridViewEmployees.ColumnHeadersHeight = 40;
@@ -197,16 +211,25 @@
             dataGridViewEmployees.DefaultCellStyle = dataGridViewCellStyle2;
             dataGridViewEmployees.Dock = DockStyle.Fill;
             dataGridViewEmployees.EnableHeadersVisualStyles = false;
+            dataGridViewEmployees.GridColor = SystemColors.ScrollBar;
             dataGridViewEmployees.Location = new Point(0, 0);
             dataGridViewEmployees.Name = "dataGridViewEmployees";
             dataGridViewEmployees.ReadOnly = true;
-            dataGridViewEmployees.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dataGridViewEmployees.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = SystemColors.Control;
+            dataGridViewCellStyle3.Font = new Font("Calibri", 9F);
+            dataGridViewCellStyle3.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
+            dataGridViewEmployees.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             dataGridViewEmployees.RowHeadersVisible = false;
-            dataGridViewCellStyle3.BackColor = SystemColors.ButtonHighlight;
-            dataGridViewEmployees.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle4.BackColor = SystemColors.ButtonHighlight;
+            dataGridViewEmployees.RowsDefaultCellStyle = dataGridViewCellStyle4;
             dataGridViewEmployees.RowTemplate.Height = 30;
             dataGridViewEmployees.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridViewEmployees.Size = new Size(1062, 515);
+            dataGridViewEmployees.Size = new Size(1615, 588);
             dataGridViewEmployees.TabIndex = 2;
             dataGridViewEmployees.CellClick += selectedRowCellClick;
             dataGridViewEmployees.CellContentClick += dataGridViewEmployees_CellContentClick;
@@ -250,7 +273,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1112, 761);
+            ClientSize = new Size(1665, 828);
             Controls.Add(panel2);
             Controls.Add(panel1);
             Controls.Add(topbarStockInOutPanel);

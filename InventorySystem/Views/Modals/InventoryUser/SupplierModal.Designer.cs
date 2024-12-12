@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SupplierModal));
             topbarStockInOutPanel = new Panel();
             label1 = new Label();
@@ -70,11 +70,11 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Arial", 26F);
+            label1.Font = new Font("Calibri", 26F);
             label1.ForeColor = SystemColors.ButtonHighlight;
             label1.Location = new Point(24, 31);
             label1.Name = "label1";
-            label1.Size = new Size(141, 40);
+            label1.Size = new Size(133, 42);
             label1.TabIndex = 0;
             label1.Text = "Supplier";
             // 
@@ -93,46 +93,49 @@
             panel20.BorderStyle = BorderStyle.FixedSingle;
             panel20.Controls.Add(dataGridViewSuppliers);
             panel20.Dock = DockStyle.Fill;
-            panel20.Location = new Point(0, 194);
+            panel20.Location = new Point(0, 188);
             panel20.Name = "panel20";
-            panel20.Padding = new Padding(30, 10, 30, 10);
-            panel20.Size = new Size(1352, 468);
+            panel20.Padding = new Padding(30, 10, 30, 30);
+            panel20.Size = new Size(1352, 474);
             panel20.TabIndex = 10;
             // 
             // dataGridViewSuppliers
             // 
             dataGridViewSuppliers.AllowUserToAddRows = false;
-            dataGridViewSuppliers.BackgroundColor = SystemColors.ButtonHighlight;
+            dataGridViewSuppliers.BackgroundColor = SystemColors.Control;
             dataGridViewSuppliers.BorderStyle = BorderStyle.None;
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = SystemColors.ControlLight;
-            dataGridViewCellStyle4.Font = new Font("Segoe UI", 15F);
-            dataGridViewCellStyle4.ForeColor = SystemColors.ActiveCaptionText;
-            dataGridViewCellStyle4.SelectionBackColor = Color.Transparent;
-            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
-            dataGridViewSuppliers.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewSuppliers.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = Color.SteelBlue;
+            dataGridViewCellStyle1.Font = new Font("Calibri", 15F);
+            dataGridViewCellStyle1.ForeColor = SystemColors.ButtonHighlight;
+            dataGridViewCellStyle1.SelectionBackColor = Color.SteelBlue;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.ButtonHighlight;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            dataGridViewSuppliers.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dataGridViewSuppliers.ColumnHeadersHeight = 40;
             dataGridViewSuppliers.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn5, dataGridViewTextBoxColumn6, dataGridViewTextBoxColumn7, Column8 });
             dataGridViewSuppliers.Dock = DockStyle.Fill;
             dataGridViewSuppliers.EnableHeadersVisualStyles = false;
+            dataGridViewSuppliers.GridColor = SystemColors.ScrollBar;
             dataGridViewSuppliers.Location = new Point(30, 10);
             dataGridViewSuppliers.Name = "dataGridViewSuppliers";
             dataGridViewSuppliers.ReadOnly = true;
-            dataGridViewSuppliers.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = SystemColors.Control;
-            dataGridViewCellStyle5.Font = new Font("Segoe UI", 30F);
-            dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
-            dataGridViewSuppliers.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewSuppliers.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = SystemColors.Control;
+            dataGridViewCellStyle2.Font = new Font("Calibri", 30F);
+            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            dataGridViewSuppliers.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dataGridViewSuppliers.RowHeadersVisible = false;
-            dataGridViewCellStyle6.Font = new Font("Microsoft Sans Serif", 15F);
-            dataGridViewSuppliers.RowsDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle3.Font = new Font("Calibri", 15F);
+            dataGridViewSuppliers.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewSuppliers.RowTemplate.Height = 33;
             dataGridViewSuppliers.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridViewSuppliers.Size = new Size(1290, 446);
+            dataGridViewSuppliers.Size = new Size(1290, 432);
             dataGridViewSuppliers.TabIndex = 4;
             dataGridViewSuppliers.CellClick += supplierRowClick;
             // 
@@ -176,16 +179,16 @@
             panel21.Dock = DockStyle.Top;
             panel21.Location = new Point(0, 0);
             panel21.Name = "panel21";
-            panel21.Size = new Size(1352, 194);
+            panel21.Size = new Size(1352, 188);
             panel21.TabIndex = 8;
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI", 16F);
+            label5.Font = new Font("Calibri", 17F);
             label5.Location = new Point(25, 20);
             label5.Name = "label5";
-            label5.Size = new Size(166, 30);
+            label5.Size = new Size(160, 28);
             label5.TabIndex = 13;
             label5.Text = "Search supplier:";
             // 
@@ -193,24 +196,27 @@
             // 
             archiveSupplierButton.BackColor = Color.Red;
             archiveSupplierButton.Cursor = Cursors.Hand;
-            archiveSupplierButton.Font = new Font("Segoe UI", 14F);
+            archiveSupplierButton.Font = new Font("Calibri", 14F);
             archiveSupplierButton.ForeColor = SystemColors.ButtonHighlight;
-            archiveSupplierButton.Location = new Point(426, 111);
+            archiveSupplierButton.Image = Properties.Resources.archive_button_icon1;
+            archiveSupplierButton.Location = new Point(456, 112);
             archiveSupplierButton.Name = "archiveSupplierButton";
-            archiveSupplierButton.Size = new Size(165, 63);
+            archiveSupplierButton.Padding = new Padding(10, 4, 10, 4);
+            archiveSupplierButton.Size = new Size(195, 53);
             archiveSupplierButton.TabIndex = 5;
             archiveSupplierButton.Text = "Archive Supplier";
+            archiveSupplierButton.TextImageRelation = TextImageRelation.ImageBeforeText;
             archiveSupplierButton.UseVisualStyleBackColor = false;
             archiveSupplierButton.Click += archiveSupplierButton_Click;
             // 
             // searchSupplierBox
             // 
             searchSupplierBox.BackColor = SystemColors.ControlLightLight;
-            searchSupplierBox.Font = new Font("Segoe UI", 16F);
+            searchSupplierBox.Font = new Font("Calibri", 18F);
             searchSupplierBox.Location = new Point(30, 53);
             searchSupplierBox.Name = "searchSupplierBox";
-            searchSupplierBox.PlaceholderText = "Search supplier";
-            searchSupplierBox.Size = new Size(406, 36);
+            searchSupplierBox.PlaceholderText = "Supplier";
+            searchSupplierBox.Size = new Size(406, 37);
             searchSupplierBox.TabIndex = 0;
             searchSupplierBox.TextChanged += searchSupplierBox_TextChanged;
             // 
@@ -218,13 +224,16 @@
             // 
             updateSupplierButton.BackColor = Color.Goldenrod;
             updateSupplierButton.Cursor = Cursors.Hand;
-            updateSupplierButton.Font = new Font("Segoe UI", 14F);
+            updateSupplierButton.Font = new Font("Calibri", 14F);
             updateSupplierButton.ForeColor = SystemColors.ButtonHighlight;
+            updateSupplierButton.Image = Properties.Resources.pen;
             updateSupplierButton.Location = new Point(229, 112);
             updateSupplierButton.Name = "updateSupplierButton";
-            updateSupplierButton.Size = new Size(165, 62);
+            updateSupplierButton.Padding = new Padding(10, 4, 10, 4);
+            updateSupplierButton.Size = new Size(207, 53);
             updateSupplierButton.TabIndex = 4;
             updateSupplierButton.Text = "Update Supplier";
+            updateSupplierButton.TextImageRelation = TextImageRelation.ImageBeforeText;
             updateSupplierButton.UseVisualStyleBackColor = false;
             updateSupplierButton.Click += updateSupplierButton_Click;
             // 
@@ -232,27 +241,34 @@
             // 
             newSupplierButton.BackColor = SystemColors.MenuHighlight;
             newSupplierButton.Cursor = Cursors.Hand;
-            newSupplierButton.Font = new Font("Segoe UI", 14F);
+            newSupplierButton.Font = new Font("Calibri", 14F);
             newSupplierButton.ForeColor = SystemColors.ButtonHighlight;
+            newSupplierButton.Image = Properties.Resources.plus;
+            newSupplierButton.ImageAlign = ContentAlignment.MiddleLeft;
             newSupplierButton.Location = new Point(31, 111);
             newSupplierButton.Name = "newSupplierButton";
-            newSupplierButton.Size = new Size(165, 63);
+            newSupplierButton.Padding = new Padding(10, 4, 10, 4);
+            newSupplierButton.Size = new Size(181, 53);
             newSupplierButton.TabIndex = 2;
             newSupplierButton.Text = "New Supplier";
+            newSupplierButton.TextImageRelation = TextImageRelation.ImageBeforeText;
             newSupplierButton.UseVisualStyleBackColor = false;
             newSupplierButton.Click += newSupplierButton_Click;
             // 
             // exportSupplierButton
             // 
-            exportSupplierButton.BackColor = Color.ForestGreen;
+            exportSupplierButton.BackColor = Color.FromArgb(64, 64, 64);
             exportSupplierButton.Cursor = Cursors.Hand;
-            exportSupplierButton.Font = new Font("Segoe UI", 14F);
+            exportSupplierButton.Font = new Font("Calibri", 14F);
             exportSupplierButton.ForeColor = SystemColors.ButtonHighlight;
-            exportSupplierButton.Location = new Point(619, 111);
+            exportSupplierButton.Image = Properties.Resources.upload;
+            exportSupplierButton.Location = new Point(671, 112);
             exportSupplierButton.Name = "exportSupplierButton";
-            exportSupplierButton.Size = new Size(165, 63);
+            exportSupplierButton.Padding = new Padding(10, 4, 10, 4);
+            exportSupplierButton.Size = new Size(181, 53);
             exportSupplierButton.TabIndex = 3;
             exportSupplierButton.Text = "Export Excel";
+            exportSupplierButton.TextImageRelation = TextImageRelation.ImageBeforeText;
             exportSupplierButton.UseVisualStyleBackColor = false;
             exportSupplierButton.Click += exportSupplierButton_Click;
             // 

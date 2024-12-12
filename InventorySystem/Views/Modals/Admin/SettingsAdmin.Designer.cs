@@ -88,7 +88,7 @@
             // 
             // accountBtn
             // 
-            accountBtn.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            accountBtn.Font = new Font("Calibri", 12F);
             accountBtn.Image = Properties.Resources.user__1_;
             accountBtn.ImageAlign = ContentAlignment.TopCenter;
             accountBtn.Location = new Point(24, 260);
@@ -113,16 +113,16 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 16F);
+            label3.Font = new Font("Calibri", 16F);
             label3.Location = new Point(17, 201);
             label3.Name = "label3";
-            label3.Size = new Size(75, 30);
+            label3.Size = new Size(71, 27);
             label3.TabIndex = 8;
             label3.Text = "Profile";
             // 
             // restoreBtn
             // 
-            restoreBtn.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            restoreBtn.Font = new Font("Calibri", 12F);
             restoreBtn.Image = Properties.Resources.restoreIcon;
             restoreBtn.ImageAlign = ContentAlignment.TopCenter;
             restoreBtn.Location = new Point(164, 74);
@@ -138,7 +138,7 @@
             // 
             // backupBtn
             // 
-            backupBtn.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            backupBtn.Font = new Font("Calibri", 12F);
             backupBtn.Image = Properties.Resources.backupIcon;
             backupBtn.ImageAlign = ContentAlignment.TopCenter;
             backupBtn.Location = new Point(22, 74);
@@ -163,10 +163,10 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Font = new Font("Segoe UI", 16F);
+            label8.Font = new Font("Calibri", 16F);
             label8.Location = new Point(17, 12);
             label8.Name = "label8";
-            label8.Size = new Size(204, 30);
+            label8.Size = new Size(193, 27);
             label8.TabIndex = 5;
             label8.Text = "Backup and Restore";
             // 
@@ -181,7 +181,7 @@
             // 
             // closeSettingsWindow
             // 
-            closeSettingsWindow.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            closeSettingsWindow.Font = new Font("Calibri", 14.25F);
             closeSettingsWindow.Image = Properties.Resources.close_circle_icon_256x255_7gelhh31__1_;
             closeSettingsWindow.ImageAlign = ContentAlignment.MiddleLeft;
             closeSettingsWindow.Location = new Point(642, 6);
@@ -207,10 +207,10 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI Semibold", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.Font = new Font("Calibri", 20.25F, FontStyle.Bold);
             label1.Location = new Point(17, 16);
             label1.Name = "label1";
-            label1.Size = new Size(117, 37);
+            label1.Size = new Size(104, 33);
             label1.TabIndex = 0;
             label1.Text = "Settings";
             // 
