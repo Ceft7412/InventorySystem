@@ -35,8 +35,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Inventory));
             navigationPanel = new Panel();
             panel3 = new Panel();
-            pictureBox1 = new PictureBox();
-            pictureBox2 = new PictureBox();
+            notificationBtn = new PictureBox();
+            informationBtn = new PictureBox();
             logoutNavigationButton = new Button();
             settingsNavigationButton = new Button();
             archiveNavigationButton = new Button();
@@ -61,6 +61,7 @@
             addItemButton = new Button();
             panel2 = new Panel();
             dataGridViewItems = new DataGridView();
+            Column8 = new DataGridViewTextBoxColumn();
             Column1 = new DataGridViewTextBoxColumn();
             Column2 = new DataGridViewTextBoxColumn();
             Column3 = new DataGridViewTextBoxColumn();
@@ -70,8 +71,8 @@
             Column7 = new DataGridViewTextBoxColumn();
             navigationPanel.SuspendLayout();
             panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)notificationBtn).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)informationBtn).BeginInit();
             ((System.ComponentModel.ISupportInitialize)companyLogo).BeginInit();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
@@ -98,39 +99,39 @@
             // panel3
             // 
             panel3.BackColor = Color.Transparent;
-            panel3.Controls.Add(pictureBox1);
-            panel3.Controls.Add(pictureBox2);
+            panel3.Controls.Add(notificationBtn);
+            panel3.Controls.Add(informationBtn);
             panel3.Dock = DockStyle.Right;
             panel3.Location = new Point(1364, 0);
             panel3.Name = "panel3";
             panel3.Size = new Size(238, 144);
             panel3.TabIndex = 9;
             // 
-            // pictureBox1
+            // notificationBtn
             // 
-            pictureBox1.Anchor = AnchorStyles.Top;
-            pictureBox1.BackColor = Color.Transparent;
-            pictureBox1.Cursor = Cursors.Hand;
-            pictureBox1.Image = Properties.Resources.notification;
-            pictureBox1.Location = new Point(50, 42);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(64, 64);
-            pictureBox1.SizeMode = PictureBoxSizeMode.AutoSize;
-            pictureBox1.TabIndex = 7;
-            pictureBox1.TabStop = false;
+            notificationBtn.Anchor = AnchorStyles.Top;
+            notificationBtn.BackColor = Color.Transparent;
+            notificationBtn.Cursor = Cursors.Hand;
+            notificationBtn.Image = Properties.Resources.notification;
+            notificationBtn.Location = new Point(50, 42);
+            notificationBtn.Name = "notificationBtn";
+            notificationBtn.Size = new Size(64, 64);
+            notificationBtn.SizeMode = PictureBoxSizeMode.AutoSize;
+            notificationBtn.TabIndex = 7;
+            notificationBtn.TabStop = false;
             // 
-            // pictureBox2
+            // informationBtn
             // 
-            pictureBox2.Anchor = AnchorStyles.Top;
-            pictureBox2.BackColor = Color.Transparent;
-            pictureBox2.Cursor = Cursors.Hand;
-            pictureBox2.Image = Properties.Resources.question;
-            pictureBox2.Location = new Point(152, 42);
-            pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(64, 64);
-            pictureBox2.SizeMode = PictureBoxSizeMode.AutoSize;
-            pictureBox2.TabIndex = 8;
-            pictureBox2.TabStop = false;
+            informationBtn.Anchor = AnchorStyles.Top;
+            informationBtn.BackColor = Color.Transparent;
+            informationBtn.Cursor = Cursors.Hand;
+            informationBtn.Image = Properties.Resources.question;
+            informationBtn.Location = new Point(152, 42);
+            informationBtn.Name = "informationBtn";
+            informationBtn.Size = new Size(64, 64);
+            informationBtn.SizeMode = PictureBoxSizeMode.AutoSize;
+            informationBtn.TabIndex = 8;
+            informationBtn.TabStop = false;
             // 
             // logoutNavigationButton
             // 
@@ -496,7 +497,7 @@
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
             dataGridViewItems.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dataGridViewItems.ColumnHeadersHeight = 45;
-            dataGridViewItems.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2, Column3, Column4, Column5, Column6, Column7 });
+            dataGridViewItems.Columns.AddRange(new DataGridViewColumn[] { Column8, Column1, Column2, Column3, Column4, Column5, Column6, Column7 });
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = SystemColors.Window;
             dataGridViewCellStyle2.Font = new Font("Calibri", 16F);
@@ -528,6 +529,13 @@
             dataGridViewItems.Size = new Size(1564, 440);
             dataGridViewItems.TabIndex = 0;
             dataGridViewItems.CellClick += SelectedItemCodeRowClick;
+            // 
+            // Column8
+            // 
+            Column8.HeaderText = "Item ID";
+            Column8.Name = "Column8";
+            Column8.ReadOnly = true;
+            Column8.Width = 200;
             // 
             // Column1
             // 
@@ -596,8 +604,8 @@
             navigationPanel.ResumeLayout(false);
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)notificationBtn).EndInit();
+            ((System.ComponentModel.ISupportInitialize)informationBtn).EndInit();
             ((System.ComponentModel.ISupportInitialize)companyLogo).EndInit();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
@@ -633,6 +641,10 @@
         private Button refreshData;
         private Button importExcelBtn;
         private Button btnSaveToDatabase;
+        private PictureBox notificationBtn;
+        private PictureBox informationBtn;
+        private Panel panel3;
+        private DataGridViewTextBoxColumn Column8;
         private DataGridViewTextBoxColumn Column1;
         private DataGridViewTextBoxColumn Column2;
         private DataGridViewTextBoxColumn Column3;
@@ -640,8 +652,5 @@
         private DataGridViewTextBoxColumn Column5;
         private DataGridViewTextBoxColumn Column6;
         private DataGridViewTextBoxColumn Column7;
-        private PictureBox pictureBox1;
-        private PictureBox pictureBox2;
-        private Panel panel3;
     }
 }

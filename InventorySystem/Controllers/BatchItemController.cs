@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
 using System.Configuration;
+using InventorySystem.Controllers;
 
 namespace InventorySystem.Controllers
 {
@@ -289,15 +290,33 @@ namespace InventorySystem.Controllers
             }
         }
 
-
-        public void AddBatchItem(string productCode, int quantity, string unit, string reason, DateTime date, string transaction_type)
+        public bool ItemIdExists(int item_id)
         {
+            string query = "SELECT COUNT(*) FROM tbItem WHERE item_id = @item_id";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@item_id", item_id);
+                int count = (int)command.ExecuteScalar();
+                return count > 0;
+            }
+        }
+
+        public void AddBatchItem(int item_id, string productCode, int quantity, string unit, string reason, DateTime date, string transaction_type)
+        {   
             if (!ProductCodeExists(productCode, unit))
             {
                 throw new ArgumentException("Product code and unit combination does not exist.");
             }
 
-            var existingItem = batchItems.FirstOrDefault(i => i.ProductCode == productCode && i.Reason == reason);
+            if(!ItemIdExists(item_id))
+            {
+                throw new ArgumentException("Item ID does not exist.");
+            }
+
+            var existingItem = batchItems.FirstOrDefault(i => i.ItemId == item_id && i.ProductCode == productCode && i.Reason == reason);
             if (existingItem != null)
             {
                 // If an item exists with the same reason, update the quantity and possibly the date
@@ -308,6 +327,7 @@ namespace InventorySystem.Controllers
             {
                 BatchItem batchItem = new BatchItem
                 {
+                    ItemId = item_id,
                     ProductCode = productCode,
                     Quantity = quantity,
                     Unit = unit,
@@ -366,8 +386,44 @@ namespace InventorySystem.Controllers
                 throw new InvalidOperationException("An error occurred while generating a unique batch item ID.", ex);
             }
         }
+        public int GenerateUniqueTransactionID()
+        {
+            try
+            {
+                int transaction_id;
+                bool isUnique;
 
-        public void SaveBatchItemsToDatabase(string transaction_type)
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    do
+                    {
+                        // Generate a random 8-digit number
+                        transaction_id = new Random().Next(10000000, 99999999);
+                        string query = "SELECT COUNT(*) FROM [tbTransaction] WHERE transaction_id = @transactionID";
+                        // Check if the generated ID already exists in the database
+                        using (SqlCommand command = new SqlCommand(query, connection))
+                        {
+                            command.Parameters.AddWithValue("@transactionID", transaction_id);
+                            int countTransactionId = (int)command.ExecuteScalar();
+
+                            // Unique if no records are found
+                            isUnique = countTransactionId == 0;
+                        }
+
+                    } while (!isUnique); // Keep generating until we find a unique ID
+                }
+
+                return transaction_id;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to generate unique transaction ID: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return -1;
+            }
+        }
+
+        public void SaveTransaction(string transaction_type)
         {
             try
             {
@@ -384,12 +440,30 @@ namespace InventorySystem.Controllers
                     // First, create the batch and get the batch ID
                     string batchId = GenerateUniqueBatchId(connection);
                     string batchItemId = GenerateUniqueBatchItemId(connection);
-                    string batchQuery = "INSERT INTO tbBatches(batchId, date, transaction_type) VALUES(@batchId, @date, @transaction_type)";
+                    int transaction_id = GenerateUniqueTransactionID();
+
+                    int employee_id = SessionData.UserId;
+
+                    DateTime dateTime = DateTime.Now;
+
+
+                    string transactionQuery = "INSERT INTO tbTransaction(transaction_id, employee_id, type, timestamp) VALUES(@transaction_id, @employee_id, @type, @timestamp)";
+                    using (SqlCommand addTransactionCommand = new SqlCommand(transactionQuery, connection))
+                    {
+                        addTransactionCommand.Parameters.AddWithValue("@transaction_id", transaction_id);
+                        addTransactionCommand.Parameters.AddWithValue("@employee_id", employee_id);
+                        addTransactionCommand.Parameters.AddWithValue("@type", transaction_type);
+                        addTransactionCommand.Parameters.AddWithValue("@timestamp", dateTime);
+                        addTransactionCommand.ExecuteNonQuery();
+                    }
+
+
+                    string batchQuery = "INSERT INTO tbBatches(batchId, date, transaction_id) VALUES(@batchId, @date, @transaction_id)";
                     using (SqlCommand addCommand = new SqlCommand(batchQuery, connection))
                     {
                         addCommand.Parameters.AddWithValue("@batchId", batchId);
-                        addCommand.Parameters.AddWithValue("@date", DateTime.Now);
-                        addCommand.Parameters.AddWithValue("@transaction_type", transaction_type);
+                        addCommand.Parameters.AddWithValue("@date", dateTime);
+                        addCommand.Parameters.AddWithValue("@transaction_id", transaction_id);
                         addCommand.ExecuteNonQuery();
                     }
 
@@ -399,9 +473,10 @@ namespace InventorySystem.Controllers
                         if (transaction_type == "OUT")
                         {
                             // Modified query to check stock for both productCode and unit combination
-                            string checkStockQuery = "SELECT productQuantity FROM tbItem WHERE productCode = @productCode AND unit = @unit";
+                            string checkStockQuery = "SELECT productQuantity FROM tbItem WHERE item_id = @item_id AND productCode = @productCode AND unit = @unit";
                             using (SqlCommand checkStockCommand = new SqlCommand(checkStockQuery, connection))
                             {
+                                checkStockCommand.Parameters.AddWithValue("@item_id", item.ItemId);
                                 checkStockCommand.Parameters.AddWithValue("@productCode", item.ProductCode);
                                 checkStockCommand.Parameters.AddWithValue("@unit", item.Unit);
                                 int currentQuantity = (int)checkStockCommand.ExecuteScalar();
@@ -414,12 +489,13 @@ namespace InventorySystem.Controllers
                         }
 
                         // Insert batch item
-                        string batchItemsQuery = "INSERT INTO tbBatchItems(batchItemId, batchId, productCode, quantity, type, reason, date, unit) " +
-                                                  "VALUES(@batchItemId, @batchId, @productCode, @quantity, @type, @reason, @date, @unit)";
+                        string batchItemsQuery = "INSERT INTO tbBatchItems(batchItemId, batchId, transaction_id, productCode, quantity, type, reason, date, unit) " +
+                                                  "VALUES(@batchItemId, @batchId, @transaction_id, @productCode, @quantity, @type, @reason, @date, @unit)";
                         using (SqlCommand addCommand = new SqlCommand(batchItemsQuery, connection))
                         {
                             addCommand.Parameters.AddWithValue("@batchItemId", batchItemId);
                             addCommand.Parameters.AddWithValue("@batchId", batchId);
+                            addCommand.Parameters.AddWithValue("@transaction_id", transaction_id);
                             addCommand.Parameters.AddWithValue("@productCode", item.ProductCode);
                             addCommand.Parameters.AddWithValue("@quantity", item.Quantity);
                             addCommand.Parameters.AddWithValue("@unit", item.Unit);
@@ -431,14 +507,15 @@ namespace InventorySystem.Controllers
                         }
 
                         // Update product stock considering unit
-                        string updateProductQuery = "UPDATE tbItem SET productQuantity = productQuantity + @quantity WHERE productCode = @productCode AND unit = @unit";
+                        string updateProductQuery = "UPDATE tbItem SET productQuantity = productQuantity + @quantity WHERE item_id = @item_id AND productCode = @productCode AND unit = @unit";
                         if (transaction_type == "OUT")
                         {
-                            updateProductQuery = "UPDATE tbItem SET productQuantity = productQuantity - @quantity WHERE productCode = @productCode AND unit = @unit";
+                            updateProductQuery = "UPDATE tbItem SET productQuantity = productQuantity - @quantity WHERE item_id = @item_id AND productCode = @productCode AND unit = @unit";
                         }
 
                         using (SqlCommand updateCommand = new SqlCommand(updateProductQuery, connection))
                         {
+                            updateCommand.Parameters.AddWithValue("@item_id", item.ItemId);
                             updateCommand.Parameters.AddWithValue("@productCode", item.ProductCode);
                             updateCommand.Parameters.AddWithValue("@unit", item.Unit);  // Add unit to stock update
                             updateCommand.Parameters.AddWithValue("@quantity", item.Quantity);
@@ -446,7 +523,7 @@ namespace InventorySystem.Controllers
                         }
                     }
 
-                    MessageBox.Show("Batch items added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Save items successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     ClearBatchItems();
                 }
             }

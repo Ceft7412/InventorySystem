@@ -8,6 +8,7 @@ namespace InventorySystem.Models
 {
     public class Item
     {
+        public int ItemId { get; set; }
         public string ProductCode { get; set; }
         public string ProductDescription { get; set; }
         public string Category { get; set; }

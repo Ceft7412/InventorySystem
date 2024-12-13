@@ -94,13 +94,13 @@ namespace InventorySystem.Controllers
             try
             {
                 var employeeDetails = GENERATE_EMPLOYEE_DETAILS(firstname.ToLower());
-                string employeeId;
+                int employeeId;
                 string username;
                 string default_password = BCrypt.Net.BCrypt.HashPassword("123");
                 string role = "employee";
                 if (employeeDetails != null)
                 {
-                    employeeId = "E" + employeeDetails.Item1.ToString(); // Output: E539239
+                    employeeId = employeeDetails.Item1; // Output: E539239
                     username = employeeDetails.Item2.ToLower(); // Get the username
                 }
                 else
@@ -227,7 +227,7 @@ namespace InventorySystem.Controllers
                     {
                         // Generate a 6-digit random number
                         employee_id = random.Next(100000, 1000000);
-                        string search_id = "E" + employee_id;
+                        int search_id = employee_id;
 
                         // Check if the generated ID exists in the database
                         string query = "SELECT COUNT(*) FROM tbUser WHERE user_id = @employee_id";
@@ -254,7 +254,7 @@ namespace InventorySystem.Controllers
             }
         }
 
-        public Tuple<long, string> GENERATE_EMPLOYEE_DETAILS(string firstname)
+        public Tuple<int, string> GENERATE_EMPLOYEE_DETAILS(string firstname)
         {
             try
             {
@@ -265,7 +265,7 @@ namespace InventorySystem.Controllers
                 string new_username = firstname + employee_id.ToString();
 
                 // Return both employee ID and username as a Tuple
-                return new Tuple<long, string>(employee_id, new_username);
+                return new Tuple<int, string>(employee_id, new_username);
             }
             catch (Exception ex)
             {

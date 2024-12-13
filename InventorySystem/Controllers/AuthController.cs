@@ -13,7 +13,7 @@ namespace InventorySystem.Controllers
 {
     public static class SessionData
     {
-        public static string UserId { get; set; }
+        public static int UserId { get; set; }
     }
     public class AuthController
     {
@@ -38,10 +38,11 @@ namespace InventorySystem.Controllers
                         if (BCrypt.Net.BCrypt.Verify(password, storedHash))
                         {
                             string role = reader["role"] as string;
-                            string userId = reader["user_id"] as string;
+                            int userId = reader["user_id"] != DBNull.Value ? Convert.ToInt32(reader["user_id"]) : 0;
+                            string toStringId = userId.ToString();
                             bool isFirstLogin = (bool)reader["is_first_login"];
                             AuthService.Authenticated();
-                            return (true, role, userId, isFirstLogin);
+                            return (true, role, toStringId, isFirstLogin);
                         }
                     }
                 }
@@ -103,7 +104,7 @@ namespace InventorySystem.Controllers
             return false;
         }
 
-        public bool CheckMatchPasswordAdmin(string user_id, string password)
+        public bool CheckMatchPasswordAdmin(int user_id, string password)
         {
             try
             {
@@ -152,7 +153,7 @@ namespace InventorySystem.Controllers
             }
         }
 
-        public bool UpdatePasswordAdmin(string user_id, string newPassword)
+        public bool UpdatePasswordAdmin(int user_id, string newPassword)
         {
             try
             {
@@ -174,7 +175,7 @@ namespace InventorySystem.Controllers
             }
         }
 
-        public bool UpdateAdminInfo(string user_id, string firstname, string lastname, string username)
+        public bool UpdateAdminInfo(int user_id, string firstname, string lastname, string username)
         {
             try
             {
@@ -198,7 +199,7 @@ namespace InventorySystem.Controllers
             }
         }
 
-        public bool UpdateEmployeeInfo(string user_id, string firstname, string lastname, string username, string contact, string address)
+        public bool UpdateEmployeeInfo(int user_id, string firstname, string lastname, string username, string contact, string address)
         {
             try
             {
@@ -224,7 +225,7 @@ namespace InventorySystem.Controllers
             }
         }
 
-        public Employee GetEmployeeData(string id)
+        public Employee GetEmployeeData(int id)
         {
             try
             {

@@ -46,6 +46,8 @@
             label2 = new Label();
             updateItemDescriptionInput = new TextBox();
             label7 = new Label();
+            updateItemIdInput = new TextBox();
+            label8 = new Label();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             SuspendLayout();
@@ -74,6 +76,8 @@
             // 
             // panel2
             // 
+            panel2.Controls.Add(updateItemIdInput);
+            panel2.Controls.Add(label8);
             panel2.Controls.Add(updateItemSupplierInput);
             panel2.Controls.Add(label6);
             panel2.Controls.Add(updateItemUnitInput);
@@ -204,17 +208,17 @@
             // updateItemCodeInput
             // 
             updateItemCodeInput.Font = new Font("Calibri", 17F);
-            updateItemCodeInput.Location = new Point(38, 56);
+            updateItemCodeInput.Location = new Point(316, 55);
             updateItemCodeInput.Name = "updateItemCodeInput";
             updateItemCodeInput.ReadOnly = true;
-            updateItemCodeInput.Size = new Size(516, 35);
+            updateItemCodeInput.Size = new Size(238, 35);
             updateItemCodeInput.TabIndex = 3;
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Calibri", 18F);
-            label2.Location = new Point(38, 21);
+            label2.Location = new Point(316, 20);
             label2.Name = "label2";
             label2.Size = new Size(114, 29);
             label2.TabIndex = 2;
@@ -237,6 +241,25 @@
             label7.Size = new Size(175, 29);
             label7.TabIndex = 0;
             label7.Text = "Item Description";
+            // 
+            // updateItemIdInput
+            // 
+            updateItemIdInput.Font = new Font("Calibri", 17F);
+            updateItemIdInput.Location = new Point(40, 55);
+            updateItemIdInput.Name = "updateItemIdInput";
+            updateItemIdInput.ReadOnly = true;
+            updateItemIdInput.Size = new Size(238, 35);
+            updateItemIdInput.TabIndex = 18;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Font = new Font("Calibri", 18F);
+            label8.Location = new Point(40, 20);
+            label8.Name = "label8";
+            label8.Size = new Size(84, 29);
+            label8.TabIndex = 17;
+            label8.Text = "Item ID";
             // 
             // UpdateItemModal
             // 
@@ -275,5 +298,7 @@
         private Label label2;
         private TextBox updateItemDescriptionInput;
         private Label label7;
+        private TextBox updateItemIdInput;
+        private Label label8;
     }
 }

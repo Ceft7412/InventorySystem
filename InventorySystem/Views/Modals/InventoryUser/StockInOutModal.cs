@@ -161,7 +161,7 @@ namespace InventorySystem.Views.Modals.InventoryUser
                     return;
                 }
                 string transaction_type = "IN";
-                batchItemController.SaveBatchItemsToDatabase(transaction_type);
+                batchItemController.SaveTransaction(transaction_type);
                 RefreshDataGridView();
             }
             catch (Exception ex)
@@ -180,7 +180,7 @@ namespace InventorySystem.Views.Modals.InventoryUser
                     return;
                 }
                 string transaction_type = "OUT";
-                batchItemController.SaveBatchItemsToDatabase(transaction_type);
+                batchItemController.SaveTransaction(transaction_type);
                 RefreshDataGridView();
             }
             catch (Exception ex)
@@ -296,6 +296,7 @@ namespace InventorySystem.Views.Modals.InventoryUser
 
         private void stockInSaveButton_Click(object sender, EventArgs e)
         {
+            int item_id = int.TryParse(stockInItemIdInput.Text.Trim(), out int result) ? result : -1;
             string productCode = stockInProductCodeInput.Text.Trim();
             int quantity;
             string unit = stockInUnitCmb.Text.Trim();
@@ -303,6 +304,12 @@ namespace InventorySystem.Views.Modals.InventoryUser
             string transaction_type = "IN";
             string reason = stockInReasonInput.Text.Trim();
             DateTime transactionDate = stockInDateInput.Value;
+
+            if(item_id == -1)
+            {
+                MessageBox.Show("Please enter valid data.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             if (string.IsNullOrEmpty(productCode) || !isQuantityValid)
             {
                 MessageBox.Show("Please enter valid data.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -310,7 +317,8 @@ namespace InventorySystem.Views.Modals.InventoryUser
             }
             try
             {
-                batchItemController.AddBatchItem(productCode, quantity, unit,  reason, transactionDate, transaction_type);
+                batchItemController.AddBatchItem(result, productCode, quantity, unit,  reason, transactionDate, transaction_type);
+                stockInItemIdInput.Clear();
                 stockInProductCodeInput.Clear();
                 stockInProductQuantity.Clear();
                 stockInReasonInput.Text = "";
@@ -337,6 +345,7 @@ namespace InventorySystem.Views.Modals.InventoryUser
 
         private void stockOutSaveButton_Click(object sender, EventArgs e)
         {
+            int item_id = int.TryParse(stockOutItemIdInput.Text.Trim(), out int result_item_id) ? result_item_id : -1;
             string productCode = stockOutProductCodeInput.Text.Trim();
             int quantity;
             string unit = stockOutUnitCmb.Text.Trim();
@@ -390,7 +399,7 @@ namespace InventorySystem.Views.Modals.InventoryUser
                     // Step 3: Call AddBatchItem to log the stock out operation
                     try
                     {
-                        batchItemController.AddBatchItem(productCode, quantity, unit, reason, transactionDate, transaction_type);
+                        batchItemController.AddBatchItem(result_item_id, productCode, quantity, unit, reason, transactionDate, transaction_type);
                         stockOutProductCodeInput.Clear();
                         stockOutProductQuantity.Clear();
                         stockOutReasonInput.Text = "";

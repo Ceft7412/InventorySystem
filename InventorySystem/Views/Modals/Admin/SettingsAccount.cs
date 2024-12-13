@@ -24,7 +24,7 @@ namespace InventorySystem.Views.Modals.Admin
         }
         private void SettingsAccount_Load(object sender, EventArgs e)
         {
-            idTxt.Text = SessionData.UserId;
+            idTxt.Text = SessionData.UserId.ToString();
             LoadEmployeeData();
         }
 

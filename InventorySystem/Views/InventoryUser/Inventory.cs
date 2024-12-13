@@ -107,6 +107,7 @@ namespace InventorySystem
                     {
                         // Add rows to DataGridView by accessing Item properties
                         dataGridViewItems.Rows.Add(
+                            item.ItemId.ToString(),
                             item.ProductCode,
                             item.ProductDescription,
                             item.Quantity.ToString(), // Assuming ProductQuantity is a numeric type
@@ -333,14 +334,14 @@ namespace InventorySystem
                 {
                     foreach (DataGridViewRow row in selectedRows)
                     {
-                        var itemCode = row.Cells[0].Value.ToString();
+                        var item_id = row.Cells[0].Value.ToString();
                         try
                         {
-                            itemController.ArchiveItem(itemCode);
+                            itemController.ArchiveItem(item_id);
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show($"Failed to archive item {itemCode}. Error: {ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show($"Failed to archive item {item_id}. Error: {ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             return;
                         }
                     }
@@ -537,9 +538,9 @@ namespace InventorySystem
 
                     // Add data to DataGridView
                     int rowIndex = dataGridViewItems.Rows.Add();
-                    dataGridViewItems.Rows[rowIndex].Cells[0].Value = itemCode;
-                    dataGridViewItems.Rows[rowIndex].Cells[1].Value = itemName;
-                    dataGridViewItems.Rows[rowIndex].Cells[3].Value = unit;
+                    dataGridViewItems.Rows[rowIndex].Cells[1].Value = itemCode;
+                    dataGridViewItems.Rows[rowIndex].Cells[2].Value = itemName;
+                    dataGridViewItems.Rows[rowIndex].Cells[4].Value = unit;
                 }
                 btnSaveToDatabase.Visible = true;
 
@@ -600,9 +601,9 @@ namespace InventorySystem
                 // First, populate the HashSet with the existing itemCode and unit combinations in the DataGridView
                 foreach (DataGridViewRow row in dataGridViewItems.Rows)
                 {
-                    if (row.IsNewRow || row.Cells[0].Value == null || row.Cells[3].Value == null) continue;
-                    string itemCode = row.Cells[0].Value.ToString();
-                    string unit = row.Cells[3].Value.ToString();
+                    if (row.IsNewRow || row.Cells[1].Value == null || row.Cells[4].Value == null) continue;
+                    string itemCode = row.Cells[1].Value.ToString();
+                    string unit = row.Cells[4].Value.ToString();
                     string itemCodeUnitCombo = $"{itemCode}|{unit}"; // Combine itemCode and unit
 
                     existingItemCodesAndUnits.Add(itemCodeUnitCombo); // Add to HashSet for checking duplicates
@@ -610,9 +611,9 @@ namespace InventorySystem
 
                 foreach (DataGridViewRow row in dataGridViewItems.Rows)
                 {
-                    if (row.IsNewRow || row.Cells[0].Value == null || row.Cells[3].Value == null) continue;
-                    string itemCode = row.Cells[0].Value.ToString();
-                    string unit = row.Cells[3].Value.ToString();
+                    if (row.IsNewRow || row.Cells[1].Value == null || row.Cells[4].Value == null) continue;
+                    string itemCode = row.Cells[1].Value.ToString();
+                    string unit = row.Cells[4].Value.ToString();
                     string itemCodeUnitCombo = $"{itemCode}|{unit}"; // Combine itemCode and unit
 
                     // Check for duplicate Item Code and Unit combination
@@ -627,12 +628,12 @@ namespace InventorySystem
                     items.Add(new Item
                     {
                         ProductCode = itemCode,
-                        ProductDescription = row.Cells[1].Value?.ToString() ?? "",
+                        ProductDescription = row.Cells[2].Value?.ToString() ?? "",
                         Unit = unit,
-                        Quantity = int.TryParse(row.Cells[2].Value?.ToString(), out int quantity) ? quantity : 0,
-                        Supplier = row.Cells[4].Value?.ToString() ?? "",
-                        Category = row.Cells[5].Value?.ToString() ?? "",
-                        MinimumStock = int.TryParse(row.Cells[6].Value?.ToString(), out int minStock) ? minStock : 0
+                        Quantity = int.TryParse(row.Cells[3].Value?.ToString(), out int quantity) ? quantity : 0,
+                        Supplier = row.Cells[5].Value?.ToString() ?? "",
+                        Category = row.Cells[6].Value?.ToString() ?? "",
+                        MinimumStock = int.TryParse(row.Cells[7].Value?.ToString(), out int minStock) ? minStock : 0
                     });
                 }
 

@@ -55,20 +55,20 @@ namespace InventorySystem.Views.Auth
 
                         // Optional: Update is_first_login in database
                         AuthController.UpdateFirstLoginStatus(username);
-                        SessionData.UserId = UserID;
+                        SessionData.UserId = Convert.ToInt32(UserID);
                     }
 
                     // Proceed based on role
                     if (Role == "admin")
                     {
-                        SessionData.UserId = UserID;
+                        SessionData.UserId = Convert.ToInt32(UserID);
                         InventorySystem.Views.Admin.Admin adminWindow = new InventorySystem.Views.Admin.Admin();
                         adminWindow.Show();
                         this.Hide();
                     }
                     else if (Role == "employee")
                     {
-                        SessionData.UserId = UserID;
+                        SessionData.UserId = Convert.ToInt32(UserID);
                         Inventory inventoryWindow = new Inventory();
                         inventoryWindow.Show();
                         this.Hide();

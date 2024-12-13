@@ -13,13 +13,13 @@ namespace InventorySystem.Views.Modals.InventoryUser
 {
     public partial class UpdateItemModal : Form
     {
-        private string itemCode;
+        private string item_id;
         private ItemController itemController = new ItemController();
         private SupplierController supplierController = new SupplierController();
         public UpdateItemModal(string id)
         {
             InitializeComponent();
-            itemCode = id;
+            item_id = id;
             LoadSelectedItemData();
             LoadSupplierNamesIntoComboBox();
 
@@ -52,16 +52,17 @@ namespace InventorySystem.Views.Modals.InventoryUser
 
         private void LoadSelectedItemData()
         {
-            if (itemCode == null)
+            if (item_id == null)
             {
                 MessageBox.Show("Item code is null", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             try
             {
-                var item = itemController.GetItemData(itemCode);
+                var item = itemController.GetItemData(item_id);
                 if (item != null)
                 {
+                    updateItemIdInput.Text = item.ItemId.ToString();
                     updateItemCodeInput.Text = item.ProductCode;
                     updateItemDescriptionInput.Text = item.ProductDescription;
                     updateItemCategoryInput.Text = item.Category;
@@ -87,7 +88,7 @@ namespace InventorySystem.Views.Modals.InventoryUser
 
         private void updateItemButton_Click(object sender, EventArgs e)
         {
-            if (itemCode == null)
+            if (item_id == null)
             {
                 MessageBox.Show("Item code is null", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -97,8 +98,8 @@ namespace InventorySystem.Views.Modals.InventoryUser
 
             if (result == DialogResult.Yes)
             {
-                itemController.UpdateItem(itemCode, updateItemDescriptionInput.Text, updateItemCategoryInput.Text, updateItemSupplierInput.Text, updateItemUnitInput.Text, int.Parse(updateMinimumStockLevelInput.Text));
-                itemController.GetAllItems("active  ");
+                itemController.UpdateItem(item_id, updateItemDescriptionInput.Text, updateItemCategoryInput.Text, updateItemSupplierInput.Text, updateItemUnitInput.Text, int.Parse(updateMinimumStockLevelInput.Text));
+                itemController.GetAllItems("active");
                 this.Close();
             }
         }

@@ -77,10 +77,12 @@ namespace InventorySystem.Views.Modals.InventoryUser
                 // Default to 0 if input is blank or invalid
                 minimumStock = 0;
             }
+            int item_id = ItemController.GenerateItemId();
             try
             {
                 Item item = new Item
                 {
+                    ItemId = item_id,
                     ProductCode = itemCodeInput.Text,
                     ProductDescription = itemDescriptionInput.Text,
                     Category = itemCategoryInput.Text,

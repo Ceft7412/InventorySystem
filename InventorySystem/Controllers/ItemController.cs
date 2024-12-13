@@ -12,7 +12,8 @@ namespace InventorySystem.Controllers
 {
     public class ItemController
     {
-        private string connectionString = ConfigurationManager.ConnectionStrings["InventoryDb"].ConnectionString; Item item;
+        private static string connectionString = ConfigurationManager.ConnectionStrings["InventoryDb"].ConnectionString; 
+        Item item;
 
 
         
@@ -23,7 +24,7 @@ namespace InventorySystem.Controllers
             try
             {
                 List<Item> items = new List<Item>();
-                string query = "SELECT productCode, productDescription, productQuantity, category, supplier, unit, minimumstocklevel FROM tbItem WHERE status = @status";
+                string query = "SELECT item_id, productCode, productDescription, productQuantity, category, supplier, unit, minimumstocklevel FROM tbItem WHERE status = @status";
 
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
@@ -35,6 +36,7 @@ namespace InventorySystem.Controllers
                     {
                         items.Add(new Item
                         {
+                            ItemId = Convert.ToInt32(reader["item_id"]),
                             ProductCode = reader["productCode"] as string ?? "", // Safely cast to string, if null then use ""
                             ProductDescription = reader["productDescription"] as string ?? "",
                             Quantity = reader["productQuantity"] != DBNull.Value ? Convert.ToInt32(reader["productQuantity"]) : 0, // Check for DBNull
@@ -57,18 +59,21 @@ namespace InventorySystem.Controllers
             }
         }
 
+
+
         // Get specific item data from the database
-        public Item GetItemData(string itemCode)
+        public Item GetItemData(string item_id)
         {
             try
             {
-                string query = "SELECT productCode, productDescription, category, supplier, unit, minimumstocklevel FROM tbItem WHERE productCode = @productCode";
+                MessageBox.Show(item_id);
+                string query = "SELECT item_id, productCode, productDescription, category, supplier, unit, minimumstocklevel FROM tbItem WHERE item_id = @item_id";
 
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-
+                    int id = Convert.ToInt32(item_id);
                     SqlCommand command = new SqlCommand(query, connection);
-                    command.Parameters.AddWithValue("@productCode", itemCode);
+                    command.Parameters.AddWithValue("@item_id", id);
                     connection.Open();
 
                     SqlDataReader reader = command.ExecuteReader();
@@ -83,6 +88,7 @@ namespace InventorySystem.Controllers
 
                         item = new Item
                         {
+                            ItemId = reader["item_id"] != DBNull.Value ? Convert.ToInt32(reader["item_id"]) : 0,
                             ProductCode = reader["productCode"] as string ?? "",
                             ProductDescription = reader["productDescription"] as string ?? "",
                             Category = reader["category"] as string ?? "",
@@ -265,15 +271,15 @@ namespace InventorySystem.Controllers
 
 
         // Set inactive status for an item
-        public void ArchiveItem(string productCode)
+        public void ArchiveItem(string item_id)
         {
             try
             {
-                string query = "UPDATE tbItem SET status = 'inactive' WHERE productCode = @productCode";
+                string query = "UPDATE tbItem SET status = 'inactive' WHERE item_id = @item_id";
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     SqlCommand archiveCommand = new SqlCommand(query, connection);
-                    archiveCommand.Parameters.AddWithValue("@productCode", productCode);
+                    archiveCommand.Parameters.AddWithValue("@item_id", item_id);
                     connection.Open();
                     archiveCommand.ExecuteNonQuery();
                 }
@@ -308,11 +314,12 @@ namespace InventorySystem.Controllers
         // Add item to the database
         public void AddItem(Item item)
         {
-            string query = "INSERT INTO tbItem (productCode, productDescription, productQuantity, category, supplier, unit, minimumstocklevel, status, created_at) VALUES (@productCode, @productDescription, @productQuantity, @category, @supplier, @unit, @minimumstocklevel, @status, @created_at)";
+            string query = "INSERT INTO tbItem (item_id, productCode, productDescription, productQuantity, category, supplier, unit, minimumstocklevel, status, created_at) VALUES (@item_id, @productCode, @productDescription, @productQuantity, @category, @supplier, @unit, @minimumstocklevel, @status, @created_at)";
             DateTime dateTime = DateTime.Now;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand addCommand = new SqlCommand(query, connection);
+                addCommand.Parameters.AddWithValue("@item_id", item.ItemId);
                 addCommand.Parameters.AddWithValue("@productCode", item.ProductCode);
                 addCommand.Parameters.AddWithValue("@productDescription", item.ProductDescription);
                 addCommand.Parameters.AddWithValue("@productQuantity", item.Quantity);
@@ -328,24 +335,25 @@ namespace InventorySystem.Controllers
             }
         }
 
+       
 
-        // Update an existing item in the database
-        public void UpdateItem(string productCode, string productDescription, string category, string supplier, string unit, int minimumstocklevel)
+            // Update an existing item in the database
+        public void UpdateItem(string item_id, string productDescription, string category, string supplier, string unit, int minimumstocklevel)
         {
             try
             {
-                if (productCode == null)
+                if (item_id == null)
                 {
-                    MessageBox.Show("Error message: Product code is null", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Error message: Item ID is null", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
 
                 }
-                string query = "UPDATE tbItem SET productDescription = @productDescription, category = @category, supplier = @supplier, unit = @unit, minimumstocklevel = @minimumstocklevel, updated_at = @updated_at WHERE productCode = @productCode";
+                string query = "UPDATE tbItem SET productDescription = @productDescription, category = @category, supplier = @supplier, unit = @unit, minimumstocklevel = @minimumstocklevel, updated_at = @updated_at WHERE item_id = @item_id";
                 DateTime dateTime = DateTime.Now;
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     SqlCommand updateCommand = new SqlCommand(query, connection);
-                    updateCommand.Parameters.AddWithValue("@productCode", productCode);
+                    updateCommand.Parameters.AddWithValue("@item_id", item_id);
                     updateCommand.Parameters.AddWithValue("@productDescription", productDescription);
                     updateCommand.Parameters.AddWithValue("@unit", unit);
                     updateCommand.Parameters.AddWithValue("@category", category);
@@ -362,6 +370,34 @@ namespace InventorySystem.Controllers
                 MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        public static int GenerateItemId()
+        {
+            try
+            {
+                int item_id;
+                bool isUnique;
+                do
+                {
+                    Random random = new Random();
+                    item_id = random.Next(100000, 999999);
+                    string query = "SELECT COUNT(*) FROM tbItem WHERE item_id = @item_id";
+                    using (SqlConnection connection = new SqlConnection(connectionString))
+                    {
+                        SqlCommand checkCommand = new SqlCommand(query, connection);
+                        checkCommand.Parameters.AddWithValue("@item_id", item_id);
+                        connection.Open();
+                        int count = (int)checkCommand.ExecuteScalar();
+                        isUnique = count == 0;
+                    }
+                } while (!isUnique);
+                return item_id;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to generate an item id: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return -1;
+            }
+        }
 
         // Method to save a list of items to the database
         public void SaveItemsToDatabase(List<Item> items)
@@ -375,10 +411,12 @@ namespace InventorySystem.Controllers
 
                 foreach (var item in items)
                 {
+                    int uniqueItemId = GenerateItemId(); // Generate unique item ID
                     // Check if the item already exists in the database with the same productCode and unit
-                    string checkQuery = "SELECT COUNT(*) FROM tbItem WHERE productCode = @ItemCode AND unit = @Unit";
+                    string checkQuery = "SELECT COUNT(*) FROM tbItem WHERE item_id = @item_id AND productCode = @ItemCode AND unit = @Unit";
                     using (SqlCommand checkCmd = new SqlCommand(checkQuery, connection))
                     {
+                        checkCmd.Parameters.AddWithValue("@item_id", uniqueItemId);
                         checkCmd.Parameters.AddWithValue("@ItemCode", item.ProductCode);
                         checkCmd.Parameters.AddWithValue("@Unit", item.Unit);
                         int count = (int)checkCmd.ExecuteScalar();
@@ -414,11 +452,12 @@ namespace InventorySystem.Controllers
 
                     // If item doesn't exist with the same productCode and unit, insert the new item
                     string query = @"
-                INSERT INTO tbItem (productCode, productDescription, unit, productQuantity, supplier, category, minimumstocklevel, status, created_at)
-                VALUES (@ItemCode, @ItemName, @Unit, @Quantity, @Supplier, @Category, @MinimumStockLevel, @Status, @Created_at)";
+                INSERT INTO tbItem (item_id, productCode, productDescription, unit, productQuantity, supplier, category, minimumstocklevel, status, created_at)
+                VALUES (@ItemId, @ItemCode, @ItemName, @Unit, @Quantity, @Supplier, @Category, @MinimumStockLevel, @Status, @Created_at)";
 
                     using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
+                        cmd.Parameters.AddWithValue("@ItemId", uniqueItemId);
                         cmd.Parameters.AddWithValue("@ItemCode", item.ProductCode);
                         cmd.Parameters.AddWithValue("@ItemName", item.ProductDescription);
                         cmd.Parameters.AddWithValue("@Unit", item.Unit);
