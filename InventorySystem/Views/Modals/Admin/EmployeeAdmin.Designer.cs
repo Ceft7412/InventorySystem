@@ -188,6 +188,7 @@
             // dataGridViewEmployees
             // 
             dataGridViewEmployees.AllowUserToAddRows = false;
+            dataGridViewEmployees.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridViewEmployees.BackgroundColor = SystemColors.ButtonHighlight;
             dataGridViewEmployees.BorderStyle = BorderStyle.None;
             dataGridViewEmployees.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
@@ -239,35 +240,30 @@
             Column1.HeaderText = "Employee ID";
             Column1.Name = "Column1";
             Column1.ReadOnly = true;
-            Column1.Width = 200;
             // 
             // Column2
             // 
             Column2.HeaderText = "Name";
             Column2.Name = "Column2";
             Column2.ReadOnly = true;
-            Column2.Width = 250;
             // 
             // Column5
             // 
             Column5.HeaderText = "Username";
             Column5.Name = "Column5";
             Column5.ReadOnly = true;
-            Column5.Width = 200;
             // 
             // Column4
             // 
             Column4.HeaderText = "Contact";
             Column4.Name = "Column4";
             Column4.ReadOnly = true;
-            Column4.Width = 230;
             // 
             // Column3
             // 
             Column3.HeaderText = "Address";
             Column3.Name = "Column3";
             Column3.ReadOnly = true;
-            Column3.Width = 220;
             // 
             // EmployeeAdmin
             // 

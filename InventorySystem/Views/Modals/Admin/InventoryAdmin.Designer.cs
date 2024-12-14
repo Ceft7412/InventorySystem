@@ -244,6 +244,7 @@
             // dataGridViewItems
             // 
             dataGridViewItems.AllowUserToAddRows = false;
+            dataGridViewItems.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridViewItems.BackgroundColor = SystemColors.ButtonHighlight;
             dataGridViewItems.BorderStyle = BorderStyle.None;
             dataGridViewItems.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
@@ -293,49 +294,42 @@
             Column1.HeaderText = "Item Code";
             Column1.Name = "Column1";
             Column1.ReadOnly = true;
-            Column1.Width = 200;
             // 
             // Column2
             // 
             Column2.HeaderText = "Name";
             Column2.Name = "Column2";
             Column2.ReadOnly = true;
-            Column2.Width = 250;
             // 
             // Column3
             // 
             Column3.HeaderText = "Quantity";
             Column3.Name = "Column3";
             Column3.ReadOnly = true;
-            Column3.Width = 150;
             // 
             // Column4
             // 
             Column4.HeaderText = "Unit";
             Column4.Name = "Column4";
             Column4.ReadOnly = true;
-            Column4.Width = 150;
             // 
             // Column5
             // 
             Column5.HeaderText = "Supplier";
             Column5.Name = "Column5";
             Column5.ReadOnly = true;
-            Column5.Width = 200;
             // 
             // Column6
             // 
             Column6.HeaderText = "Category";
             Column6.Name = "Column6";
             Column6.ReadOnly = true;
-            Column6.Width = 200;
             // 
             // Column7
             // 
             Column7.HeaderText = "Minimum Stock Level";
             Column7.Name = "Column7";
             Column7.ReadOnly = true;
-            Column7.Width = 250;
             // 
             // InventoryAdmin
             // 

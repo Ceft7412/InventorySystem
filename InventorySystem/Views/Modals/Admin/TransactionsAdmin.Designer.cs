@@ -116,6 +116,7 @@
             // dataGridViewTransactions
             // 
             dataGridViewTransactions.AllowUserToAddRows = false;
+            dataGridViewTransactions.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridViewTransactions.BackgroundColor = SystemColors.ButtonHighlight;
             dataGridViewTransactions.BorderStyle = BorderStyle.None;
             dataGridViewTransactions.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
@@ -165,49 +166,42 @@
             Column1.HeaderText = "Batch Item ID";
             Column1.Name = "Column1";
             Column1.ReadOnly = true;
-            Column1.Width = 260;
             // 
             // Column2
             // 
             Column2.HeaderText = "Batch ID";
             Column2.Name = "Column2";
             Column2.ReadOnly = true;
-            Column2.Width = 280;
             // 
             // Column3
             // 
             Column3.HeaderText = "Item Code";
             Column3.Name = "Column3";
             Column3.ReadOnly = true;
-            Column3.Width = 150;
             // 
             // Column4
             // 
             Column4.HeaderText = "Quantity";
             Column4.Name = "Column4";
             Column4.ReadOnly = true;
-            Column4.Width = 150;
             // 
             // Column5
             // 
             Column5.HeaderText = "Type";
             Column5.Name = "Column5";
             Column5.ReadOnly = true;
-            Column5.Width = 200;
             // 
             // Column6
             // 
             Column6.HeaderText = "Reason";
             Column6.Name = "Column6";
             Column6.ReadOnly = true;
-            Column6.Width = 250;
             // 
             // Column7
             // 
             Column7.HeaderText = "Date";
             Column7.Name = "Column7";
             Column7.ReadOnly = true;
-            Column7.Width = 250;
             // 
             // panel3
             // 

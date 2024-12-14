@@ -55,12 +55,6 @@ namespace InventorySystem.Views.Admin
             panel14 = new Panel();
             panel16 = new Panel();
             bestSellerGrid = new DataGridView();
-            Column6 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
-            Column4 = new DataGridViewTextBoxColumn();
-            Column5 = new DataGridViewTextBoxColumn();
             panel15 = new Panel();
             label3 = new Label();
             periodCmb = new ComboBox();
@@ -85,6 +79,12 @@ namespace InventorySystem.Views.Admin
             label2 = new Label();
             panel9 = new Panel();
             refreshButton = new Button();
+            Column6 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
+            Column4 = new DataGridViewTextBoxColumn();
+            Column5 = new DataGridViewTextBoxColumn();
             sidebar.SuspendLayout();
             panel3.SuspendLayout();
             panel2.SuspendLayout();
@@ -324,6 +324,7 @@ namespace InventorySystem.Views.Admin
             // bestSellerGrid
             // 
             bestSellerGrid.AllowUserToAddRows = false;
+            bestSellerGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             bestSellerGrid.BackgroundColor = SystemColors.ButtonHighlight;
             bestSellerGrid.BorderStyle = BorderStyle.None;
             bestSellerGrid.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
@@ -366,47 +367,6 @@ namespace InventorySystem.Views.Admin
             bestSellerGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             bestSellerGrid.Size = new Size(1112, 264);
             bestSellerGrid.TabIndex = 6;
-            // 
-            // Column6
-            // 
-            Column6.HeaderText = "Rank";
-            Column6.Name = "Column6";
-            Column6.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            dataGridViewTextBoxColumn1.HeaderText = "Item Code";
-            dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            dataGridViewTextBoxColumn1.ReadOnly = true;
-            dataGridViewTextBoxColumn1.Width = 200;
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            dataGridViewTextBoxColumn2.HeaderText = "Name";
-            dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            dataGridViewTextBoxColumn2.ReadOnly = true;
-            dataGridViewTextBoxColumn2.Width = 250;
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            dataGridViewTextBoxColumn3.HeaderText = "Category";
-            dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            dataGridViewTextBoxColumn3.ReadOnly = true;
-            dataGridViewTextBoxColumn3.Width = 200;
-            // 
-            // Column4
-            // 
-            Column4.HeaderText = "Supplier";
-            Column4.Name = "Column4";
-            Column4.ReadOnly = true;
-            Column4.Width = 200;
-            // 
-            // Column5
-            // 
-            Column5.HeaderText = "Unit";
-            Column5.Name = "Column5";
-            Column5.ReadOnly = true;
-            Column5.Width = 150;
             // 
             // panel15
             // 
@@ -694,6 +654,48 @@ namespace InventorySystem.Views.Admin
             refreshButton.UseVisualStyleBackColor = true;
             refreshButton.Click += refreshButton_Click;
             // 
+            // Column6
+            // 
+            Column6.FillWeight = 71.26904F;
+            Column6.HeaderText = "Rank";
+            Column6.Name = "Column6";
+            Column6.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            dataGridViewTextBoxColumn1.FillWeight = 71.26904F;
+            dataGridViewTextBoxColumn1.HeaderText = "Item Code";
+            dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            dataGridViewTextBoxColumn1.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            dataGridViewTextBoxColumn2.FillWeight = 243.654785F;
+            dataGridViewTextBoxColumn2.HeaderText = "Name";
+            dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            dataGridViewTextBoxColumn2.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            dataGridViewTextBoxColumn3.FillWeight = 71.26904F;
+            dataGridViewTextBoxColumn3.HeaderText = "Category";
+            dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            dataGridViewTextBoxColumn3.ReadOnly = true;
+            // 
+            // Column4
+            // 
+            Column4.FillWeight = 71.26904F;
+            Column4.HeaderText = "Supplier";
+            Column4.Name = "Column4";
+            Column4.ReadOnly = true;
+            // 
+            // Column5
+            // 
+            Column5.FillWeight = 71.26904F;
+            Column5.HeaderText = "Unit";
+            Column5.Name = "Column5";
+            Column5.ReadOnly = true;
+            // 
             // Admin
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -764,12 +766,6 @@ namespace InventorySystem.Views.Admin
         private ComboBox inventoryRestockingCmb;
         private LinkLabel linkTransaction;
         private DataGridView bestSellerGrid;
-        private DataGridViewTextBoxColumn Column6;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private DataGridViewTextBoxColumn Column4;
-        private DataGridViewTextBoxColumn Column5;
         private ComboBox periodCmb;
         private Button employeeBtn;
         private Panel panel4;
@@ -788,5 +784,11 @@ namespace InventorySystem.Views.Admin
         private Panel panel19;
         private Panel panel22;
         private Label label6;
+        private DataGridViewTextBoxColumn Column6;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private DataGridViewTextBoxColumn Column4;
+        private DataGridViewTextBoxColumn Column5;
     }
 }

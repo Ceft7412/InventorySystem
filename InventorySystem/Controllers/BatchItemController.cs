@@ -13,7 +13,8 @@ namespace InventorySystem.Controllers
     public class BatchItemController
     {
         private string connectionString = ConfigurationManager.ConnectionStrings["InventoryDb"].ConnectionString;
-    private List<BatchItem> batchItems = new List<BatchItem>();
+        private NotificationController NotificationController = new NotificationController();
+        private List<BatchItem> batchItems = new List<BatchItem>();
         public List<BatchItem> GetBatchItems()
         {
             return batchItems;
@@ -524,6 +525,9 @@ namespace InventorySystem.Controllers
                     }
 
                     MessageBox.Show("Save items successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    // Check and generate stock alerts
+                    NotificationController.UpdateCompletedStockAlerts();
+                    NotificationController.GenerateStockAlerts();
                     ClearBatchItems();
                 }
             }

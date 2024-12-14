@@ -102,6 +102,7 @@
             // dataGridViewSuppliers
             // 
             dataGridViewSuppliers.AllowUserToAddRows = false;
+            dataGridViewSuppliers.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridViewSuppliers.BackgroundColor = SystemColors.Control;
             dataGridViewSuppliers.BorderStyle = BorderStyle.None;
             dataGridViewSuppliers.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
@@ -144,28 +145,24 @@
             dataGridViewTextBoxColumn5.HeaderText = "Supplier ID";
             dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
             dataGridViewTextBoxColumn5.ReadOnly = true;
-            dataGridViewTextBoxColumn5.Width = 200;
             // 
             // dataGridViewTextBoxColumn6
             // 
             dataGridViewTextBoxColumn6.HeaderText = "Supplier Name";
             dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
             dataGridViewTextBoxColumn6.ReadOnly = true;
-            dataGridViewTextBoxColumn6.Width = 500;
             // 
             // dataGridViewTextBoxColumn7
             // 
             dataGridViewTextBoxColumn7.HeaderText = "Contact";
             dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
             dataGridViewTextBoxColumn7.ReadOnly = true;
-            dataGridViewTextBoxColumn7.Width = 200;
             // 
             // Column8
             // 
             Column8.HeaderText = "Address";
             Column8.Name = "Column8";
             Column8.ReadOnly = true;
-            Column8.Width = 200;
             // 
             // panel21
             // 

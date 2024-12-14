@@ -51,7 +51,6 @@
             label3 = new Label();
             label4 = new Label();
             panel1 = new Panel();
-            btnSaveToDatabase = new Button();
             importExcelBtn = new Button();
             refreshData = new Button();
             label5 = new Label();
@@ -112,20 +111,22 @@
             notificationBtn.Anchor = AnchorStyles.Top;
             notificationBtn.BackColor = Color.Transparent;
             notificationBtn.Cursor = Cursors.Hand;
-            notificationBtn.Image = Properties.Resources.notification;
-            notificationBtn.Location = new Point(50, 42);
+            notificationBtn.Image = Properties.Resources.bell__1_;
+            notificationBtn.Location = new Point(60, 42);
             notificationBtn.Name = "notificationBtn";
             notificationBtn.Size = new Size(64, 64);
             notificationBtn.SizeMode = PictureBoxSizeMode.AutoSize;
             notificationBtn.TabIndex = 7;
             notificationBtn.TabStop = false;
+            notificationBtn.Visible = false;
+            notificationBtn.Click += notificationBtn_Click;
             // 
             // informationBtn
             // 
             informationBtn.Anchor = AnchorStyles.Top;
             informationBtn.BackColor = Color.Transparent;
             informationBtn.Cursor = Cursors.Hand;
-            informationBtn.Image = Properties.Resources.question;
+            informationBtn.Image = Properties.Resources.info;
             informationBtn.Location = new Point(152, 42);
             informationBtn.Name = "informationBtn";
             informationBtn.Size = new Size(64, 64);
@@ -324,7 +325,6 @@
             // panel1
             // 
             panel1.BackColor = SystemColors.ControlLightLight;
-            panel1.Controls.Add(btnSaveToDatabase);
             panel1.Controls.Add(importExcelBtn);
             panel1.Controls.Add(refreshData);
             panel1.Controls.Add(label5);
@@ -344,21 +344,6 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(1604, 192);
             panel1.TabIndex = 8;
-            // 
-            // btnSaveToDatabase
-            // 
-            btnSaveToDatabase.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnSaveToDatabase.BackColor = Color.SteelBlue;
-            btnSaveToDatabase.Font = new Font("Calibri", 11.25F, FontStyle.Underline);
-            btnSaveToDatabase.ForeColor = SystemColors.ButtonHighlight;
-            btnSaveToDatabase.Location = new Point(1292, 126);
-            btnSaveToDatabase.Name = "btnSaveToDatabase";
-            btnSaveToDatabase.Size = new Size(120, 44);
-            btnSaveToDatabase.TabIndex = 24;
-            btnSaveToDatabase.Text = "Save Changes";
-            btnSaveToDatabase.UseVisualStyleBackColor = false;
-            btnSaveToDatabase.Visible = false;
-            btnSaveToDatabase.Click += btnSaveToDatabase_Click;
             // 
             // importExcelBtn
             // 
@@ -485,6 +470,7 @@
             // dataGridViewItems
             // 
             dataGridViewItems.AllowUserToAddRows = false;
+            dataGridViewItems.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridViewItems.BackgroundColor = SystemColors.ButtonFace;
             dataGridViewItems.BorderStyle = BorderStyle.None;
             dataGridViewItems.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
@@ -496,7 +482,7 @@
             dataGridViewCellStyle1.SelectionForeColor = SystemColors.ButtonHighlight;
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
             dataGridViewItems.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            dataGridViewItems.ColumnHeadersHeight = 45;
+            dataGridViewItems.ColumnHeadersHeight = 65;
             dataGridViewItems.Columns.AddRange(new DataGridViewColumn[] { Column8, Column1, Column2, Column3, Column4, Column5, Column6, Column7 });
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = SystemColors.Window;
@@ -535,56 +521,48 @@
             Column8.HeaderText = "Item ID";
             Column8.Name = "Column8";
             Column8.ReadOnly = true;
-            Column8.Width = 200;
             // 
             // Column1
             // 
             Column1.HeaderText = "Item Code";
             Column1.Name = "Column1";
             Column1.ReadOnly = true;
-            Column1.Width = 200;
             // 
             // Column2
             // 
             Column2.HeaderText = "Name";
             Column2.Name = "Column2";
             Column2.ReadOnly = true;
-            Column2.Width = 400;
             // 
             // Column3
             // 
             Column3.HeaderText = "Quantity";
             Column3.Name = "Column3";
             Column3.ReadOnly = true;
-            Column3.Width = 150;
             // 
             // Column4
             // 
             Column4.HeaderText = "Unit";
             Column4.Name = "Column4";
             Column4.ReadOnly = true;
-            Column4.Width = 150;
             // 
             // Column5
             // 
             Column5.HeaderText = "Supplier";
             Column5.Name = "Column5";
             Column5.ReadOnly = true;
-            Column5.Width = 200;
             // 
             // Column6
             // 
             Column6.HeaderText = "Category";
             Column6.Name = "Column6";
             Column6.ReadOnly = true;
-            Column6.Width = 200;
             // 
             // Column7
             // 
             Column7.HeaderText = "Minimum Stock Level";
             Column7.Name = "Column7";
             Column7.ReadOnly = true;
-            Column7.Width = 250;
             // 
             // Inventory
             // 
@@ -640,7 +618,6 @@
         private Label label5;
         private Button refreshData;
         private Button importExcelBtn;
-        private Button btnSaveToDatabase;
         private PictureBox notificationBtn;
         private PictureBox informationBtn;
         private Panel panel3;

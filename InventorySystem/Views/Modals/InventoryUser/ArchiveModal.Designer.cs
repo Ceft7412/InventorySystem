@@ -225,6 +225,7 @@
             // dataGridViewProductArchive
             // 
             dataGridViewProductArchive.AllowUserToAddRows = false;
+            dataGridViewProductArchive.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridViewProductArchive.BackgroundColor = SystemColors.Control;
             dataGridViewProductArchive.BorderStyle = BorderStyle.None;
             dataGridViewProductArchive.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
@@ -268,14 +269,12 @@
             dataGridViewTextBoxColumn8.HeaderText = "Item Code";
             dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
             dataGridViewTextBoxColumn8.ReadOnly = true;
-            dataGridViewTextBoxColumn8.Width = 150;
             // 
             // dataGridViewTextBoxColumn9
             // 
             dataGridViewTextBoxColumn9.HeaderText = "Description";
             dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
             dataGridViewTextBoxColumn9.ReadOnly = true;
-            dataGridViewTextBoxColumn9.Width = 500;
             // 
             // dataGridViewTextBoxColumn10
             // 
@@ -294,21 +293,18 @@
             dataGridViewTextBoxColumn12.HeaderText = "Supplier";
             dataGridViewTextBoxColumn12.Name = "dataGridViewTextBoxColumn12";
             dataGridViewTextBoxColumn12.ReadOnly = true;
-            dataGridViewTextBoxColumn12.Width = 200;
             // 
             // dataGridViewTextBoxColumn13
             // 
             dataGridViewTextBoxColumn13.HeaderText = "Category";
             dataGridViewTextBoxColumn13.Name = "dataGridViewTextBoxColumn13";
             dataGridViewTextBoxColumn13.ReadOnly = true;
-            dataGridViewTextBoxColumn13.Width = 150;
             // 
             // dataGridViewTextBoxColumn15
             // 
             dataGridViewTextBoxColumn15.HeaderText = "Minimum Stock Level";
             dataGridViewTextBoxColumn15.Name = "dataGridViewTextBoxColumn15";
             dataGridViewTextBoxColumn15.ReadOnly = true;
-            dataGridViewTextBoxColumn15.Width = 250;
             // 
             // supplierArchivePanel
             // 
@@ -326,24 +322,27 @@
             dataGridViewArchiveSupplier.AllowUserToAddRows = false;
             dataGridViewArchiveSupplier.BackgroundColor = SystemColors.ButtonHighlight;
             dataGridViewArchiveSupplier.BorderStyle = BorderStyle.None;
+            dataGridViewArchiveSupplier.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = SystemColors.ControlLight;
-            dataGridViewCellStyle4.Font = new Font("Segoe UI", 15F);
-            dataGridViewCellStyle4.ForeColor = SystemColors.ActiveCaptionText;
-            dataGridViewCellStyle4.SelectionBackColor = Color.Transparent;
-            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle4.BackColor = Color.SteelBlue;
+            dataGridViewCellStyle4.Font = new Font("Calibri", 16F);
+            dataGridViewCellStyle4.ForeColor = SystemColors.ButtonHighlight;
+            dataGridViewCellStyle4.SelectionBackColor = Color.SteelBlue;
+            dataGridViewCellStyle4.SelectionForeColor = SystemColors.ButtonHighlight;
             dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
             dataGridViewArchiveSupplier.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             dataGridViewArchiveSupplier.ColumnHeadersHeight = 40;
             dataGridViewArchiveSupplier.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn16, dataGridViewTextBoxColumn17, dataGridViewTextBoxColumn18, dataGridViewTextBoxColumn19 });
             dataGridViewArchiveSupplier.Dock = DockStyle.Fill;
             dataGridViewArchiveSupplier.EnableHeadersVisualStyles = false;
+            dataGridViewArchiveSupplier.GridColor = SystemColors.ScrollBar;
             dataGridViewArchiveSupplier.Location = new Point(30, 10);
             dataGridViewArchiveSupplier.Name = "dataGridViewArchiveSupplier";
             dataGridViewArchiveSupplier.ReadOnly = true;
+            dataGridViewArchiveSupplier.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle5.BackColor = SystemColors.Control;
-            dataGridViewCellStyle5.Font = new Font("Segoe UI", 30F);
+            dataGridViewCellStyle5.Font = new Font("Calibri", 30F);
             dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle5.SelectionBackColor = SystemColors.Highlight;
             dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
@@ -352,6 +351,7 @@
             dataGridViewArchiveSupplier.RowHeadersVisible = false;
             dataGridViewCellStyle6.Font = new Font("Microsoft Sans Serif", 15F);
             dataGridViewArchiveSupplier.RowsDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewArchiveSupplier.RowTemplate.Height = 33;
             dataGridViewArchiveSupplier.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridViewArchiveSupplier.Size = new Size(1505, 481);
             dataGridViewArchiveSupplier.TabIndex = 5;

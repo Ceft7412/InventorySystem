@@ -136,6 +136,7 @@ namespace InventorySystem.Views.Modals.InventoryUser
                     foreach (var item in batchItems)
                     {
                         dataGridViewBatchItems.Rows.Add(
+                            item.ItemId.ToString(),
                             item.ProductCode,
                             item.Quantity.ToString(),
                             item.Unit,

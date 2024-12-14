@@ -13,6 +13,7 @@ namespace InventorySystem
         private ItemController itemController = new ItemController();
         private SupplierController supplierController = new SupplierController();
         private AuthenticationService AuthenticationService = new AuthenticationService();
+        NotificationController notificationController = new NotificationController();
         private string selectedItemCodeRow;
         private string selectedRows;
         private bool alreadyAsked = false;
@@ -29,14 +30,56 @@ namespace InventorySystem
             else
             {
                 InitializeComponent();
-                LoadItems();
-                LoadSupplierNamesIntoComboBox();
-                LoadUnitsIntoComboBox();
-                LoadCategoriesIntoComboBox();
+                Inventory_Load(null,null);
             }
 
         }
 
+        private void Inventory_Load(object sender, EventArgs e)
+        {
+           
+            LoadItems();
+            GENERATE_NOTIFICATION();
+            COUNT_NOTIFICATION();
+            LoadSupplierNamesIntoComboBox();
+            LoadUnitsIntoComboBox();
+            LoadCategoriesIntoComboBox();
+        }
+        private void stockInOutNavigationButton_Click(object sender, EventArgs e)
+        {
+            StockInOutModal stockInOutModal = new StockInOutModal();
+            stockInOutModal.ShowDialog();
+            LoadItems();
+            GENERATE_NOTIFICATION();
+            COUNT_NOTIFICATION();
+        }
+
+        private void COUNT_NOTIFICATION()
+        {
+
+            var alerts = notificationController.GetActiveStockAlerts();
+
+            if (alerts != null && alerts.Count > 0)
+            {
+                notificationBtn.Visible = true;
+            }   
+            else
+            {
+                notificationBtn.Visible = false;
+            }
+        }
+
+        private void GENERATE_NOTIFICATION()
+        {
+            notificationController.GenerateStockAlerts();
+            notificationController.UpdateCompletedStockAlerts();
+        }
+
+        private void notificationBtn_Click(object sender, EventArgs e)
+        {
+            NotificationModal notificationModal = new NotificationModal();
+            notificationModal.ShowDialog();
+        }
 
         // METHOD TO CHECK IF USER IS AUTHENTICATED
         private void CHECKAUTHENTICATION()
@@ -244,12 +287,7 @@ namespace InventorySystem
         // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         // ++++++++++++++++++++++++++++++++++++++ NAVIGATION BUTTONS ++++++++++++++++++++++++++++++++++++++
         // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        private void stockInOutNavigationButton_Click(object sender, EventArgs e)
-        {
-            StockInOutModal stockInOutModal = new StockInOutModal();
-            stockInOutModal.ShowDialog();
-            LoadItems();
-        }
+       
 
         private void supplierNavigationButton_Click(object sender, EventArgs e)
         {
@@ -319,8 +357,10 @@ namespace InventorySystem
 
         private void SelectedItemCodeRowClick(object sender, DataGridViewCellEventArgs e)
         {
+
             if (e.RowIndex == -1) return;
             selectedItemCodeRow = dataGridViewItems.Rows[e.RowIndex].Cells[0].Value.ToString();
+
 
         }
 
@@ -542,9 +582,19 @@ namespace InventorySystem
                     dataGridViewItems.Rows[rowIndex].Cells[2].Value = itemName;
                     dataGridViewItems.Rows[rowIndex].Cells[4].Value = unit;
                 }
-                btnSaveToDatabase.Visible = true;
+
 
                 MessageBox.Show("Excel data successfully imported!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                var message_result = MessageBox.Show("Do you want to save the data to the database?", "Save to Database", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (message_result == DialogResult.Yes)
+                {
+                    SaveToDatabase();
+                }
+                else
+                {
+                    refreshData_Click(null, null);
+                    return;
+                }
             }
             catch (Exception ex)
             {
@@ -584,7 +634,7 @@ namespace InventorySystem
             }
         }
 
-        private void btnSaveToDatabase_Click(object sender, EventArgs e)
+        private void SaveToDatabase()
         {
             try
             {
@@ -651,7 +701,7 @@ namespace InventorySystem
                 LoadSupplierNamesIntoComboBox();
 
                 MessageBox.Show("Data successfully saved to the database!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                btnSaveToDatabase.Visible = false;
+
             }
             catch (Exception ex)
             {
@@ -659,5 +709,8 @@ namespace InventorySystem
             }
         }
 
+        
+
+        
     }
 }

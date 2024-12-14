@@ -6,6 +6,12 @@ using System.Threading.Tasks;
 
 namespace InventorySystem.Models
 {
+
+    public enum StockSeverity
+    {
+        Critical,
+        Warning
+    }
     public class Item
     {
         public int ItemId { get; set; }
@@ -20,5 +26,7 @@ namespace InventorySystem.Models
         public string LastUpdated { get; set; }
 
         public int MinimumStock { get; set; }
+
+        public StockSeverity Severity { get; set; }
     }
 }
