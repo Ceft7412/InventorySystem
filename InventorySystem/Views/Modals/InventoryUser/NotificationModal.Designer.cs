@@ -37,15 +37,15 @@
             panel3 = new Panel();
             dataGridViewAlerts = new DataGridView();
             panel2 = new Panel();
+            label6 = new Label();
+            label5 = new Label();
+            label4 = new Label();
+            panel6 = new Panel();
+            panel5 = new Panel();
+            panel4 = new Panel();
             label3 = new Label();
             label2 = new Label();
             label1 = new Label();
-            panel4 = new Panel();
-            panel5 = new Panel();
-            panel6 = new Panel();
-            label4 = new Label();
-            label5 = new Label();
-            label6 = new Label();
             panel1.SuspendLayout();
             panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewAlerts).BeginInit();
@@ -119,6 +119,7 @@
             dataGridViewAlerts.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridViewAlerts.Size = new Size(1663, 675);
             dataGridViewAlerts.TabIndex = 1;
+            dataGridViewAlerts.CellDoubleClick += DataGridViewAlerts_CellDoubleClick;
             dataGridViewAlerts.CellFormatting += dataGridViewAlerts_CellFormatting;
             dataGridViewAlerts.DataBindingComplete += Alerts_OnDataBindingComplete;
             // 
@@ -138,6 +139,60 @@
             panel2.Name = "panel2";
             panel2.Size = new Size(1723, 91);
             panel2.TabIndex = 0;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("Calibri", 12.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label6.Location = new Point(1538, 57);
+            label6.Name = "label6";
+            label6.Size = new Size(89, 21);
+            label6.TabIndex = 8;
+            label6.Text = "Below 50%";
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Font = new Font("Calibri", 12.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label5.Location = new Point(1288, 57);
+            label5.Name = "label5";
+            label5.Size = new Size(197, 21);
+            label5.TabIndex = 7;
+            label5.Text = "Greater than or equal 50%";
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Font = new Font("Calibri", 12.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label4.Location = new Point(1018, 57);
+            label4.Name = "label4";
+            label4.Size = new Size(216, 21);
+            label4.TabIndex = 6;
+            label4.Text = "Greater than or equal to 75%";
+            // 
+            // panel6
+            // 
+            panel6.BackColor = Color.Yellow;
+            panel6.Location = new Point(1240, 57);
+            panel6.Name = "panel6";
+            panel6.Size = new Size(22, 21);
+            panel6.TabIndex = 5;
+            // 
+            // panel5
+            // 
+            panel5.BackColor = Color.Orange;
+            panel5.Location = new Point(1491, 57);
+            panel5.Name = "panel5";
+            panel5.Size = new Size(22, 21);
+            panel5.TabIndex = 4;
+            // 
+            // panel4
+            // 
+            panel4.BackColor = Color.Red;
+            panel4.Location = new Point(1633, 57);
+            panel4.Name = "panel4";
+            panel4.Size = new Size(22, 21);
+            panel4.TabIndex = 3;
             // 
             // label3
             // 
@@ -166,60 +221,6 @@
             label1.Size = new Size(234, 49);
             label1.TabIndex = 0;
             label1.Text = "Notifications";
-            // 
-            // panel4
-            // 
-            panel4.BackColor = Color.Red;
-            panel4.Location = new Point(1633, 57);
-            panel4.Name = "panel4";
-            panel4.Size = new Size(22, 21);
-            panel4.TabIndex = 3;
-            // 
-            // panel5
-            // 
-            panel5.BackColor = Color.Orange;
-            panel5.Location = new Point(1491, 57);
-            panel5.Name = "panel5";
-            panel5.Size = new Size(22, 21);
-            panel5.TabIndex = 4;
-            // 
-            // panel6
-            // 
-            panel6.BackColor = Color.Yellow;
-            panel6.Location = new Point(1240, 57);
-            panel6.Name = "panel6";
-            panel6.Size = new Size(22, 21);
-            panel6.TabIndex = 5;
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Font = new Font("Calibri", 12.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label4.Location = new Point(1018, 57);
-            label4.Name = "label4";
-            label4.Size = new Size(216, 21);
-            label4.TabIndex = 6;
-            label4.Text = "Greater than or equal to 75%";
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Font = new Font("Calibri", 12.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label5.Location = new Point(1288, 57);
-            label5.Name = "label5";
-            label5.Size = new Size(197, 21);
-            label5.TabIndex = 7;
-            label5.Text = "Greater than or equal 50%";
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Font = new Font("Calibri", 12.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label6.Location = new Point(1538, 57);
-            label6.Name = "label6";
-            label6.Size = new Size(89, 21);
-            label6.TabIndex = 8;
-            label6.Text = "Below 50%";
             // 
             // NotificationModal
             // 

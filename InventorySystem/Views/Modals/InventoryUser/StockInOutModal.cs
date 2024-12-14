@@ -23,14 +23,91 @@ namespace InventorySystem.Views.Modals.InventoryUser
         private ItemController itemController = new ItemController();
 
         private List<BatchItem> batchItems = new List<BatchItem>();
-        public StockInOutModal()
+        public StockInOutModal(int id, string code, string unit)
         {
             InitializeComponent();
+            RECEIVED_DATA(id, code, unit);
         }
 
         private void StockInOutModal_Load(object sender, EventArgs e)
         {
             LOAD_UNITS_COMBOBOX();
+        }
+
+        private void stockInItemIdInput_TextChanged(object sender, EventArgs e)
+        {
+
+            // Trim the text input
+            string input = stockInItemIdInput.Text.Trim();
+
+            // Check if the input is a valid number
+            if (int.TryParse(input, out int itemId))
+            {
+                // If valid, proceed to query the item
+                Item item = itemController.QueryItemByItemId(itemId);
+                if (item != null)
+                {
+                    stockInProductCodeInput.Text = item.ProductCode;
+                    stockInUnitCmb.Text = item.Unit;
+                }
+
+            }
+            else
+            {
+                // If not valid, show a warning or clear the input
+                MessageBox.Show("Please enter a valid numeric Item ID.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                // Optionally clear the input field
+                stockInItemIdInput.Text = string.Empty;
+            }
+        }
+
+        private void stockOutItemIdInput_TextChanged(object sender, EventArgs e)
+        {   
+            // Trim the text input
+            string input = stockOutItemIdInput.Text.Trim();
+
+            // Check if the input is a valid number
+            if (int.TryParse(input, out int itemId))
+            {
+                // If valid, proceed to query the item
+                Item item = itemController.QueryItemByItemId(itemId);
+                if (item != null)
+                {
+                    stockOutProductCodeInput.Text = item.ProductCode;
+                    stockOutUnitCmb.Text = item.Unit;
+                }
+
+            }
+            else
+            {
+                // If not valid, show a warning or clear the input
+                MessageBox.Show("Please enter a valid numeric Item ID.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                // Optionally clear the input field
+                stockOutItemIdInput.Text = string.Empty;
+            }
+        }
+
+
+        // Data coming from notification modal.
+        private void RECEIVED_DATA(int itemId, string productCode, string unit)
+        {
+            try
+            {
+                if (itemId != 0 && productCode != null)
+                {
+                    stockInItemIdInput.Text = itemId.ToString();
+                    stockInProductCodeInput.Text = productCode;
+                    stockInUnitCmb.Text = unit;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error message: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+
+            }
         }
 
         public List<BatchItem> GetBatchItems()
@@ -60,7 +137,7 @@ namespace InventorySystem.Views.Modals.InventoryUser
                     return;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show("Error message: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -306,7 +383,7 @@ namespace InventorySystem.Views.Modals.InventoryUser
             string reason = stockInReasonInput.Text.Trim();
             DateTime transactionDate = stockInDateInput.Value;
 
-            if(item_id == -1)
+            if (item_id == -1)
             {
                 MessageBox.Show("Please enter valid data.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -318,7 +395,7 @@ namespace InventorySystem.Views.Modals.InventoryUser
             }
             try
             {
-                batchItemController.AddBatchItem(result, productCode, quantity, unit,  reason, transactionDate, transaction_type);
+                batchItemController.AddBatchItem(result, productCode, quantity, unit, reason, transactionDate, transaction_type);
                 stockInItemIdInput.Clear();
                 stockInProductCodeInput.Clear();
                 stockInProductQuantity.Clear();

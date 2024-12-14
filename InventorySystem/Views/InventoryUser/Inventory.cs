@@ -47,7 +47,7 @@ namespace InventorySystem
         }
         private void stockInOutNavigationButton_Click(object sender, EventArgs e)
         {
-            StockInOutModal stockInOutModal = new StockInOutModal();
+            StockInOutModal stockInOutModal = new StockInOutModal(-1, null, null);
             stockInOutModal.ShowDialog();
             LoadItems();
             GENERATE_NOTIFICATION();

@@ -30,7 +30,7 @@ namespace InventorySystem.Views.Modals.InventoryUser
                 {
                     // Bind the list of alerts to the DataGridView
                     dataGridViewAlerts.DataSource = new BindingList<StockAlert>(alerts);
-                    
+
                 }
                 else
                 {
@@ -48,6 +48,8 @@ namespace InventorySystem.Views.Modals.InventoryUser
                 //columns["ProductCode"].Width = 200;
 
                 columns["ProductDescription"].HeaderText = "Name";
+
+                columns["Unit"].HeaderText = "Unit";    
                 //columns["ProductDescription"].Width = 390;
 
                 columns["Quantity"].HeaderText = "Quantity";
@@ -133,6 +135,30 @@ namespace InventorySystem.Views.Modals.InventoryUser
                         e.CellStyle.ForeColor = Color.Black;
                         break;
                 }
+            }
+        }
+
+        private void DataGridViewAlerts_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // Check if the double-click is not on the header row or an invalid row
+            if (e.RowIndex >= 0)
+            {
+                // Get the selected row
+                DataGridViewRow selectedRow = dataGridViewAlerts.Rows[e.RowIndex];
+
+                // Retrieve data from the row's cells
+                int itemId = Convert.ToInt32(selectedRow.Cells[0].Value); // Assuming Column8 is for Item ID
+                string productCode = selectedRow.Cells[1].Value.ToString(); // Assuming Column1 is for Product Code
+                string unit = selectedRow.Cells[3].Value.ToString(); // Assuming Column2 is for Unit
+
+                // Perform the desired action, e.g., show details
+                var message_result = MessageBox.Show($"Do you wish to stock in the item with ID: {itemId}?", "Stock In Item", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (message_result == DialogResult.Yes)
+                {
+                    StockInOutModal stockInOutModal = new StockInOutModal(itemId, productCode, unit);
+                    stockInOutModal.ShowDialog();
+                }
+
             }
         }
     }

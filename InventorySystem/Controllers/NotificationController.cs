@@ -15,6 +15,8 @@ namespace InventorySystem.Controllers
         public int ItemId { get; set; }
         public string ProductCode { get; set; }
         public string ProductDescription { get; set; }
+
+        public string Unit { get; set; }
         public int Quantity { get; set; }
         public int MinimumStockLevel { get; set; }
         public DateTime DateTime { get; set; }
@@ -64,6 +66,7 @@ namespace InventorySystem.Controllers
             sa.item_id, 
             i.productCode, 
             i.productDescription, 
+            i.unit,
             i.productQuantity, 
             i.minimumstocklevel, 
             sa.datetime, 
@@ -86,6 +89,7 @@ namespace InventorySystem.Controllers
                         ItemId = Convert.ToInt32(reader["item_id"]),
                         ProductCode = reader["productCode"].ToString(),
                         ProductDescription = reader["productDescription"].ToString(),
+                        Unit = reader["unit"].ToString(),
                         Quantity = Convert.ToInt32(reader["productQuantity"]),
                         MinimumStockLevel = Convert.ToInt32(reader["minimumstocklevel"]),
                         DateTime = Convert.ToDateTime(reader["datetime"]),

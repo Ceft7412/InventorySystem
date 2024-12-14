@@ -16,7 +16,45 @@ namespace InventorySystem.Controllers
         Item item;
 
 
-        
+
+
+
+        public Item QueryItemByItemId(int item_id)
+        {
+            try
+            {
+                string query = "SELECT * FROM tbItem WHERE CAST(item_id AS VARCHAR) LIKE @item_id";
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    SqlCommand command = new SqlCommand(query, connection);
+
+                    // Add wildcards for partial matching
+                    command.Parameters.AddWithValue("@item_id", $"%{item_id}%");
+
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        item = new Item
+                        {
+                            ItemId = reader["item_id"] != DBNull.Value ? Convert.ToInt32(reader["item_id"]) : 0,
+                            ProductCode = reader["productCode"] as string ?? "",
+                            ProductDescription = reader["productDescription"] as string ?? "",
+                            Category = reader["category"] as string ?? "",
+                            Supplier = reader["supplier"] as string ?? "",
+                            Unit = reader["unit"] as string ?? "",
+                            MinimumStock = reader["minimumstocklevel"] != DBNull.Value ? Convert.ToInt32(reader["minimumstocklevel"]) : 0
+                        };
+                    }
+                    reader.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return item;
+        }
 
         // Get all items from the database
         public List<Item> GetAllItems(string status)
