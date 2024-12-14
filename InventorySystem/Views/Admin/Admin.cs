@@ -314,5 +314,12 @@ namespace InventorySystem.Views.Admin
             SettingsAdmin settingAdmin = new SettingsAdmin();
             settingAdmin.ShowDialog();
         }
+
+        private void logsBtn_Click(object sender, EventArgs e)
+        {
+            LogsAdmin logsAdmin = new LogsAdmin();
+            logsAdmin.ShowDialog();
+
+        }
     }
 }

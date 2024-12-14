@@ -85,3 +85,4 @@ C:\Users\cedri\source\repos\InventorySystem\InventorySystem\obj\Release\net8.0-w
 C:\Users\cedri\source\repos\InventorySystem\InventorySystem\obj\Release\net8.0-windows\InventorySystem.Views.Modals.InventoryUser.ChangePasswordInventoryUser.resources
 C:\Users\cedri\source\repos\InventorySystem\InventorySystem\obj\Release\net8.0-windows\InventorySystem.Views.Modals.InventoryUser.SettingsAccountInventory.resources
 C:\Users\cedri\source\repos\InventorySystem\InventorySystem\obj\Release\net8.0-windows\InventorySystem.Views.Modals.InventoryUser.NotificationModal.resources
+C:\Users\cedri\source\repos\InventorySystem\InventorySystem\obj\Release\net8.0-windows\InventorySystem.Views.Modals.Admin.LogsAdmin.resources

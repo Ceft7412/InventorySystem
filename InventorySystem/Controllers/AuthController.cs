@@ -19,6 +19,7 @@ namespace InventorySystem.Controllers
     {
         private string connectionString = ConfigurationManager.ConnectionStrings["InventoryDb"].ConnectionString;
         private AuthenticationService AuthService = new AuthenticationService();
+        private LogController LogController = new LogController();
 
         public (bool Success, string Role, string UserID, bool IsFirstLogin) LOGINUSER(string username, string password)
         {
@@ -41,6 +42,10 @@ namespace InventorySystem.Controllers
                             int userId = reader["user_id"] != DBNull.Value ? Convert.ToInt32(reader["user_id"]) : 0;
                             string toStringId = userId.ToString();
                             bool isFirstLogin = (bool)reader["is_first_login"];
+
+                            // Log the successful login
+                            //LogController.LogUserLogin(userId, true, role, isFirstLogin);
+
                             AuthService.Authenticated();
                             return (true, role, toStringId, isFirstLogin);
                         }

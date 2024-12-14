@@ -30,19 +30,19 @@ namespace InventorySystem.Views.Admin
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            ChartArea chartArea1 = new ChartArea();
-            Series series1 = new Series();
-            Title title1 = new Title();
-            ChartArea chartArea2 = new ChartArea();
-            Legend legend1 = new Legend();
-            Series series2 = new Series();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            ChartArea chartArea3 = new ChartArea();
+            Series series3 = new Series();
+            Title title2 = new Title();
+            ChartArea chartArea4 = new ChartArea();
+            Legend legend2 = new Legend();
+            Series series4 = new Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Admin));
             sidebar = new Panel();
             panel3 = new Panel();
-            settingsBtn = new Button();
+            logsBtn = new Button();
             employeeBtn = new Button();
             logoutBtn = new Button();
             transactionsBtn = new Button();
@@ -55,6 +55,12 @@ namespace InventorySystem.Views.Admin
             panel14 = new Panel();
             panel16 = new Panel();
             bestSellerGrid = new DataGridView();
+            Column6 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
+            Column4 = new DataGridViewTextBoxColumn();
+            Column5 = new DataGridViewTextBoxColumn();
             panel15 = new Panel();
             label3 = new Label();
             periodCmb = new ComboBox();
@@ -79,12 +85,7 @@ namespace InventorySystem.Views.Admin
             label2 = new Label();
             panel9 = new Panel();
             refreshButton = new Button();
-            Column6 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
-            Column4 = new DataGridViewTextBoxColumn();
-            Column5 = new DataGridViewTextBoxColumn();
+            settingsBtn = new Button();
             sidebar.SuspendLayout();
             panel3.SuspendLayout();
             panel2.SuspendLayout();
@@ -130,6 +131,7 @@ namespace InventorySystem.Views.Admin
             // 
             panel3.BackColor = Color.Transparent;
             panel3.Controls.Add(settingsBtn);
+            panel3.Controls.Add(logsBtn);
             panel3.Controls.Add(employeeBtn);
             panel3.Controls.Add(logoutBtn);
             panel3.Controls.Add(transactionsBtn);
@@ -140,27 +142,27 @@ namespace InventorySystem.Views.Admin
             panel3.Size = new Size(230, 642);
             panel3.TabIndex = 2;
             // 
-            // settingsBtn
+            // logsBtn
             // 
-            settingsBtn.Cursor = Cursors.Hand;
-            settingsBtn.Dock = DockStyle.Top;
-            settingsBtn.FlatAppearance.BorderSize = 0;
-            settingsBtn.FlatAppearance.MouseOverBackColor = SystemColors.ActiveCaption;
-            settingsBtn.FlatStyle = FlatStyle.Flat;
-            settingsBtn.Font = new Font("Calibri", 18F);
-            settingsBtn.ForeColor = SystemColors.ButtonHighlight;
-            settingsBtn.Image = Properties.Resources.settings__3_;
-            settingsBtn.ImageAlign = ContentAlignment.MiddleLeft;
-            settingsBtn.Location = new Point(0, 249);
-            settingsBtn.Name = "settingsBtn";
-            settingsBtn.Padding = new Padding(5);
-            settingsBtn.Size = new Size(230, 83);
-            settingsBtn.TabIndex = 5;
-            settingsBtn.Text = "Settings";
-            settingsBtn.TextAlign = ContentAlignment.MiddleRight;
-            settingsBtn.TextImageRelation = TextImageRelation.ImageBeforeText;
-            settingsBtn.UseVisualStyleBackColor = true;
-            settingsBtn.Click += settingsBtn_Click;
+            logsBtn.Cursor = Cursors.Hand;
+            logsBtn.Dock = DockStyle.Top;
+            logsBtn.FlatAppearance.BorderSize = 0;
+            logsBtn.FlatAppearance.MouseOverBackColor = SystemColors.ActiveCaption;
+            logsBtn.FlatStyle = FlatStyle.Flat;
+            logsBtn.Font = new Font("Calibri", 18F);
+            logsBtn.ForeColor = SystemColors.ButtonHighlight;
+            logsBtn.Image = Properties.Resources.log;
+            logsBtn.ImageAlign = ContentAlignment.MiddleLeft;
+            logsBtn.Location = new Point(0, 249);
+            logsBtn.Name = "logsBtn";
+            logsBtn.Padding = new Padding(5);
+            logsBtn.Size = new Size(230, 83);
+            logsBtn.TabIndex = 5;
+            logsBtn.Text = "Logs";
+            logsBtn.TextAlign = ContentAlignment.MiddleRight;
+            logsBtn.TextImageRelation = TextImageRelation.ImageBeforeText;
+            logsBtn.UseVisualStyleBackColor = true;
+            logsBtn.Click += logsBtn_Click;
             // 
             // employeeBtn
             // 
@@ -328,24 +330,24 @@ namespace InventorySystem.Views.Admin
             bestSellerGrid.BackgroundColor = SystemColors.ButtonHighlight;
             bestSellerGrid.BorderStyle = BorderStyle.None;
             bestSellerGrid.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = Color.SteelBlue;
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 16F);
-            dataGridViewCellStyle1.ForeColor = SystemColors.ButtonHighlight;
-            dataGridViewCellStyle1.SelectionBackColor = Color.SteelBlue;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.ButtonHighlight;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            bestSellerGrid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = Color.SteelBlue;
+            dataGridViewCellStyle4.Font = new Font("Segoe UI", 16F);
+            dataGridViewCellStyle4.ForeColor = SystemColors.ButtonHighlight;
+            dataGridViewCellStyle4.SelectionBackColor = Color.SteelBlue;
+            dataGridViewCellStyle4.SelectionForeColor = SystemColors.ButtonHighlight;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            bestSellerGrid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             bestSellerGrid.ColumnHeadersHeight = 45;
             bestSellerGrid.Columns.AddRange(new DataGridViewColumn[] { Column6, dataGridViewTextBoxColumn1, dataGridViewTextBoxColumn2, dataGridViewTextBoxColumn3, Column4, Column5 });
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = SystemColors.Window;
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 16F);
-            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
-            bestSellerGrid.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = SystemColors.Window;
+            dataGridViewCellStyle5.Font = new Font("Segoe UI", 16F);
+            dataGridViewCellStyle5.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.False;
+            bestSellerGrid.DefaultCellStyle = dataGridViewCellStyle5;
             bestSellerGrid.Dock = DockStyle.Fill;
             bestSellerGrid.EnableHeadersVisualStyles = false;
             bestSellerGrid.GridColor = SystemColors.ScrollBar;
@@ -353,20 +355,62 @@ namespace InventorySystem.Views.Admin
             bestSellerGrid.Name = "bestSellerGrid";
             bestSellerGrid.ReadOnly = true;
             bestSellerGrid.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = SystemColors.Control;
-            dataGridViewCellStyle3.Font = new Font("Calibri", 9F);
-            dataGridViewCellStyle3.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
-            bestSellerGrid.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = SystemColors.Control;
+            dataGridViewCellStyle6.Font = new Font("Calibri", 9F);
+            dataGridViewCellStyle6.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle6.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.True;
+            bestSellerGrid.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
             bestSellerGrid.RowHeadersVisible = false;
             bestSellerGrid.RowTemplate.Height = 45;
             bestSellerGrid.RowTemplate.Resizable = DataGridViewTriState.True;
             bestSellerGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             bestSellerGrid.Size = new Size(1112, 264);
             bestSellerGrid.TabIndex = 6;
+            // 
+            // Column6
+            // 
+            Column6.FillWeight = 71.26904F;
+            Column6.HeaderText = "Rank";
+            Column6.Name = "Column6";
+            Column6.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            dataGridViewTextBoxColumn1.FillWeight = 71.26904F;
+            dataGridViewTextBoxColumn1.HeaderText = "Item Code";
+            dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            dataGridViewTextBoxColumn1.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            dataGridViewTextBoxColumn2.FillWeight = 243.654785F;
+            dataGridViewTextBoxColumn2.HeaderText = "Name";
+            dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            dataGridViewTextBoxColumn2.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            dataGridViewTextBoxColumn3.FillWeight = 71.26904F;
+            dataGridViewTextBoxColumn3.HeaderText = "Category";
+            dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            dataGridViewTextBoxColumn3.ReadOnly = true;
+            // 
+            // Column4
+            // 
+            Column4.FillWeight = 71.26904F;
+            Column4.HeaderText = "Supplier";
+            Column4.Name = "Column4";
+            Column4.ReadOnly = true;
+            // 
+            // Column5
+            // 
+            Column5.FillWeight = 71.26904F;
+            Column5.HeaderText = "Unit";
+            Column5.Name = "Column5";
+            Column5.ReadOnly = true;
             // 
             // panel15
             // 
@@ -433,33 +477,33 @@ namespace InventorySystem.Views.Admin
             // chartInventory
             // 
             chartInventory.BackColor = Color.Transparent;
-            chartArea1.AxisX.MajorGrid.LineColor = Color.LightGray;
-            chartArea1.AxisY.MajorGrid.LineColor = Color.LightGray;
-            chartArea1.AxisY.Title = "Re-stock Values";
-            chartArea1.Name = "ChartArea1";
-            chartInventory.ChartAreas.Add(chartArea1);
+            chartArea3.AxisX.MajorGrid.LineColor = Color.LightGray;
+            chartArea3.AxisY.MajorGrid.LineColor = Color.LightGray;
+            chartArea3.AxisY.Title = "Re-stock Values";
+            chartArea3.Name = "ChartArea1";
+            chartInventory.ChartAreas.Add(chartArea3);
             chartInventory.Dock = DockStyle.Fill;
             chartInventory.Location = new Point(0, 0);
             chartInventory.Name = "chartInventory";
-            series1.BackGradientStyle = GradientStyle.TopBottom;
-            series1.BorderWidth = 4;
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = SeriesChartType.Area;
-            series1.Color = Color.Blue;
-            series1.IsVisibleInLegend = false;
-            series1.IsXValueIndexed = true;
-            series1.MarkerSize = 10;
-            series1.MarkerStyle = MarkerStyle.Circle;
-            series1.Name = "Inventory Restocking";
-            series1.ShadowColor = Color.FromArgb(64, 64, 64);
-            chartInventory.Series.Add(series1);
+            series3.BackGradientStyle = GradientStyle.TopBottom;
+            series3.BorderWidth = 4;
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = SeriesChartType.Area;
+            series3.Color = Color.Blue;
+            series3.IsVisibleInLegend = false;
+            series3.IsXValueIndexed = true;
+            series3.MarkerSize = 10;
+            series3.MarkerStyle = MarkerStyle.Circle;
+            series3.Name = "Inventory Restocking";
+            series3.ShadowColor = Color.FromArgb(64, 64, 64);
+            chartInventory.Series.Add(series3);
             chartInventory.Size = new Size(1112, 391);
             chartInventory.TabIndex = 1;
             chartInventory.Text = "chart1";
-            title1.Font = new Font("Microsoft Sans Serif", 21.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            title1.Name = "Title1";
-            title1.Text = "Inventory Re-stocking";
-            chartInventory.Titles.Add(title1);
+            title2.Font = new Font("Microsoft Sans Serif", 21.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            title2.Name = "Title1";
+            title2.Text = "Inventory Re-stocking";
+            chartInventory.Titles.Add(title2);
             // 
             // panel17
             // 
@@ -590,23 +634,23 @@ namespace InventorySystem.Views.Admin
             // 
             pieChartInventory.BackColor = SystemColors.ButtonHighlight;
             pieChartInventory.BorderlineColor = SystemColors.WindowFrame;
-            chartArea2.Name = "ChartArea1";
-            pieChartInventory.ChartAreas.Add(chartArea2);
+            chartArea4.Name = "ChartArea1";
+            pieChartInventory.ChartAreas.Add(chartArea4);
             pieChartInventory.Dock = DockStyle.Fill;
-            legend1.Alignment = StringAlignment.Center;
-            legend1.Docking = Docking.Bottom;
-            legend1.LegendStyle = LegendStyle.Row;
-            legend1.Name = "Legend1";
-            pieChartInventory.Legends.Add(legend1);
+            legend2.Alignment = StringAlignment.Center;
+            legend2.Docking = Docking.Bottom;
+            legend2.LegendStyle = LegendStyle.Row;
+            legend2.Name = "Legend1";
+            pieChartInventory.Legends.Add(legend2);
             pieChartInventory.Location = new Point(15, 5);
             pieChartInventory.Name = "pieChartInventory";
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = SeriesChartType.Pie;
-            series2.IsValueShownAsLabel = true;
-            series2.LabelFormat = "0.00%";
-            series2.Legend = "Legend1";
-            series2.Name = "pieChart";
-            pieChartInventory.Series.Add(series2);
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = SeriesChartType.Pie;
+            series4.IsValueShownAsLabel = true;
+            series4.LabelFormat = "0.00%";
+            series4.Legend = "Legend1";
+            series4.Name = "pieChart";
+            pieChartInventory.Series.Add(series4);
             pieChartInventory.Size = new Size(395, 391);
             pieChartInventory.TabIndex = 2;
             pieChartInventory.Text = "chart1";
@@ -654,47 +698,27 @@ namespace InventorySystem.Views.Admin
             refreshButton.UseVisualStyleBackColor = true;
             refreshButton.Click += refreshButton_Click;
             // 
-            // Column6
+            // settingsBtn
             // 
-            Column6.FillWeight = 71.26904F;
-            Column6.HeaderText = "Rank";
-            Column6.Name = "Column6";
-            Column6.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            dataGridViewTextBoxColumn1.FillWeight = 71.26904F;
-            dataGridViewTextBoxColumn1.HeaderText = "Item Code";
-            dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            dataGridViewTextBoxColumn1.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            dataGridViewTextBoxColumn2.FillWeight = 243.654785F;
-            dataGridViewTextBoxColumn2.HeaderText = "Name";
-            dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            dataGridViewTextBoxColumn2.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            dataGridViewTextBoxColumn3.FillWeight = 71.26904F;
-            dataGridViewTextBoxColumn3.HeaderText = "Category";
-            dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            dataGridViewTextBoxColumn3.ReadOnly = true;
-            // 
-            // Column4
-            // 
-            Column4.FillWeight = 71.26904F;
-            Column4.HeaderText = "Supplier";
-            Column4.Name = "Column4";
-            Column4.ReadOnly = true;
-            // 
-            // Column5
-            // 
-            Column5.FillWeight = 71.26904F;
-            Column5.HeaderText = "Unit";
-            Column5.Name = "Column5";
-            Column5.ReadOnly = true;
+            settingsBtn.Cursor = Cursors.Hand;
+            settingsBtn.Dock = DockStyle.Top;
+            settingsBtn.FlatAppearance.BorderSize = 0;
+            settingsBtn.FlatAppearance.MouseOverBackColor = SystemColors.ActiveCaption;
+            settingsBtn.FlatStyle = FlatStyle.Flat;
+            settingsBtn.Font = new Font("Calibri", 18F);
+            settingsBtn.ForeColor = SystemColors.ButtonHighlight;
+            settingsBtn.Image = Properties.Resources.settings__3_;
+            settingsBtn.ImageAlign = ContentAlignment.MiddleLeft;
+            settingsBtn.Location = new Point(0, 332);
+            settingsBtn.Name = "settingsBtn";
+            settingsBtn.Padding = new Padding(5);
+            settingsBtn.Size = new Size(230, 83);
+            settingsBtn.TabIndex = 6;
+            settingsBtn.Text = "Settings";
+            settingsBtn.TextAlign = ContentAlignment.MiddleRight;
+            settingsBtn.TextImageRelation = TextImageRelation.ImageBeforeText;
+            settingsBtn.UseVisualStyleBackColor = true;
+            settingsBtn.Click += settingsBtn_Click;
             // 
             // Admin
             // 
@@ -780,7 +804,7 @@ namespace InventorySystem.Views.Admin
         private Panel panel10;
         private Panel panel17;
         private Panel panel18;
-        private Button settingsBtn;
+        private Button logsBtn;
         private Panel panel19;
         private Panel panel22;
         private Label label6;
@@ -790,5 +814,6 @@ namespace InventorySystem.Views.Admin
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
         private DataGridViewTextBoxColumn Column4;
         private DataGridViewTextBoxColumn Column5;
+        private Button settingsBtn;
     }
 }

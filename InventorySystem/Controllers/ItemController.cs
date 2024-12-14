@@ -13,6 +13,8 @@ namespace InventorySystem.Controllers
     public class ItemController
     {
         private static string connectionString = ConfigurationManager.ConnectionStrings["InventoryDb"].ConnectionString; 
+        private LogController LogController = new LogController();
+
         Item item;
 
 
@@ -373,9 +375,9 @@ namespace InventorySystem.Controllers
             }
         }
 
-       
 
-            // Update an existing item in the database
+
+        // Update an existing item in the database
         public void UpdateItem(string item_id, string productDescription, string category, string supplier, string unit, int minimumstocklevel)
         {
             try
@@ -384,8 +386,11 @@ namespace InventorySystem.Controllers
                 {
                     MessageBox.Show("Error message: Item ID is null", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
-
                 }
+
+                // Retrieve the existing item data before update to compare with the new data
+                Item existingItem = GetItemById(item_id);
+
                 string query = "UPDATE tbItem SET productDescription = @productDescription, category = @category, supplier = @supplier, unit = @unit, minimumstocklevel = @minimumstocklevel, updated_at = @updated_at WHERE item_id = @item_id";
                 DateTime dateTime = DateTime.Now;
                 using (SqlConnection connection = new SqlConnection(connectionString))
@@ -402,11 +407,76 @@ namespace InventorySystem.Controllers
                     updateCommand.ExecuteNonQuery();
                 }
 
+                // Log the update in the log table
+                Log log = new Log
+                {
+                    TableAffected = "tbItem",
+                    RecordID = Convert.ToInt32(item_id),
+                    ModuleName = "Inventory",
+                    Status = "Success"
+                };
+
+                // Generate a detailed description of the changes
+                var changes = new List<string>();
+
+                if (existingItem.ProductDescription != productDescription)
+                    changes.Add($"Product Description: {existingItem.ProductDescription} -> {productDescription}");
+
+                if (existingItem.Category != category)
+                    changes.Add($"Category: {existingItem.Category} -> {category}");
+
+                if (existingItem.Supplier != supplier)
+                    changes.Add($"Supplier: {existingItem.Supplier} -> {supplier}");
+
+                if (existingItem.Unit != unit)
+                    changes.Add($"Unit: {existingItem.Unit} -> {unit}");
+
+                if (existingItem.MinimumStock != minimumstocklevel)
+                    changes.Add($"Minimum Stock Level: {existingItem.MinimumStock} -> {minimumstocklevel}");
+
+                // Join the changes and add to the log description
+                log.Description = $"Updated Item ID {item_id}: {string.Join(", ", changes)}";
+
+                // Call a method to save the log entry
+                LogController.LogUpdate(log.TableAffected, log.RecordID, log.ModuleName, log.Description, log.Status);
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private Item GetItemById(string item_id)
+        {
+            // Replace with your logic to fetch the existing item from the database by ID
+            // This is just a placeholder for fetching the data
+            string query = "SELECT * FROM tbItem WHERE item_id = @item_id";
+            Item item = null;
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@item_id", item_id);
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    item = new Item
+                    {
+                        ItemId = Convert.ToInt32(reader["item_id"]),
+                        ProductCode = reader["productCode"].ToString(),
+                        ProductDescription = reader["productDescription"].ToString(),
+                        Category = reader["category"].ToString(),
+                        Supplier = reader["supplier"].ToString(),
+                        Unit = reader["unit"].ToString(),
+                        MinimumStock = Convert.ToInt32(reader["minimumstocklevel"])
+                    };
+                }
+                reader.Close();
+            }
+
+            return item;
         }
         public static int GenerateItemId()
         {

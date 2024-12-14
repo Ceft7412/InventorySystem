@@ -25,6 +25,9 @@
     <Compile Update="Views\Modals\Admin\InventoryAdmin.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Views\Modals\Admin\LogsAdmin.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Views\Modals\Admin\SettingsAccount.cs">
       <SubType>Form</SubType>
     </Compile>
