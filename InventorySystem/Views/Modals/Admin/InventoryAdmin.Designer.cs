@@ -50,6 +50,7 @@
             label4 = new Label();
             panel2 = new Panel();
             dataGridViewItems = new DataGridView();
+            Column8 = new DataGridViewTextBoxColumn();
             Column1 = new DataGridViewTextBoxColumn();
             Column2 = new DataGridViewTextBoxColumn();
             Column3 = new DataGridViewTextBoxColumn();
@@ -257,7 +258,7 @@
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
             dataGridViewItems.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dataGridViewItems.ColumnHeadersHeight = 40;
-            dataGridViewItems.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2, Column3, Column4, Column5, Column6, Column7 });
+            dataGridViewItems.Columns.AddRange(new DataGridViewColumn[] { Column8, Column1, Column2, Column3, Column4, Column5, Column6, Column7 });
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = SystemColors.Window;
             dataGridViewCellStyle2.Font = new Font("Segoe UI", 16F);
@@ -288,6 +289,12 @@
             dataGridViewItems.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridViewItems.Size = new Size(1519, 458);
             dataGridViewItems.TabIndex = 1;
+            // 
+            // Column8
+            // 
+            Column8.HeaderText = "Item ID";
+            Column8.Name = "Column8";
+            Column8.ReadOnly = true;
             // 
             // Column1
             // 
@@ -363,13 +370,6 @@
         private Panel panel1;
         private Panel panel2;
         private DataGridView dataGridViewItems;
-        private DataGridViewTextBoxColumn Column1;
-        private DataGridViewTextBoxColumn Column2;
-        private DataGridViewTextBoxColumn Column3;
-        private DataGridViewTextBoxColumn Column4;
-        private DataGridViewTextBoxColumn Column5;
-        private DataGridViewTextBoxColumn Column6;
-        private DataGridViewTextBoxColumn Column7;
         private Label label5;
         private TextBox searchItemTxt;
         private Label label4;
@@ -382,5 +382,13 @@
         private Panel panel3;
         private Label label6;
         private Panel panel4;
+        private DataGridViewTextBoxColumn Column8;
+        private DataGridViewTextBoxColumn Column1;
+        private DataGridViewTextBoxColumn Column2;
+        private DataGridViewTextBoxColumn Column3;
+        private DataGridViewTextBoxColumn Column4;
+        private DataGridViewTextBoxColumn Column5;
+        private DataGridViewTextBoxColumn Column6;
+        private DataGridViewTextBoxColumn Column7;
     }
 }

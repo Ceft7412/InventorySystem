@@ -26,5 +26,7 @@ namespace InventorySystem.Models
         public DateTime? Date { get; set; }
 
         public string TransactionType { get; set; }
+
+        public string Supplier { get; set; }
     }
 }

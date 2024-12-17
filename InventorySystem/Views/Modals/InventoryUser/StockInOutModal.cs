@@ -36,31 +36,111 @@ namespace InventorySystem.Views.Modals.InventoryUser
 
         private void stockInItemIdInput_TextChanged(object sender, EventArgs e)
         {
-
-            // Trim the text input
+            // Trim and validate input
             string input = stockInItemIdInput.Text.Trim();
 
-            // Check if the input is a valid number
-            if (int.TryParse(input, out int itemId))
+            if (string.IsNullOrEmpty(input) || !int.TryParse(input, out int itemId))
             {
-                // If valid, proceed to query the item
-                Item item = itemController.QueryItemByItemId(itemId);
-                if (item != null)
-                {
-                    stockInProductCodeInput.Text = item.ProductCode;
-                    stockInUnitCmb.Text = item.Unit;
-                }
+                ClearStockInFields();
+                return;
+            }
 
+            // Query the item
+            Item item = itemController.QueryItemByItemId(itemId);
+            if (item != null)
+            {
+                stockInProductCodeInput.Text = item.ProductCode;
+                stockInUnitCmb.Text = item.Unit;
+
+                // Load suppliers into the combo box
+                LOAD_STOCK_IN_SUPPLIER_CMB(itemId);
             }
             else
             {
-                // If not valid, show a warning or clear the input
-                MessageBox.Show("Please enter a valid numeric Item ID.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
-                // Optionally clear the input field
-                stockInItemIdInput.Text = string.Empty;
+                ClearStockInFields();
             }
         }
+
+        private void ClearStockInFields()
+        {
+            stockInProductCodeInput.Clear();
+            stockInUnitCmb.Text = string.Empty;
+            stockInSupplierCmb.DataSource = null;
+        }
+
+        private void stockInSaveButton_Click(object sender, EventArgs e)
+        {
+            if (!int.TryParse(stockInItemIdInput.Text.Trim(), out int item_id) || string.IsNullOrEmpty(stockInProductCodeInput.Text.Trim()))
+            {
+                MessageBox.Show("Please enter valid data.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (!int.TryParse(stockInProductQuantity.Text.Trim(), out int quantity))
+            {
+                MessageBox.Show("Please enter a valid quantity.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            string productCode = stockInProductCodeInput.Text.Trim();
+            string unit = stockInUnitCmb.Text.Trim();
+            string transaction_type = "IN";
+            string reason = stockInReasonInput.Text.Trim();
+            string supplier = stockInSupplierCmb.Text.Trim();
+            DateTime transactionDate = DateTime.Now;
+
+            try
+            {
+                batchItemController.AddBatchItem(item_id, productCode, quantity, unit, reason, transactionDate, transaction_type, supplier);
+                ClearAllStockInFields();
+                RefreshDataGridView();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void ClearAllStockInFields()
+        {
+            stockInItemIdInput.Clear();
+            stockInProductCodeInput.Clear();
+            stockInProductQuantity.Clear();
+            stockInReasonInput.Text ="";
+            stockInUnitCmb.Text = string.Empty;
+            stockInSupplierCmb.DataSource = null;
+        }
+
+
+
+        private void LOAD_STOCK_IN_SUPPLIER_CMB(int itemId)
+        {
+            try
+            {
+                // Clear the existing items in the combo box
+                stockInSupplierCmb.Items.Clear();
+
+                // Fetch the suppliers associated with the item ID
+                List<Supplier> suppliers = itemController.GetSuppliersByItemId(itemId);
+
+                if (suppliers != null && suppliers.Count > 0)
+                {
+                    // Bind suppliers to the combo box
+                    stockInSupplierCmb.DataSource = suppliers;
+                    stockInSupplierCmb.DisplayMember = "SupplierName"; // Display supplier name
+                    stockInSupplierCmb.ValueMember = "SupplierId";     // Hidden value is supplier ID
+                }
+                else
+                {
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                return;
+            }
+        }
+
 
         private void stockOutItemIdInput_TextChanged(object sender, EventArgs e)
         {   
@@ -72,7 +152,7 @@ namespace InventorySystem.Views.Modals.InventoryUser
             {
                 // If valid, proceed to query the item
                 Item item = itemController.QueryItemByItemId(itemId);
-                if (item != null)
+                if (itemId != null)
                 {
                     stockOutProductCodeInput.Text = item.ProductCode;
                     stockOutUnitCmb.Text = item.Unit;
@@ -86,9 +166,12 @@ namespace InventorySystem.Views.Modals.InventoryUser
 
                 // Optionally clear the input field
                 stockOutItemIdInput.Text = string.Empty;
+                stockOutProductCodeInput.Clear();
+                stockOutUnitCmb.Text = string.Empty;
             }
         }
 
+        
 
         // Data coming from notification modal.
         private void RECEIVED_DATA(int itemId, string productCode, string unit)
@@ -158,6 +241,7 @@ namespace InventorySystem.Views.Modals.InventoryUser
                         stockOutButtonsPanel.Visible = false;
                         stockInPanel.Visible = true;
                         stockInButtonsPanel.Visible = true;
+                        batchItemController.ClearBatchItems();
                         RefreshDataGridView();
                     }
                 }
@@ -182,13 +266,14 @@ namespace InventorySystem.Views.Modals.InventoryUser
         {
             if (batchItemController.GetBatchItems().Count >= 1 && stockInPanel.Visible)
             {
-                var result = MessageBox.Show("You have unsaved stock out items. Do you wish to discard them and go to another panel?", "Save Stock Out Items", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                var result = MessageBox.Show("You have unsaved stock in items. Do you wish to discard them and go to another panel?", "Save Stock Out Items", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (result == DialogResult.Yes)
                 {
                     stockInButtonsPanel.Visible = false;
                     stockInPanel.Visible = false;
                     stockOutPanel.Visible = true;
                     stockOutButtonsPanel.Visible = true;
+                    batchItemController.ClearBatchItems();
                     RefreshDataGridView();
                 }
             }
@@ -218,7 +303,7 @@ namespace InventorySystem.Views.Modals.InventoryUser
                             item.Quantity.ToString(),
                             item.Unit,
                             item.Reason,
-                            item.Date.ToString());
+                            item.Supplier);
                     }
                 }
             }
@@ -372,53 +457,13 @@ namespace InventorySystem.Views.Modals.InventoryUser
 
 
 
-        private void stockInSaveButton_Click(object sender, EventArgs e)
-        {
-            int item_id = int.TryParse(stockInItemIdInput.Text.Trim(), out int result) ? result : -1;
-            string productCode = stockInProductCodeInput.Text.Trim();
-            int quantity;
-            string unit = stockInUnitCmb.Text.Trim();
-            bool isQuantityValid = int.TryParse(stockInProductQuantity.Text.Trim(), out quantity);
-            string transaction_type = "IN";
-            string reason = stockInReasonInput.Text.Trim();
-            DateTime transactionDate = stockInDateInput.Value;
-
-            if (item_id == -1)
-            {
-                MessageBox.Show("Please enter valid data.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            if (string.IsNullOrEmpty(productCode) || !isQuantityValid)
-            {
-                MessageBox.Show("Please enter valid data.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            try
-            {
-                batchItemController.AddBatchItem(result, productCode, quantity, unit, reason, transactionDate, transaction_type);
-                stockInItemIdInput.Clear();
-                stockInProductCodeInput.Clear();
-                stockInProductQuantity.Clear();
-                stockInReasonInput.Text = "";
-                stockInDateInput.ResetText();
-
-
-                RefreshDataGridView();
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"An error occurred: {ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
+        
         private void stockInClear_Click(object sender, EventArgs e)
         {
             stockInProductCodeInput.Clear();
             stockInProductQuantity.Clear();
             stockInUnitCmb.SelectedIndex = -1;
             stockInReasonInput.SelectedIndex = -1;
-            stockInDateInput.ResetText();
         }
 
         private void stockOutSaveButton_Click(object sender, EventArgs e)
@@ -430,7 +475,7 @@ namespace InventorySystem.Views.Modals.InventoryUser
             bool isQuantityValid = int.TryParse(stockOutProductQuantity.Text.Trim(), out quantity);
             string transaction_type = "OUT";
             string reason = stockOutReasonInput.Text.Trim();
-            DateTime transactionDate = stockOutDateInput.Value;
+            DateTime transactionDate = DateTime.Now;
 
             if (string.IsNullOrEmpty(productCode) || !isQuantityValid)
             {
@@ -481,7 +526,6 @@ namespace InventorySystem.Views.Modals.InventoryUser
                         stockOutProductCodeInput.Clear();
                         stockOutProductQuantity.Clear();
                         stockOutReasonInput.Text = "";
-                        stockOutDateInput.ResetText();
                         RefreshDataGridView();
                     }
                     catch (Exception ex)
@@ -502,7 +546,6 @@ namespace InventorySystem.Views.Modals.InventoryUser
             stockOutProductQuantity.Clear();
             stockOutUnitCmb.SelectedIndex = -1;
             stockOutReasonInput.SelectedIndex = -1;
-            stockOutDateInput.ResetText();
         }
 
         private void selectedItemCode(object sender, DataGridViewCellEventArgs e)

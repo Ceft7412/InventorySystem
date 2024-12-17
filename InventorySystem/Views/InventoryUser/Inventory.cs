@@ -177,7 +177,7 @@ namespace InventorySystem
         {
             try
             {
-                supplierComboBox.Items.Clear();
+                supplierComboBox.DataSource = null;
                 List<Supplier> suppliers = supplierController.GetAllSupplierNames();
 
                 if (suppliers != null && suppliers.Count > 0)

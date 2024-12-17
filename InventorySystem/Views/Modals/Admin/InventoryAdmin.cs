@@ -65,14 +65,18 @@ namespace InventorySystem.Views.Modals.Admin
         {
             try
             {
-                supplierComboBox.Items.Clear();
-                List<Supplier> supplierNames = supplierController.GetAllSupplierNames();
-                if (supplierNames != null && supplierNames.Count > 0)
+                supplierComboBox.DataSource = null;
+                List<Supplier> suppliers = supplierController.GetAllSupplierNames();
+
+                if (suppliers != null && suppliers.Count > 0)
                 {
-                    foreach (var name in supplierNames)
-                    {
-                        supplierComboBox.Items.Add(name);
-                    }
+
+                    // Bind the data directly to the ComboBox
+                    supplierComboBox.DataSource = suppliers;
+                    supplierComboBox.DisplayMember = "SupplierName"; // What is displayed
+                    supplierComboBox.ValueMember = "SupplierId";     // The hidden value
+                                                                     // Ensure no item is selected when the ComboBox is loaded
+                    supplierComboBox.SelectedIndex = -1;
                 }
                 else
                 {
@@ -90,13 +94,18 @@ namespace InventorySystem.Views.Modals.Admin
         {
             try
             {
-                unitComboBox.Items.Clear();
-                List<string> units = itemController.GetAllUnits();
+                unitComboBox.Items.Clear(); // Clear any existing items
+                List<string> units = itemController.GetAllUnits(); // Get the list of units
+
                 if (units != null && units.Count > 0)
                 {
+                    // Ensure no empty or null units are added
                     foreach (var unit in units)
                     {
-                        unitComboBox.Items.Add(unit);
+                        if (!string.IsNullOrWhiteSpace(unit)) // Add only non-empty strings
+                        {
+                            unitComboBox.Items.Add(unit);
+                        }
                     }
                 }
                 else
@@ -115,13 +124,18 @@ namespace InventorySystem.Views.Modals.Admin
 
             try
             {
-                categoryComboBox.Items.Clear();
-                List<string> categories = itemController.GetAllCategories();
+                categoryComboBox.Items.Clear(); // Clear any existing items
+                List<string> categories = itemController.GetAllCategories(); // Get the list of categories
+
                 if (categories != null && categories.Count > 0)
                 {
+                    // Ensure no empty or null categories are added
                     foreach (var category in categories)
                     {
-                        categoryComboBox.Items.Add(category);
+                        if (!string.IsNullOrWhiteSpace(category)) // Add only non-empty strings
+                        {
+                            categoryComboBox.Items.Add(category);
+                        }
                     }
                 }
                 else
@@ -148,14 +162,15 @@ namespace InventorySystem.Views.Modals.Admin
                         foreach (var item in items)
                         {
                             dataGridViewItems.Rows.Add(
-                                item.ProductCode,
-                                item.ProductDescription,
-                                item.Quantity.ToString(),
-                                item.Unit,
-                                item.Supplier,
-                                item.Category,
-                                item.LastUpdated,
-                                item.MinimumStock.ToString());
+                                 item.ItemId,
+                                 item.ProductCode,
+                                 item.ProductDescription,
+                                 item.Quantity.ToString(),
+                                 item.Unit,
+                                 item.Supplier,
+                                 item.Category,
+                                 item.LastUpdated,
+                                 item.MinimumStock.ToString());
                         }
                     }
                 }
@@ -174,29 +189,55 @@ namespace InventorySystem.Views.Modals.Admin
 
         private void categoryComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // Get the selected category from the ComboBox
             string category = categoryComboBox.SelectedItem as string;
-            string supplier = supplierComboBox.SelectedItem as string;
+
+            // Get the selected supplier and unit
+            Supplier selectedSupplier = supplierComboBox.SelectedItem as Supplier;
+            string supplier = selectedSupplier?.SupplierName ?? string.Empty;  // Default to empty if no selection
+
             string unit = unitComboBox.SelectedItem as string;
-            var filterItems = itemController.FilterItems(category, supplier, unit);
-            UpdateDisplay(filterItems);
+
+            // Perform the filtering when category is selected
+            FilterItemsAndUpdateDisplay(category, supplier, unit);
         }
 
         private void supplierComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // Get the selected supplier as a Supplier object
+            Supplier selectedSupplier = supplierComboBox.SelectedItem as Supplier;
+
+            // If a supplier is selected, retrieve its properties
+            string supplierName = selectedSupplier?.SupplierName ?? string.Empty;  // Default to empty if no selection
+
+            // Get the selected category and unit
             string category = categoryComboBox.SelectedItem as string;
-            string supplier = supplierComboBox.SelectedItem as string;
             string unit = unitComboBox.SelectedItem as string;
-            var filterItems = itemController.FilterItems(category, supplier, unit);
-            UpdateDisplay(filterItems);
+
+            // Perform the filtering when supplier is selected
+            FilterItemsAndUpdateDisplay(category, supplierName, unit);
+            
         }
 
         private void unitComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // Get the selected category and supplier
             string category = categoryComboBox.SelectedItem as string;
             string supplier = supplierComboBox.SelectedItem as string;
+
+            // Get the selected unit
             string unit = unitComboBox.SelectedItem as string;
+
+            // Perform the filtering when unit is selected
+            FilterItemsAndUpdateDisplay(category, supplier, unit);
+        }
+
+        private void FilterItemsAndUpdateDisplay(string category, string supplier, string unit)
+        {
+            // Only proceed if we have selections to filter by
+            // This will silently filter without popping up any messages
             var filterItems = itemController.FilterItems(category, supplier, unit);
-            UpdateDisplay(filterItems);
+            UpdateDisplay(filterItems);  // Update the UI with the filtered items
         }
 
         private void UpdateDisplay(List<Item> items)
@@ -210,19 +251,18 @@ namespace InventorySystem.Views.Modals.Admin
                 return;
             }
 
-            // Adding rows to the DataGridView for each item
             foreach (Item item in items)
             {
                 dataGridViewItems.Rows.Add(new object[] {
-            item.ProductCode,
-            item.ProductDescription,
-            item.Quantity,
-            item.Unit,
-             item.Supplier,
-            item.Category,
-             item.LastUpdated,
-            item.MinimumStock
-             });
+                    item.ItemId.ToString(),
+                    item.ProductCode,
+                    item.ProductDescription,
+                    item.Quantity.ToString(),
+                    item.Unit,
+                    item.Supplier,
+                    item.Category,
+                    item.MinimumStock.ToString()
+                 });
             }
         }
 

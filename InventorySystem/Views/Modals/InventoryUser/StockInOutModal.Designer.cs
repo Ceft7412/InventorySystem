@@ -54,25 +54,9 @@
             dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
             Column1 = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
+            Column3 = new DataGridViewTextBoxColumn();
             panel1 = new Panel();
             panel4 = new Panel();
-            stockInPanel = new Panel();
-            stockInItemIdInput = new TextBox();
-            label14 = new Label();
-            stockInUnitCmb = new ComboBox();
-            label12 = new Label();
-            stockInSaveButton = new Button();
-            stockInClear = new Button();
-            stockInDateInput = new DateTimePicker();
-            stockInReasonInput = new ComboBox();
-            label6 = new Label();
-            label5 = new Label();
-            stockInProductQuantity = new TextBox();
-            label4 = new Label();
-            stockInProductCodeInput = new TextBox();
-            label3 = new Label();
-            label2 = new Label();
             stockOutPanel = new Panel();
             stockOutItemIdInput = new TextBox();
             label15 = new Label();
@@ -80,15 +64,29 @@
             label13 = new Label();
             stockOutSaveButton = new Button();
             stockOutClear = new Button();
-            stockOutDateInput = new DateTimePicker();
             stockOutReasonInput = new ComboBox();
-            label7 = new Label();
             label8 = new Label();
             stockOutProductQuantity = new TextBox();
             label9 = new Label();
             stockOutProductCodeInput = new TextBox();
             label10 = new Label();
             label11 = new Label();
+            stockInPanel = new Panel();
+            stockInSupplierCmb = new ComboBox();
+            label6 = new Label();
+            stockInItemIdInput = new TextBox();
+            label14 = new Label();
+            stockInUnitCmb = new ComboBox();
+            label12 = new Label();
+            stockInSaveButton = new Button();
+            stockInClear = new Button();
+            stockInReasonInput = new ComboBox();
+            label5 = new Label();
+            stockInProductQuantity = new TextBox();
+            label4 = new Label();
+            stockInProductCodeInput = new TextBox();
+            label3 = new Label();
+            label2 = new Label();
             panel2 = new Panel();
             stockOutButton = new Button();
             stockInButton = new Button();
@@ -104,8 +102,8 @@
             ((System.ComponentModel.ISupportInitialize)dataGridViewBatchItems).BeginInit();
             panel1.SuspendLayout();
             panel4.SuspendLayout();
-            stockInPanel.SuspendLayout();
             stockOutPanel.SuspendLayout();
+            stockInPanel.SuspendLayout();
             panel2.SuspendLayout();
             SuspendLayout();
             // 
@@ -323,7 +321,7 @@
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
             dataGridViewBatchItems.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dataGridViewBatchItems.ColumnHeadersHeight = 40;
-            dataGridViewBatchItems.Columns.AddRange(new DataGridViewColumn[] { Column2, dataGridViewTextBoxColumn1, dataGridViewTextBoxColumn2, Column1, dataGridViewTextBoxColumn3, dataGridViewTextBoxColumn4 });
+            dataGridViewBatchItems.Columns.AddRange(new DataGridViewColumn[] { Column2, dataGridViewTextBoxColumn1, dataGridViewTextBoxColumn2, Column1, dataGridViewTextBoxColumn3, Column3 });
             dataGridViewBatchItems.Dock = DockStyle.Fill;
             dataGridViewBatchItems.EnableHeadersVisualStyles = false;
             dataGridViewBatchItems.GridColor = SystemColors.ScrollBar;
@@ -378,11 +376,11 @@
             dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
             dataGridViewTextBoxColumn3.ReadOnly = true;
             // 
-            // dataGridViewTextBoxColumn4
+            // Column3
             // 
-            dataGridViewTextBoxColumn4.HeaderText = "Date";
-            dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            dataGridViewTextBoxColumn4.ReadOnly = true;
+            Column3.HeaderText = "Supplier";
+            Column3.Name = "Column3";
+            Column3.ReadOnly = true;
             // 
             // panel1
             // 
@@ -397,27 +395,183 @@
             // 
             // panel4
             // 
-            panel4.Controls.Add(stockOutPanel);
             panel4.Controls.Add(stockInPanel);
+            panel4.Controls.Add(stockOutPanel);
             panel4.Dock = DockStyle.Fill;
             panel4.Location = new Point(0, 94);
             panel4.Name = "panel4";
             panel4.Size = new Size(523, 764);
             panel4.TabIndex = 1;
             // 
+            // stockOutPanel
+            // 
+            stockOutPanel.AutoScroll = true;
+            stockOutPanel.Controls.Add(stockOutItemIdInput);
+            stockOutPanel.Controls.Add(label15);
+            stockOutPanel.Controls.Add(stockOutUnitCmb);
+            stockOutPanel.Controls.Add(label13);
+            stockOutPanel.Controls.Add(stockOutSaveButton);
+            stockOutPanel.Controls.Add(stockOutClear);
+            stockOutPanel.Controls.Add(stockOutReasonInput);
+            stockOutPanel.Controls.Add(label8);
+            stockOutPanel.Controls.Add(stockOutProductQuantity);
+            stockOutPanel.Controls.Add(label9);
+            stockOutPanel.Controls.Add(stockOutProductCodeInput);
+            stockOutPanel.Controls.Add(label10);
+            stockOutPanel.Controls.Add(label11);
+            stockOutPanel.Dock = DockStyle.Fill;
+            stockOutPanel.Location = new Point(0, 0);
+            stockOutPanel.Name = "stockOutPanel";
+            stockOutPanel.Size = new Size(523, 764);
+            stockOutPanel.TabIndex = 2;
+            stockOutPanel.Visible = false;
+            // 
+            // stockOutItemIdInput
+            // 
+            stockOutItemIdInput.Font = new Font("Calibri", 18F);
+            stockOutItemIdInput.Location = new Point(33, 127);
+            stockOutItemIdInput.Name = "stockOutItemIdInput";
+            stockOutItemIdInput.Size = new Size(446, 37);
+            stockOutItemIdInput.TabIndex = 27;
+            stockOutItemIdInput.TextChanged += stockOutItemIdInput_TextChanged;
+            // 
+            // label15
+            // 
+            label15.AutoSize = true;
+            label15.Font = new Font("Calibri", 18F);
+            label15.Location = new Point(30, 92);
+            label15.Name = "label15";
+            label15.Size = new Size(84, 29);
+            label15.TabIndex = 26;
+            label15.Text = "Item ID";
+            // 
+            // stockOutUnitCmb
+            // 
+            stockOutUnitCmb.Font = new Font("Calibri", 18F);
+            stockOutUnitCmb.FormattingEnabled = true;
+            stockOutUnitCmb.Items.AddRange(new object[] { "Purchase of Materials", "Stock Adjustments", "Return" });
+            stockOutUnitCmb.Location = new Point(30, 307);
+            stockOutUnitCmb.Name = "stockOutUnitCmb";
+            stockOutUnitCmb.Size = new Size(446, 37);
+            stockOutUnitCmb.TabIndex = 25;
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Font = new Font("Calibri", 18F);
+            label13.Location = new Point(30, 272);
+            label13.Name = "label13";
+            label13.Size = new Size(55, 29);
+            label13.TabIndex = 24;
+            label13.Text = "Unit";
+            // 
+            // stockOutSaveButton
+            // 
+            stockOutSaveButton.BackColor = Color.MediumSeaGreen;
+            stockOutSaveButton.FlatStyle = FlatStyle.Flat;
+            stockOutSaveButton.Font = new Font("Calibri", 16F);
+            stockOutSaveButton.ForeColor = SystemColors.ButtonHighlight;
+            stockOutSaveButton.Location = new Point(319, 581);
+            stockOutSaveButton.Name = "stockOutSaveButton";
+            stockOutSaveButton.Size = new Size(161, 53);
+            stockOutSaveButton.TabIndex = 23;
+            stockOutSaveButton.Text = "STOCK OUT";
+            stockOutSaveButton.UseVisualStyleBackColor = false;
+            stockOutSaveButton.Click += stockOutSaveButton_Click;
+            // 
+            // stockOutClear
+            // 
+            stockOutClear.BackColor = Color.Firebrick;
+            stockOutClear.FlatStyle = FlatStyle.Flat;
+            stockOutClear.Font = new Font("Calibri", 16F);
+            stockOutClear.ForeColor = SystemColors.ButtonHighlight;
+            stockOutClear.Location = new Point(131, 581);
+            stockOutClear.Name = "stockOutClear";
+            stockOutClear.Size = new Size(161, 53);
+            stockOutClear.TabIndex = 22;
+            stockOutClear.Text = "CLEAR";
+            stockOutClear.UseVisualStyleBackColor = false;
+            stockOutClear.Click += stockOutClear_Click;
+            // 
+            // stockOutReasonInput
+            // 
+            stockOutReasonInput.Font = new Font("Calibri", 18F);
+            stockOutReasonInput.FormattingEnabled = true;
+            stockOutReasonInput.Items.AddRange(new object[] { "Sold", "Damaged" });
+            stockOutReasonInput.Location = new Point(33, 500);
+            stockOutReasonInput.Name = "stockOutReasonInput";
+            stockOutReasonInput.Size = new Size(446, 37);
+            stockOutReasonInput.TabIndex = 20;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Font = new Font("Calibri", 18F);
+            label8.Location = new Point(30, 465);
+            label8.Name = "label8";
+            label8.Size = new Size(85, 29);
+            label8.TabIndex = 18;
+            label8.Text = "Reason";
+            // 
+            // stockOutProductQuantity
+            // 
+            stockOutProductQuantity.Font = new Font("Calibri", 18F);
+            stockOutProductQuantity.Location = new Point(30, 405);
+            stockOutProductQuantity.Name = "stockOutProductQuantity";
+            stockOutProductQuantity.Size = new Size(446, 37);
+            stockOutProductQuantity.TabIndex = 17;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Font = new Font("Calibri", 18F);
+            label9.Location = new Point(30, 370);
+            label9.Name = "label9";
+            label9.Size = new Size(99, 29);
+            label9.TabIndex = 16;
+            label9.Text = "Quantity";
+            // 
+            // stockOutProductCodeInput
+            // 
+            stockOutProductCodeInput.Font = new Font("Calibri", 18F);
+            stockOutProductCodeInput.Location = new Point(30, 221);
+            stockOutProductCodeInput.Name = "stockOutProductCodeInput";
+            stockOutProductCodeInput.Size = new Size(446, 37);
+            stockOutProductCodeInput.TabIndex = 15;
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Font = new Font("Calibri", 18F);
+            label10.Location = new Point(30, 186);
+            label10.Name = "label10";
+            label10.Size = new Size(114, 29);
+            label10.TabIndex = 14;
+            label10.Text = "Item Code";
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Font = new Font("Calibri", 27.75F, FontStyle.Bold);
+            label11.Location = new Point(23, 13);
+            label11.Name = "label11";
+            label11.Size = new Size(169, 45);
+            label11.TabIndex = 13;
+            label11.Text = "Stock Out";
+            // 
             // stockInPanel
             // 
             stockInPanel.BackColor = SystemColors.Control;
             stockInPanel.BorderStyle = BorderStyle.FixedSingle;
+            stockInPanel.Controls.Add(stockInSupplierCmb);
+            stockInPanel.Controls.Add(label6);
             stockInPanel.Controls.Add(stockInItemIdInput);
             stockInPanel.Controls.Add(label14);
             stockInPanel.Controls.Add(stockInUnitCmb);
             stockInPanel.Controls.Add(label12);
             stockInPanel.Controls.Add(stockInSaveButton);
             stockInPanel.Controls.Add(stockInClear);
-            stockInPanel.Controls.Add(stockInDateInput);
             stockInPanel.Controls.Add(stockInReasonInput);
-            stockInPanel.Controls.Add(label6);
             stockInPanel.Controls.Add(label5);
             stockInPanel.Controls.Add(stockInProductQuantity);
             stockInPanel.Controls.Add(label4);
@@ -429,6 +583,25 @@
             stockInPanel.Name = "stockInPanel";
             stockInPanel.Size = new Size(523, 764);
             stockInPanel.TabIndex = 1;
+            // 
+            // stockInSupplierCmb
+            // 
+            stockInSupplierCmb.Font = new Font("Calibri", 18F);
+            stockInSupplierCmb.FormattingEnabled = true;
+            stockInSupplierCmb.Location = new Point(32, 606);
+            stockInSupplierCmb.Name = "stockInSupplierCmb";
+            stockInSupplierCmb.Size = new Size(446, 37);
+            stockInSupplierCmb.TabIndex = 18;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("Calibri", 18F);
+            label6.Location = new Point(29, 571);
+            label6.Name = "label6";
+            label6.Size = new Size(95, 29);
+            label6.TabIndex = 17;
+            label6.Text = "Supplier";
             // 
             // stockInItemIdInput
             // 
@@ -497,14 +670,6 @@
             stockInClear.UseVisualStyleBackColor = false;
             stockInClear.Click += stockInClear_Click;
             // 
-            // stockInDateInput
-            // 
-            stockInDateInput.Font = new Font("Calibri", 18F);
-            stockInDateInput.Location = new Point(32, 603);
-            stockInDateInput.Name = "stockInDateInput";
-            stockInDateInput.Size = new Size(446, 37);
-            stockInDateInput.TabIndex = 10;
-            // 
             // stockInReasonInput
             // 
             stockInReasonInput.Font = new Font("Calibri", 18F);
@@ -514,16 +679,6 @@
             stockInReasonInput.Name = "stockInReasonInput";
             stockInReasonInput.Size = new Size(446, 37);
             stockInReasonInput.TabIndex = 9;
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Font = new Font("Calibri", 18F);
-            label6.Location = new Point(29, 568);
-            label6.Name = "label6";
-            label6.Size = new Size(60, 29);
-            label6.TabIndex = 7;
-            label6.Text = "Date";
             // 
             // label5
             // 
@@ -580,182 +735,6 @@
             label2.Size = new Size(141, 45);
             label2.TabIndex = 0;
             label2.Text = "Stock In";
-            // 
-            // stockOutPanel
-            // 
-            stockOutPanel.AutoScroll = true;
-            stockOutPanel.Controls.Add(stockOutItemIdInput);
-            stockOutPanel.Controls.Add(label15);
-            stockOutPanel.Controls.Add(stockOutUnitCmb);
-            stockOutPanel.Controls.Add(label13);
-            stockOutPanel.Controls.Add(stockOutSaveButton);
-            stockOutPanel.Controls.Add(stockOutClear);
-            stockOutPanel.Controls.Add(stockOutDateInput);
-            stockOutPanel.Controls.Add(stockOutReasonInput);
-            stockOutPanel.Controls.Add(label7);
-            stockOutPanel.Controls.Add(label8);
-            stockOutPanel.Controls.Add(stockOutProductQuantity);
-            stockOutPanel.Controls.Add(label9);
-            stockOutPanel.Controls.Add(stockOutProductCodeInput);
-            stockOutPanel.Controls.Add(label10);
-            stockOutPanel.Controls.Add(label11);
-            stockOutPanel.Dock = DockStyle.Fill;
-            stockOutPanel.Location = new Point(0, 0);
-            stockOutPanel.Name = "stockOutPanel";
-            stockOutPanel.Size = new Size(523, 764);
-            stockOutPanel.TabIndex = 2;
-            stockOutPanel.Visible = false;
-            // 
-            // stockOutItemIdInput
-            // 
-            stockOutItemIdInput.Font = new Font("Calibri", 18F);
-            stockOutItemIdInput.Location = new Point(33, 127);
-            stockOutItemIdInput.Name = "stockOutItemIdInput";
-            stockOutItemIdInput.Size = new Size(446, 37);
-            stockOutItemIdInput.TabIndex = 27;
-            stockOutItemIdInput.TextChanged += stockOutItemIdInput_TextChanged;
-            // 
-            // label15
-            // 
-            label15.AutoSize = true;
-            label15.Font = new Font("Calibri", 18F);
-            label15.Location = new Point(30, 92);
-            label15.Name = "label15";
-            label15.Size = new Size(84, 29);
-            label15.TabIndex = 26;
-            label15.Text = "Item ID";
-            // 
-            // stockOutUnitCmb
-            // 
-            stockOutUnitCmb.Font = new Font("Calibri", 18F);
-            stockOutUnitCmb.FormattingEnabled = true;
-            stockOutUnitCmb.Items.AddRange(new object[] { "Purchase of Materials", "Stock Adjustments", "Return" });
-            stockOutUnitCmb.Location = new Point(30, 307);
-            stockOutUnitCmb.Name = "stockOutUnitCmb";
-            stockOutUnitCmb.Size = new Size(446, 37);
-            stockOutUnitCmb.TabIndex = 25;
-            // 
-            // label13
-            // 
-            label13.AutoSize = true;
-            label13.Font = new Font("Calibri", 18F);
-            label13.Location = new Point(30, 272);
-            label13.Name = "label13";
-            label13.Size = new Size(55, 29);
-            label13.TabIndex = 24;
-            label13.Text = "Unit";
-            // 
-            // stockOutSaveButton
-            // 
-            stockOutSaveButton.BackColor = Color.MediumSeaGreen;
-            stockOutSaveButton.FlatStyle = FlatStyle.Flat;
-            stockOutSaveButton.Font = new Font("Calibri", 16F);
-            stockOutSaveButton.ForeColor = SystemColors.ButtonHighlight;
-            stockOutSaveButton.Location = new Point(318, 675);
-            stockOutSaveButton.Name = "stockOutSaveButton";
-            stockOutSaveButton.Size = new Size(161, 53);
-            stockOutSaveButton.TabIndex = 23;
-            stockOutSaveButton.Text = "STOCK OUT";
-            stockOutSaveButton.UseVisualStyleBackColor = false;
-            stockOutSaveButton.Click += stockOutSaveButton_Click;
-            // 
-            // stockOutClear
-            // 
-            stockOutClear.BackColor = Color.Firebrick;
-            stockOutClear.FlatStyle = FlatStyle.Flat;
-            stockOutClear.Font = new Font("Calibri", 16F);
-            stockOutClear.ForeColor = SystemColors.ButtonHighlight;
-            stockOutClear.Location = new Point(130, 675);
-            stockOutClear.Name = "stockOutClear";
-            stockOutClear.Size = new Size(161, 53);
-            stockOutClear.TabIndex = 22;
-            stockOutClear.Text = "CLEAR";
-            stockOutClear.UseVisualStyleBackColor = false;
-            stockOutClear.Click += stockOutClear_Click;
-            // 
-            // stockOutDateInput
-            // 
-            stockOutDateInput.Font = new Font("Calibri", 18F);
-            stockOutDateInput.Location = new Point(33, 601);
-            stockOutDateInput.Name = "stockOutDateInput";
-            stockOutDateInput.Size = new Size(446, 37);
-            stockOutDateInput.TabIndex = 21;
-            // 
-            // stockOutReasonInput
-            // 
-            stockOutReasonInput.Font = new Font("Calibri", 18F);
-            stockOutReasonInput.FormattingEnabled = true;
-            stockOutReasonInput.Items.AddRange(new object[] { "Sold", "Damaged" });
-            stockOutReasonInput.Location = new Point(33, 500);
-            stockOutReasonInput.Name = "stockOutReasonInput";
-            stockOutReasonInput.Size = new Size(446, 37);
-            stockOutReasonInput.TabIndex = 20;
-            // 
-            // label7
-            // 
-            label7.AutoSize = true;
-            label7.Font = new Font("Calibri", 18F);
-            label7.Location = new Point(30, 566);
-            label7.Name = "label7";
-            label7.Size = new Size(60, 29);
-            label7.TabIndex = 19;
-            label7.Text = "Date";
-            // 
-            // label8
-            // 
-            label8.AutoSize = true;
-            label8.Font = new Font("Calibri", 18F);
-            label8.Location = new Point(30, 465);
-            label8.Name = "label8";
-            label8.Size = new Size(85, 29);
-            label8.TabIndex = 18;
-            label8.Text = "Reason";
-            // 
-            // stockOutProductQuantity
-            // 
-            stockOutProductQuantity.Font = new Font("Calibri", 18F);
-            stockOutProductQuantity.Location = new Point(30, 405);
-            stockOutProductQuantity.Name = "stockOutProductQuantity";
-            stockOutProductQuantity.Size = new Size(446, 37);
-            stockOutProductQuantity.TabIndex = 17;
-            // 
-            // label9
-            // 
-            label9.AutoSize = true;
-            label9.Font = new Font("Calibri", 18F);
-            label9.Location = new Point(30, 370);
-            label9.Name = "label9";
-            label9.Size = new Size(99, 29);
-            label9.TabIndex = 16;
-            label9.Text = "Quantity";
-            // 
-            // stockOutProductCodeInput
-            // 
-            stockOutProductCodeInput.Font = new Font("Calibri", 18F);
-            stockOutProductCodeInput.Location = new Point(30, 221);
-            stockOutProductCodeInput.Name = "stockOutProductCodeInput";
-            stockOutProductCodeInput.Size = new Size(446, 37);
-            stockOutProductCodeInput.TabIndex = 15;
-            // 
-            // label10
-            // 
-            label10.AutoSize = true;
-            label10.Font = new Font("Calibri", 18F);
-            label10.Location = new Point(30, 186);
-            label10.Name = "label10";
-            label10.Size = new Size(114, 29);
-            label10.TabIndex = 14;
-            label10.Text = "Item Code";
-            // 
-            // label11
-            // 
-            label11.AutoSize = true;
-            label11.Font = new Font("Calibri", 27.75F, FontStyle.Bold);
-            label11.Location = new Point(23, 13);
-            label11.Name = "label11";
-            label11.Size = new Size(169, 45);
-            label11.TabIndex = 13;
-            label11.Text = "Stock Out";
             // 
             // panel2
             // 
@@ -816,10 +795,10 @@
             ((System.ComponentModel.ISupportInitialize)dataGridViewBatchItems).EndInit();
             panel1.ResumeLayout(false);
             panel4.ResumeLayout(false);
-            stockInPanel.ResumeLayout(false);
-            stockInPanel.PerformLayout();
             stockOutPanel.ResumeLayout(false);
             stockOutPanel.PerformLayout();
+            stockInPanel.ResumeLayout(false);
+            stockInPanel.PerformLayout();
             panel2.ResumeLayout(false);
             ResumeLayout(false);
         }
@@ -839,9 +818,7 @@
         private Label label2;
         private TextBox stockInProductCodeInput;
         private Label label3;
-        private DateTimePicker stockInDateInput;
         private ComboBox stockInReasonInput;
-        private Label label6;
         private Label label5;
         private TextBox stockInProductQuantity;
         private Label label4;
@@ -849,9 +826,7 @@
         private Button stockInClear;
         private Button stockOutSaveButton;
         private Button stockOutClear;
-        private DateTimePicker stockOutDateInput;
         private ComboBox stockOutReasonInput;
-        private Label label7;
         private Label label8;
         private TextBox stockOutProductQuantity;
         private Label label9;
@@ -880,11 +855,13 @@
         private Label label14;
         private TextBox stockOutItemIdInput;
         private Label label15;
+        private ComboBox stockInSupplierCmb;
+        private Label label6;
         private DataGridViewTextBoxColumn Column2;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private DataGridViewTextBoxColumn Column1;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private DataGridViewTextBoxColumn Column3;
     }
 }

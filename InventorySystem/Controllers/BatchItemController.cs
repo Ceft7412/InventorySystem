@@ -176,7 +176,6 @@ namespace InventorySystem.Controllers
                 productCode, 
                 productDescription, 
                 category, 
-                supplier, 
                 unit
             FROM 
                 tbItem";
@@ -194,7 +193,6 @@ namespace InventorySystem.Controllers
                         ProductCode = reader["productCode"].ToString(),
                         ProductDescription = reader["productDescription"].ToString(),
                         Category = reader["category"].ToString(),
-                        Supplier = reader["supplier"].ToString(),
                         Unit = reader["unit"].ToString()
                     });
                 }
@@ -359,7 +357,7 @@ namespace InventorySystem.Controllers
             }
         }
 
-        public void AddBatchItem(int item_id, string productCode, int quantity, string unit, string reason, DateTime date, string transaction_type)
+        public void AddBatchItem(int item_id, string productCode, int quantity, string unit, string reason, DateTime date, string transaction_type, string supplier = null)
         {   
             if (!ProductCodeExists(productCode, unit))
             {
@@ -371,7 +369,7 @@ namespace InventorySystem.Controllers
                 throw new ArgumentException("Item ID does not exist.");
             }
 
-            var existingItem = batchItems.FirstOrDefault(i => i.ItemId == item_id && i.ProductCode == productCode && i.Reason == reason);
+            var existingItem = batchItems.FirstOrDefault(i => i.ItemId == item_id && i.ProductCode == productCode && i.Reason == reason && i.Supplier == supplier);
             if (existingItem != null)
             {
                 // If an item exists with the same reason, update the quantity and possibly the date
@@ -388,7 +386,8 @@ namespace InventorySystem.Controllers
                     Unit = unit,
                     Reason = reason,
                     Date = date,
-                    TransactionType = transaction_type
+                    TransactionType = transaction_type,
+                    Supplier = supplier
 
                 };
                 batchItems.Add(batchItem);
@@ -558,8 +557,8 @@ namespace InventorySystem.Controllers
                         }
 
                         // Insert batch item record into tbBatchItems table
-                        string batchItemsQuery = "INSERT INTO tbBatchItems(batchItemId, batchId, transaction_id, productCode, quantity, type, reason, date, unit) " +
-                                                  "VALUES(@batchItemId, @batchId, @transaction_id, @productCode, @quantity, @type, @reason, @date, @unit)";
+                        string batchItemsQuery = "INSERT INTO tbBatchItems(batchItemId, batchId, transaction_id, productCode, quantity, type, reason, date, unit, supplierName) " +
+                                                  "VALUES(@batchItemId, @batchId, @transaction_id, @productCode, @quantity, @type, @reason, @date, @unit, @supplier)";
                         using (SqlCommand addCommand = new SqlCommand(batchItemsQuery, connection))
                         {
                             addCommand.Parameters.AddWithValue("@batchItemId", batchItemId);
@@ -571,6 +570,14 @@ namespace InventorySystem.Controllers
                             addCommand.Parameters.AddWithValue("@type", transaction_type);
                             addCommand.Parameters.AddWithValue("@reason", item.Reason);
                             addCommand.Parameters.AddWithValue("@date", item.Date);
+                            if (string.IsNullOrEmpty(item.Supplier))
+                            {
+                                addCommand.Parameters.AddWithValue("@supplier", DBNull.Value);
+                            }
+                            else
+                            {
+                                addCommand.Parameters.AddWithValue("@supplier", item.Supplier);
+                            }
                             addCommand.ExecuteNonQuery();
                         }
 

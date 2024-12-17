@@ -17,6 +17,37 @@ namespace InventorySystem.Controllers
 
         Item item;
 
+
+        public List<Supplier> GetSuppliersByItemId(int itemId)
+        {
+            string query = "SELECT s.supplierId, s.supplierName FROM tbSupplier s " +
+                           "INNER JOIN tbItemSupplier isup ON s.supplierId = isup.SupplierId " +
+                           "WHERE isup.ItemId = @itemId";
+
+            List<Supplier> suppliers = new List<Supplier>();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@itemId", itemId);
+
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    suppliers.Add(new Supplier
+                    {
+                        SupplierId = Convert.ToInt32(reader["supplierId"]),
+                        SupplierName = reader["supplierName"].ToString()
+                    });
+                }
+                reader.Close();
+            }
+
+            return suppliers;
+        }
+
         public int GetDamagedItemCount()
         {
             try
@@ -169,7 +200,6 @@ namespace InventorySystem.Controllers
                             ProductCode = reader["productCode"] as string ?? "",
                             ProductDescription = reader["productDescription"] as string ?? "",
                             Category = reader["category"] as string ?? "",
-                            Supplier = reader["supplier"] as string ?? "",
                             Unit = reader["unit"] as string ?? "",
                             MinimumStock = reader["minimumstocklevel"] != DBNull.Value ? Convert.ToInt32(reader["minimumstocklevel"]) : 0
                         };
