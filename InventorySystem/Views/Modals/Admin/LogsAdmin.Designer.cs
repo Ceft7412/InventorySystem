@@ -37,7 +37,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LogsAdmin));
             topbarStockInOutPanel = new Panel();
             label1 = new Label();
-            panel1 = new Panel();
             dataGridViewLogs = new DataGridView();
             Column1 = new DataGridViewTextBoxColumn();
             Column2 = new DataGridViewTextBoxColumn();
@@ -47,9 +46,15 @@
             Column6 = new DataGridViewTextBoxColumn();
             Column7 = new DataGridViewTextBoxColumn();
             Column8 = new DataGridViewTextBoxColumn();
+            panel2 = new Panel();
+            label2 = new Label();
+            statusCmb = new ComboBox();
+            logAndemployeeTxt = new TextBox();
+            panel3 = new Panel();
             topbarStockInOutPanel.SuspendLayout();
-            panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewLogs).BeginInit();
+            panel2.SuspendLayout();
+            panel3.SuspendLayout();
             SuspendLayout();
             // 
             // topbarStockInOutPanel
@@ -73,16 +78,6 @@
             label1.Size = new Size(81, 42);
             label1.TabIndex = 0;
             label1.Text = "Logs";
-            // 
-            // panel1
-            // 
-            panel1.Controls.Add(dataGridViewLogs);
-            panel1.Dock = DockStyle.Fill;
-            panel1.Location = new Point(0, 79);
-            panel1.Name = "panel1";
-            panel1.Padding = new Padding(30, 10, 30, 30);
-            panel1.Size = new Size(1505, 749);
-            panel1.TabIndex = 4;
             // 
             // dataGridViewLogs
             // 
@@ -141,7 +136,7 @@
             dataGridViewLogs.RowsDefaultCellStyle = dataGridViewCellStyle6;
             dataGridViewLogs.RowTemplate.Height = 100;
             dataGridViewLogs.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridViewLogs.Size = new Size(1445, 709);
+            dataGridViewLogs.Size = new Size(1445, 639);
             dataGridViewLogs.TabIndex = 2;
             // 
             // Column1
@@ -203,21 +198,77 @@
             Column8.Name = "Column8";
             Column8.ReadOnly = true;
             // 
+            // panel2
+            // 
+            panel2.Controls.Add(label2);
+            panel2.Controls.Add(statusCmb);
+            panel2.Controls.Add(logAndemployeeTxt);
+            panel2.Dock = DockStyle.Top;
+            panel2.Location = new Point(0, 79);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(1505, 70);
+            panel2.TabIndex = 5;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 16F);
+            label2.Location = new Point(1078, 25);
+            label2.Name = "label2";
+            label2.Size = new Size(75, 30);
+            label2.TabIndex = 4;
+            label2.Text = "Status:";
+            // 
+            // statusCmb
+            // 
+            statusCmb.DropDownStyle = ComboBoxStyle.DropDownList;
+            statusCmb.Font = new Font("Segoe UI", 16F);
+            statusCmb.FormattingEnabled = true;
+            statusCmb.Items.AddRange(new object[] { "All", "Success", "Failure" });
+            statusCmb.Location = new Point(1159, 20);
+            statusCmb.Name = "statusCmb";
+            statusCmb.Size = new Size(309, 38);
+            statusCmb.TabIndex = 3;
+            statusCmb.SelectedIndexChanged += statusCmb_SelectedIndexChanged;
+            // 
+            // logAndemployeeTxt
+            // 
+            logAndemployeeTxt.Font = new Font("Segoe UI", 17F);
+            logAndemployeeTxt.Location = new Point(29, 17);
+            logAndemployeeTxt.Name = "logAndemployeeTxt";
+            logAndemployeeTxt.PlaceholderText = "Search log and employee id";
+            logAndemployeeTxt.Size = new Size(335, 38);
+            logAndemployeeTxt.TabIndex = 2;
+            logAndemployeeTxt.TextChanged += logAndemployeeTxt_TextChanged;
+            // 
+            // panel3
+            // 
+            panel3.Controls.Add(dataGridViewLogs);
+            panel3.Dock = DockStyle.Fill;
+            panel3.Location = new Point(0, 149);
+            panel3.Name = "panel3";
+            panel3.Padding = new Padding(30, 10, 30, 30);
+            panel3.Size = new Size(1505, 679);
+            panel3.TabIndex = 6;
+            // 
             // LogsAdmin
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1505, 828);
-            Controls.Add(panel1);
+            Controls.Add(panel3);
+            Controls.Add(panel2);
             Controls.Add(topbarStockInOutPanel);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "LogsAdmin";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "LogsAdmin";
+            Text = "Admin - Logs";
             topbarStockInOutPanel.ResumeLayout(false);
             topbarStockInOutPanel.PerformLayout();
-            panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dataGridViewLogs).EndInit();
+            panel2.ResumeLayout(false);
+            panel2.PerformLayout();
+            panel3.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -225,7 +276,6 @@
 
         private Panel topbarStockInOutPanel;
         private Label label1;
-        private Panel panel1;
         private DataGridView dataGridViewLogs;
         private DataGridViewTextBoxColumn Column1;
         private DataGridViewTextBoxColumn Column2;
@@ -235,5 +285,10 @@
         private DataGridViewTextBoxColumn Column6;
         private DataGridViewTextBoxColumn Column7;
         private DataGridViewTextBoxColumn Column8;
+        private Panel panel2;
+        private Panel panel3;
+        private TextBox logAndemployeeTxt;
+        private ComboBox statusCmb;
+        private Label label2;
     }
 }

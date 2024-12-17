@@ -16,6 +16,7 @@ namespace InventorySystem.Views.Modals.InventoryUser
     public partial class SupplierModal : Form
     {
         private SupplierController supplierController = new SupplierController();
+        private LogController LogController = new LogController();
         private string selectedSupplier;
         public SupplierModal()
         {
@@ -125,13 +126,13 @@ namespace InventorySystem.Views.Modals.InventoryUser
         {
             try
             {
-
                 var message = MessageBox.Show("Are you sure you want to export the data?", "Export to Excel", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                 if (message == DialogResult.No)
                 {
                     return;
                 }
+
                 // Create Excel application instance
                 Excel.Application excelApp = new Excel.Application();
                 excelApp.Visible = true;
@@ -163,12 +164,38 @@ namespace InventorySystem.Views.Modals.InventoryUser
                 System.Runtime.InteropServices.Marshal.ReleaseComObject(excelApp);
 
                 MessageBox.Show("Data exported successfully!", "Export to Excel", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Log successful export
+                Log log = new Log
+                {
+                    TableAffected = "tbSupplier",
+                    RecordID = 0, // No specific record, this is a bulk operation
+                    ModuleName = "Supplier Management",
+                    Description = "Exported supplier data to Excel.",
+                    Status = "Success",
+                    ActionType = "Export"
+                };
+                LogController.LogUpdate(log.TableAffected, log.RecordID, log.ModuleName, log.Description, log.Status, log.ActionType);
             }
             catch (Exception ex)
             {
+                // Log the failure
+                Log log = new Log
+                {
+                    TableAffected = "tbSupplier",
+                    RecordID = 0, // No specific record, this is a bulk operation
+                    ModuleName = "Supplier Management",
+                    Description = $"Failed to export supplier data to Excel. Error: {ex.Message}",
+                    Status = "Failure",
+                    ActionType = "Export"
+                };
+                LogController.LogUpdate(log.TableAffected, log.RecordID, log.ModuleName, log.Description, log.Status, log.ActionType);
+
+                // Display error message to the user
                 MessageBox.Show($"Error message: {ex.Message}", "Export to Excel", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
         private void supplierRowClick(object sender, DataGridViewCellEventArgs e)
         {

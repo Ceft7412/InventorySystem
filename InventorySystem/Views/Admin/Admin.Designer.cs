@@ -30,18 +30,19 @@ namespace InventorySystem.Views.Admin
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
-            ChartArea chartArea3 = new ChartArea();
-            Series series3 = new Series();
-            Title title2 = new Title();
-            ChartArea chartArea4 = new ChartArea();
-            Legend legend2 = new Legend();
-            Series series4 = new Series();
+            ChartArea chartArea1 = new ChartArea();
+            Series series1 = new Series();
+            Title title1 = new Title();
+            ChartArea chartArea2 = new ChartArea();
+            Legend legend1 = new Legend();
+            Series series2 = new Series();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Admin));
             sidebar = new Panel();
             panel3 = new Panel();
+            settingsBtn = new Button();
             logsBtn = new Button();
             employeeBtn = new Button();
             logoutBtn = new Button();
@@ -52,40 +53,69 @@ namespace InventorySystem.Views.Admin
             adminPanels = new Panel();
             panel11 = new Panel();
             panel8 = new Panel();
-            panel14 = new Panel();
-            panel16 = new Panel();
-            bestSellerGrid = new DataGridView();
-            Column6 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
-            Column4 = new DataGridViewTextBoxColumn();
-            Column5 = new DataGridViewTextBoxColumn();
-            panel15 = new Panel();
-            label3 = new Label();
-            periodCmb = new ComboBox();
+            panel24 = new Panel();
             panel10 = new Panel();
             panel18 = new Panel();
             panel19 = new Panel();
             chartInventory = new Chart();
             panel17 = new Panel();
             inventoryRestockingCmb = new ComboBox();
-            panel7 = new Panel();
             panel4 = new Panel();
-            panel13 = new Panel();
-            panel22 = new Panel();
-            label6 = new Label();
-            panel12 = new Panel();
+            panel36 = new Panel();
+            panel39 = new Panel();
+            panel40 = new Panel();
+            panel25 = new Panel();
+            panel26 = new Panel();
+            label5 = new Label();
+            panel27 = new Panel();
+            damagedItems = new Label();
+            panel41 = new Panel();
+            panel42 = new Panel();
+            label10 = new Label();
+            panel43 = new Panel();
+            totalItems = new Label();
+            panel44 = new Panel();
+            panel45 = new Panel();
+            label12 = new Label();
+            panel46 = new Panel();
+            NUMBER_MIN_STOCK_LEVEL = new Label();
+            panel47 = new Panel();
+            pieChartInventory = new Chart();
+            panel37 = new Panel();
+            label8 = new Label();
+            panel38 = new Panel();
+            label9 = new Label();
+            panel35 = new Panel();
+            panel21 = new Panel();
+            labelPullOuts = new Label();
+            panel5 = new Panel();
             label1 = new Label();
-            linkTransaction = new LinkLabel();
+            panel12 = new Panel();
+            totalPullOutCmb = new ComboBox();
+            label4 = new Label();
+            panel7 = new Panel();
             panel1 = new Panel();
             panel6 = new Panel();
-            pieChartInventory = new Chart();
-            panel5 = new Panel();
+            panel14 = new Panel();
+            panel16 = new Panel();
+            bestSellerGrid = new DataGridView();
+            Column6 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
+            Column1 = new DataGridViewTextBoxColumn();
+            panel15 = new Panel();
+            label3 = new Label();
+            periodCmb = new ComboBox();
+            panel13 = new Panel();
+            panel20 = new Panel();
+            transactionCountLabel = new Label();
+            panel22 = new Panel();
             label2 = new Label();
+            panel23 = new Panel();
+            filterComboBox = new ComboBox();
+            label6 = new Label();
             panel9 = new Panel();
             refreshButton = new Button();
-            settingsBtn = new Button();
             sidebar.SuspendLayout();
             panel3.SuspendLayout();
             panel2.SuspendLayout();
@@ -93,24 +123,43 @@ namespace InventorySystem.Views.Admin
             adminPanels.SuspendLayout();
             panel11.SuspendLayout();
             panel8.SuspendLayout();
-            panel14.SuspendLayout();
-            panel16.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)bestSellerGrid).BeginInit();
-            panel15.SuspendLayout();
+            panel24.SuspendLayout();
             panel10.SuspendLayout();
             panel18.SuspendLayout();
             panel19.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)chartInventory).BeginInit();
             panel17.SuspendLayout();
-            panel7.SuspendLayout();
             panel4.SuspendLayout();
-            panel13.SuspendLayout();
-            panel22.SuspendLayout();
+            panel36.SuspendLayout();
+            panel39.SuspendLayout();
+            panel40.SuspendLayout();
+            panel25.SuspendLayout();
+            panel26.SuspendLayout();
+            panel27.SuspendLayout();
+            panel41.SuspendLayout();
+            panel42.SuspendLayout();
+            panel43.SuspendLayout();
+            panel44.SuspendLayout();
+            panel45.SuspendLayout();
+            panel46.SuspendLayout();
+            panel47.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pieChartInventory).BeginInit();
+            panel37.SuspendLayout();
+            panel38.SuspendLayout();
+            panel21.SuspendLayout();
+            panel5.SuspendLayout();
             panel12.SuspendLayout();
+            panel7.SuspendLayout();
             panel1.SuspendLayout();
             panel6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pieChartInventory).BeginInit();
-            panel5.SuspendLayout();
+            panel14.SuspendLayout();
+            panel16.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)bestSellerGrid).BeginInit();
+            panel15.SuspendLayout();
+            panel13.SuspendLayout();
+            panel20.SuspendLayout();
+            panel22.SuspendLayout();
+            panel23.SuspendLayout();
             panel9.SuspendLayout();
             SuspendLayout();
             // 
@@ -123,8 +172,9 @@ namespace InventorySystem.Views.Admin
             sidebar.Controls.Add(panel2);
             sidebar.Dock = DockStyle.Left;
             sidebar.Location = new Point(0, 0);
+            sidebar.Margin = new Padding(3, 4, 3, 4);
             sidebar.Name = "sidebar";
-            sidebar.Size = new Size(230, 881);
+            sidebar.Size = new Size(263, 1055);
             sidebar.TabIndex = 0;
             // 
             // panel3
@@ -137,10 +187,34 @@ namespace InventorySystem.Views.Admin
             panel3.Controls.Add(transactionsBtn);
             panel3.Controls.Add(inventoryBtn);
             panel3.Dock = DockStyle.Fill;
-            panel3.Location = new Point(0, 239);
+            panel3.Location = new Point(0, 319);
+            panel3.Margin = new Padding(3, 4, 3, 4);
             panel3.Name = "panel3";
-            panel3.Size = new Size(230, 642);
+            panel3.Size = new Size(263, 736);
             panel3.TabIndex = 2;
+            // 
+            // settingsBtn
+            // 
+            settingsBtn.Cursor = Cursors.Hand;
+            settingsBtn.Dock = DockStyle.Top;
+            settingsBtn.FlatAppearance.BorderSize = 0;
+            settingsBtn.FlatAppearance.MouseOverBackColor = SystemColors.ActiveCaption;
+            settingsBtn.FlatStyle = FlatStyle.Flat;
+            settingsBtn.Font = new Font("Calibri", 18F);
+            settingsBtn.ForeColor = SystemColors.ButtonHighlight;
+            settingsBtn.Image = Properties.Resources.settings__3_;
+            settingsBtn.ImageAlign = ContentAlignment.MiddleLeft;
+            settingsBtn.Location = new Point(0, 444);
+            settingsBtn.Margin = new Padding(3, 4, 3, 4);
+            settingsBtn.Name = "settingsBtn";
+            settingsBtn.Padding = new Padding(6, 7, 6, 7);
+            settingsBtn.Size = new Size(263, 111);
+            settingsBtn.TabIndex = 6;
+            settingsBtn.Text = "Settings";
+            settingsBtn.TextAlign = ContentAlignment.MiddleRight;
+            settingsBtn.TextImageRelation = TextImageRelation.ImageBeforeText;
+            settingsBtn.UseVisualStyleBackColor = true;
+            settingsBtn.Click += settingsBtn_Click;
             // 
             // logsBtn
             // 
@@ -153,10 +227,11 @@ namespace InventorySystem.Views.Admin
             logsBtn.ForeColor = SystemColors.ButtonHighlight;
             logsBtn.Image = Properties.Resources.log;
             logsBtn.ImageAlign = ContentAlignment.MiddleLeft;
-            logsBtn.Location = new Point(0, 249);
+            logsBtn.Location = new Point(0, 333);
+            logsBtn.Margin = new Padding(3, 4, 3, 4);
             logsBtn.Name = "logsBtn";
-            logsBtn.Padding = new Padding(5);
-            logsBtn.Size = new Size(230, 83);
+            logsBtn.Padding = new Padding(6, 7, 6, 7);
+            logsBtn.Size = new Size(263, 111);
             logsBtn.TabIndex = 5;
             logsBtn.Text = "Logs";
             logsBtn.TextAlign = ContentAlignment.MiddleRight;
@@ -175,10 +250,11 @@ namespace InventorySystem.Views.Admin
             employeeBtn.ForeColor = SystemColors.ButtonHighlight;
             employeeBtn.Image = Properties.Resources.employee;
             employeeBtn.ImageAlign = ContentAlignment.MiddleLeft;
-            employeeBtn.Location = new Point(0, 166);
+            employeeBtn.Location = new Point(0, 222);
+            employeeBtn.Margin = new Padding(3, 4, 3, 4);
             employeeBtn.Name = "employeeBtn";
-            employeeBtn.Padding = new Padding(5);
-            employeeBtn.Size = new Size(230, 83);
+            employeeBtn.Padding = new Padding(6, 7, 6, 7);
+            employeeBtn.Size = new Size(263, 111);
             employeeBtn.TabIndex = 4;
             employeeBtn.Text = "Employee";
             employeeBtn.TextAlign = ContentAlignment.MiddleRight;
@@ -197,10 +273,11 @@ namespace InventorySystem.Views.Admin
             logoutBtn.ForeColor = SystemColors.ButtonHighlight;
             logoutBtn.Image = Properties.Resources.logout;
             logoutBtn.ImageAlign = ContentAlignment.MiddleLeft;
-            logoutBtn.Location = new Point(0, 559);
+            logoutBtn.Location = new Point(0, 625);
+            logoutBtn.Margin = new Padding(3, 4, 3, 4);
             logoutBtn.Name = "logoutBtn";
-            logoutBtn.Padding = new Padding(5);
-            logoutBtn.Size = new Size(230, 83);
+            logoutBtn.Padding = new Padding(6, 7, 6, 7);
+            logoutBtn.Size = new Size(263, 111);
             logoutBtn.TabIndex = 3;
             logoutBtn.Text = "Logout";
             logoutBtn.TextAlign = ContentAlignment.MiddleRight;
@@ -219,10 +296,11 @@ namespace InventorySystem.Views.Admin
             transactionsBtn.ForeColor = SystemColors.ButtonHighlight;
             transactionsBtn.Image = Properties.Resources.transaction;
             transactionsBtn.ImageAlign = ContentAlignment.MiddleLeft;
-            transactionsBtn.Location = new Point(0, 83);
+            transactionsBtn.Location = new Point(0, 111);
+            transactionsBtn.Margin = new Padding(3, 4, 3, 4);
             transactionsBtn.Name = "transactionsBtn";
-            transactionsBtn.Padding = new Padding(5);
-            transactionsBtn.Size = new Size(230, 83);
+            transactionsBtn.Padding = new Padding(6, 7, 6, 7);
+            transactionsBtn.Size = new Size(263, 111);
             transactionsBtn.TabIndex = 2;
             transactionsBtn.Text = "Transactions";
             transactionsBtn.TextAlign = ContentAlignment.MiddleRight;
@@ -242,9 +320,10 @@ namespace InventorySystem.Views.Admin
             inventoryBtn.Image = Properties.Resources.asset;
             inventoryBtn.ImageAlign = ContentAlignment.MiddleLeft;
             inventoryBtn.Location = new Point(0, 0);
+            inventoryBtn.Margin = new Padding(3, 4, 3, 4);
             inventoryBtn.Name = "inventoryBtn";
-            inventoryBtn.Padding = new Padding(5);
-            inventoryBtn.Size = new Size(230, 83);
+            inventoryBtn.Padding = new Padding(6, 7, 6, 7);
+            inventoryBtn.Size = new Size(263, 111);
             inventoryBtn.TabIndex = 1;
             inventoryBtn.Text = "Inventory";
             inventoryBtn.TextAlign = ContentAlignment.MiddleRight;
@@ -258,16 +337,18 @@ namespace InventorySystem.Views.Admin
             panel2.Controls.Add(pictureBox1);
             panel2.Dock = DockStyle.Top;
             panel2.Location = new Point(0, 0);
+            panel2.Margin = new Padding(3, 4, 3, 4);
             panel2.Name = "panel2";
-            panel2.Size = new Size(230, 239);
+            panel2.Size = new Size(263, 319);
             panel2.TabIndex = 1;
             // 
             // pictureBox1
             // 
             pictureBox1.Image = Properties.Resources.company_logo;
-            pictureBox1.Location = new Point(25, 12);
+            pictureBox1.Location = new Point(29, 16);
+            pictureBox1.Margin = new Padding(3, 4, 3, 4);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(181, 147);
+            pictureBox1.Size = new Size(207, 196);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
@@ -277,50 +358,575 @@ namespace InventorySystem.Views.Admin
             adminPanels.Controls.Add(panel11);
             adminPanels.Controls.Add(panel9);
             adminPanels.Dock = DockStyle.Fill;
-            adminPanels.Location = new Point(230, 0);
+            adminPanels.Location = new Point(263, 0);
+            adminPanels.Margin = new Padding(3, 4, 3, 4);
             adminPanels.Name = "adminPanels";
-            adminPanels.Size = new Size(1569, 881);
+            adminPanels.Padding = new Padding(17, 13, 17, 13);
+            adminPanels.Size = new Size(1661, 1055);
             adminPanels.TabIndex = 1;
             // 
             // panel11
             // 
-            panel11.BorderStyle = BorderStyle.FixedSingle;
             panel11.Controls.Add(panel8);
             panel11.Controls.Add(panel7);
             panel11.Dock = DockStyle.Fill;
-            panel11.Location = new Point(0, 71);
+            panel11.Location = new Point(17, 108);
+            panel11.Margin = new Padding(3, 4, 3, 4);
             panel11.Name = "panel11";
-            panel11.Size = new Size(1569, 810);
+            panel11.Size = new Size(1627, 934);
             panel11.TabIndex = 8;
             // 
             // panel8
             // 
-            panel8.Controls.Add(panel14);
-            panel8.Controls.Add(panel10);
+            panel8.Controls.Add(panel24);
+            panel8.Controls.Add(panel4);
             panel8.Dock = DockStyle.Fill;
             panel8.Location = new Point(0, 0);
+            panel8.Margin = new Padding(3, 4, 3, 4);
             panel8.Name = "panel8";
-            panel8.Size = new Size(1142, 808);
+            panel8.Size = new Size(1024, 934);
             panel8.TabIndex = 7;
+            // 
+            // panel24
+            // 
+            panel24.Controls.Add(panel10);
+            panel24.Dock = DockStyle.Fill;
+            panel24.Location = new Point(0, 0);
+            panel24.Margin = new Padding(3, 4, 3, 4);
+            panel24.Name = "panel24";
+            panel24.Padding = new Padding(17, 7, 17, 7);
+            panel24.Size = new Size(1024, 403);
+            panel24.TabIndex = 11;
+            // 
+            // panel10
+            // 
+            panel10.BackColor = SystemColors.ButtonHighlight;
+            panel10.BorderStyle = BorderStyle.FixedSingle;
+            panel10.Controls.Add(panel18);
+            panel10.Controls.Add(panel17);
+            panel10.Dock = DockStyle.Fill;
+            panel10.Location = new Point(17, 7);
+            panel10.Margin = new Padding(3, 4, 3, 4);
+            panel10.Name = "panel10";
+            panel10.Size = new Size(990, 389);
+            panel10.TabIndex = 8;
+            // 
+            // panel18
+            // 
+            panel18.Controls.Add(panel19);
+            panel18.Dock = DockStyle.Fill;
+            panel18.Location = new Point(0, 76);
+            panel18.Margin = new Padding(3, 4, 3, 4);
+            panel18.Name = "panel18";
+            panel18.Padding = new Padding(17, 7, 17, 7);
+            panel18.Size = new Size(988, 311);
+            panel18.TabIndex = 4;
+            // 
+            // panel19
+            // 
+            panel19.Controls.Add(chartInventory);
+            panel19.Dock = DockStyle.Fill;
+            panel19.Location = new Point(17, 7);
+            panel19.Margin = new Padding(3, 4, 3, 4);
+            panel19.Name = "panel19";
+            panel19.Size = new Size(954, 297);
+            panel19.TabIndex = 2;
+            // 
+            // chartInventory
+            // 
+            chartInventory.BackColor = Color.Transparent;
+            chartArea1.AxisX.MajorGrid.LineColor = Color.LightGray;
+            chartArea1.AxisY.MajorGrid.LineColor = Color.LightGray;
+            chartArea1.AxisY.Title = "Re-stock Values";
+            chartArea1.Name = "ChartArea1";
+            chartInventory.ChartAreas.Add(chartArea1);
+            chartInventory.Dock = DockStyle.Fill;
+            chartInventory.Location = new Point(0, 0);
+            chartInventory.Margin = new Padding(3, 4, 3, 4);
+            chartInventory.Name = "chartInventory";
+            series1.BackGradientStyle = GradientStyle.TopBottom;
+            series1.BorderWidth = 4;
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = SeriesChartType.Area;
+            series1.Color = Color.Blue;
+            series1.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            series1.IsVisibleInLegend = false;
+            series1.IsXValueIndexed = true;
+            series1.MarkerSize = 10;
+            series1.MarkerStyle = MarkerStyle.Circle;
+            series1.Name = "Inventory Restocking";
+            series1.ShadowColor = Color.FromArgb(64, 64, 64);
+            chartInventory.Series.Add(series1);
+            chartInventory.Size = new Size(954, 297);
+            chartInventory.TabIndex = 1;
+            chartInventory.Text = "chart1";
+            title1.Font = new Font("Segoe UI Semibold", 21.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            title1.Name = "Title1";
+            title1.Text = "INVENTORY RESTOCKING";
+            chartInventory.Titles.Add(title1);
+            // 
+            // panel17
+            // 
+            panel17.Controls.Add(inventoryRestockingCmb);
+            panel17.Dock = DockStyle.Top;
+            panel17.Location = new Point(0, 0);
+            panel17.Margin = new Padding(3, 4, 3, 4);
+            panel17.Name = "panel17";
+            panel17.Size = new Size(988, 76);
+            panel17.TabIndex = 3;
+            // 
+            // inventoryRestockingCmb
+            // 
+            inventoryRestockingCmb.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            inventoryRestockingCmb.DropDownStyle = ComboBoxStyle.DropDownList;
+            inventoryRestockingCmb.Font = new Font("Calibri", 15.75F);
+            inventoryRestockingCmb.FormattingEnabled = true;
+            inventoryRestockingCmb.Items.AddRange(new object[] { "Daily", "Weekly", "Monthly" });
+            inventoryRestockingCmb.Location = new Point(664, 13);
+            inventoryRestockingCmb.Margin = new Padding(3, 4, 3, 4);
+            inventoryRestockingCmb.Name = "inventoryRestockingCmb";
+            inventoryRestockingCmb.Size = new Size(306, 40);
+            inventoryRestockingCmb.TabIndex = 2;
+            inventoryRestockingCmb.SelectedIndexChanged += inventoryRestockingCmb_SelectedIndexChanged;
+            // 
+            // panel4
+            // 
+            panel4.Controls.Add(panel36);
+            panel4.Controls.Add(panel35);
+            panel4.Controls.Add(panel21);
+            panel4.Dock = DockStyle.Bottom;
+            panel4.Location = new Point(0, 403);
+            panel4.Margin = new Padding(3, 4, 3, 4);
+            panel4.Name = "panel4";
+            panel4.Padding = new Padding(17, 7, 17, 13);
+            panel4.Size = new Size(1024, 531);
+            panel4.TabIndex = 10;
+            // 
+            // panel36
+            // 
+            panel36.BackColor = SystemColors.ButtonHighlight;
+            panel36.BorderStyle = BorderStyle.FixedSingle;
+            panel36.Controls.Add(panel39);
+            panel36.Controls.Add(panel37);
+            panel36.Dock = DockStyle.Fill;
+            panel36.Location = new Point(17, 7);
+            panel36.Margin = new Padding(3, 4, 3, 4);
+            panel36.Name = "panel36";
+            panel36.Padding = new Padding(11, 7, 11, 7);
+            panel36.Size = new Size(578, 511);
+            panel36.TabIndex = 14;
+            // 
+            // panel39
+            // 
+            panel39.Controls.Add(panel40);
+            panel39.Controls.Add(panel47);
+            panel39.Dock = DockStyle.Fill;
+            panel39.Location = new Point(11, 84);
+            panel39.Margin = new Padding(3, 4, 3, 4);
+            panel39.Name = "panel39";
+            panel39.Size = new Size(554, 418);
+            panel39.TabIndex = 3;
+            // 
+            // panel40
+            // 
+            panel40.Controls.Add(panel25);
+            panel40.Controls.Add(panel41);
+            panel40.Controls.Add(panel44);
+            panel40.Dock = DockStyle.Fill;
+            panel40.Location = new Point(0, 0);
+            panel40.Margin = new Padding(3, 4, 3, 4);
+            panel40.Name = "panel40";
+            panel40.Padding = new Padding(0, 80, 11, 40);
+            panel40.Size = new Size(245, 418);
+            panel40.TabIndex = 3;
+            // 
+            // panel25
+            // 
+            panel25.Controls.Add(panel26);
+            panel25.Controls.Add(panel27);
+            panel25.Dock = DockStyle.Top;
+            panel25.Location = new Point(0, 264);
+            panel25.Margin = new Padding(3, 4, 3, 4);
+            panel25.Name = "panel25";
+            panel25.Padding = new Padding(5, 5, 5, 5);
+            panel25.Size = new Size(234, 92);
+            panel25.TabIndex = 6;
+            // 
+            // panel26
+            // 
+            panel26.Controls.Add(label5);
+            panel26.Dock = DockStyle.Fill;
+            panel26.Location = new Point(5, 5);
+            panel26.Margin = new Padding(3, 4, 3, 4);
+            panel26.Name = "panel26";
+            panel26.Size = new Size(113, 82);
+            panel26.TabIndex = 2;
+            // 
+            // label5
+            // 
+            label5.Dock = DockStyle.Fill;
+            label5.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
+            label5.ForeColor = SystemColors.ActiveCaptionText;
+            label5.Location = new Point(0, 0);
+            label5.Name = "label5";
+            label5.Size = new Size(113, 82);
+            label5.TabIndex = 0;
+            label5.Text = "Damaged Items";
+            label5.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // panel27
+            // 
+            panel27.Controls.Add(damagedItems);
+            panel27.Dock = DockStyle.Right;
+            panel27.Location = new Point(118, 5);
+            panel27.Margin = new Padding(3, 4, 3, 4);
+            panel27.Name = "panel27";
+            panel27.Size = new Size(111, 82);
+            panel27.TabIndex = 1;
+            // 
+            // damagedItems
+            // 
+            damagedItems.Dock = DockStyle.Fill;
+            damagedItems.Font = new Font("Segoe UI", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            damagedItems.ForeColor = SystemColors.ActiveCaptionText;
+            damagedItems.Location = new Point(0, 0);
+            damagedItems.Name = "damagedItems";
+            damagedItems.Size = new Size(111, 82);
+            damagedItems.TabIndex = 1;
+            damagedItems.Text = "0";
+            damagedItems.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // panel41
+            // 
+            panel41.Controls.Add(panel42);
+            panel41.Controls.Add(panel43);
+            panel41.Dock = DockStyle.Top;
+            panel41.Location = new Point(0, 172);
+            panel41.Margin = new Padding(3, 4, 3, 4);
+            panel41.Name = "panel41";
+            panel41.Padding = new Padding(5, 5, 5, 5);
+            panel41.Size = new Size(234, 92);
+            panel41.TabIndex = 5;
+            // 
+            // panel42
+            // 
+            panel42.Controls.Add(label10);
+            panel42.Dock = DockStyle.Fill;
+            panel42.Location = new Point(5, 5);
+            panel42.Margin = new Padding(3, 4, 3, 4);
+            panel42.Name = "panel42";
+            panel42.Size = new Size(113, 82);
+            panel42.TabIndex = 2;
+            // 
+            // label10
+            // 
+            label10.Dock = DockStyle.Fill;
+            label10.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
+            label10.ForeColor = SystemColors.ActiveCaptionText;
+            label10.Location = new Point(0, 0);
+            label10.Name = "label10";
+            label10.Size = new Size(113, 82);
+            label10.TabIndex = 0;
+            label10.Text = "All Items";
+            label10.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // panel43
+            // 
+            panel43.Controls.Add(totalItems);
+            panel43.Dock = DockStyle.Right;
+            panel43.Location = new Point(118, 5);
+            panel43.Margin = new Padding(3, 4, 3, 4);
+            panel43.Name = "panel43";
+            panel43.Size = new Size(111, 82);
+            panel43.TabIndex = 1;
+            // 
+            // totalItems
+            // 
+            totalItems.Dock = DockStyle.Fill;
+            totalItems.Font = new Font("Segoe UI", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            totalItems.ForeColor = SystemColors.ActiveCaptionText;
+            totalItems.Location = new Point(0, 0);
+            totalItems.Name = "totalItems";
+            totalItems.Size = new Size(111, 82);
+            totalItems.TabIndex = 1;
+            totalItems.Text = "0";
+            totalItems.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // panel44
+            // 
+            panel44.Controls.Add(panel45);
+            panel44.Controls.Add(panel46);
+            panel44.Dock = DockStyle.Top;
+            panel44.Location = new Point(0, 80);
+            panel44.Margin = new Padding(3, 4, 3, 4);
+            panel44.Name = "panel44";
+            panel44.Padding = new Padding(5, 5, 5, 5);
+            panel44.Size = new Size(234, 92);
+            panel44.TabIndex = 4;
+            // 
+            // panel45
+            // 
+            panel45.Controls.Add(label12);
+            panel45.Dock = DockStyle.Fill;
+            panel45.Location = new Point(5, 5);
+            panel45.Margin = new Padding(3, 4, 3, 4);
+            panel45.Name = "panel45";
+            panel45.Size = new Size(113, 82);
+            panel45.TabIndex = 2;
+            // 
+            // label12
+            // 
+            label12.Dock = DockStyle.Fill;
+            label12.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
+            label12.ForeColor = Color.Red;
+            label12.Location = new Point(0, 0);
+            label12.Name = "label12";
+            label12.Size = new Size(113, 82);
+            label12.TabIndex = 0;
+            label12.Text = "Low Stock Items";
+            label12.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // panel46
+            // 
+            panel46.Controls.Add(NUMBER_MIN_STOCK_LEVEL);
+            panel46.Dock = DockStyle.Right;
+            panel46.Location = new Point(118, 5);
+            panel46.Margin = new Padding(3, 4, 3, 4);
+            panel46.Name = "panel46";
+            panel46.Size = new Size(111, 82);
+            panel46.TabIndex = 1;
+            // 
+            // NUMBER_MIN_STOCK_LEVEL
+            // 
+            NUMBER_MIN_STOCK_LEVEL.Dock = DockStyle.Fill;
+            NUMBER_MIN_STOCK_LEVEL.Font = new Font("Segoe UI", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            NUMBER_MIN_STOCK_LEVEL.ForeColor = Color.Red;
+            NUMBER_MIN_STOCK_LEVEL.Location = new Point(0, 0);
+            NUMBER_MIN_STOCK_LEVEL.Name = "NUMBER_MIN_STOCK_LEVEL";
+            NUMBER_MIN_STOCK_LEVEL.Size = new Size(111, 82);
+            NUMBER_MIN_STOCK_LEVEL.TabIndex = 1;
+            NUMBER_MIN_STOCK_LEVEL.Text = "0";
+            NUMBER_MIN_STOCK_LEVEL.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // panel47
+            // 
+            panel47.Controls.Add(pieChartInventory);
+            panel47.Dock = DockStyle.Right;
+            panel47.Location = new Point(245, 0);
+            panel47.Margin = new Padding(3, 4, 3, 4);
+            panel47.Name = "panel47";
+            panel47.Size = new Size(309, 418);
+            panel47.TabIndex = 1;
+            // 
+            // pieChartInventory
+            // 
+            pieChartInventory.BackColor = SystemColors.ButtonHighlight;
+            pieChartInventory.BorderlineColor = SystemColors.WindowFrame;
+            chartArea2.Name = "ChartArea1";
+            pieChartInventory.ChartAreas.Add(chartArea2);
+            pieChartInventory.Dock = DockStyle.Fill;
+            legend1.Alignment = StringAlignment.Center;
+            legend1.Docking = Docking.Bottom;
+            legend1.LegendStyle = LegendStyle.Row;
+            legend1.Name = "Legend1";
+            pieChartInventory.Legends.Add(legend1);
+            pieChartInventory.Location = new Point(0, 0);
+            pieChartInventory.Margin = new Padding(3, 4, 3, 4);
+            pieChartInventory.Name = "pieChartInventory";
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = SeriesChartType.Pie;
+            series2.IsValueShownAsLabel = true;
+            series2.LabelFormat = "0.00%";
+            series2.Legend = "Legend1";
+            series2.Name = "pieChart";
+            pieChartInventory.Series.Add(series2);
+            pieChartInventory.Size = new Size(309, 418);
+            pieChartInventory.TabIndex = 2;
+            pieChartInventory.Text = "chart1";
+            // 
+            // panel37
+            // 
+            panel37.Controls.Add(label8);
+            panel37.Controls.Add(panel38);
+            panel37.Dock = DockStyle.Top;
+            panel37.Location = new Point(11, 7);
+            panel37.Margin = new Padding(3, 4, 3, 4);
+            panel37.Name = "panel37";
+            panel37.Size = new Size(554, 77);
+            panel37.TabIndex = 2;
+            // 
+            // label8
+            // 
+            label8.BorderStyle = BorderStyle.Fixed3D;
+            label8.Dock = DockStyle.Bottom;
+            label8.Location = new Point(0, 76);
+            label8.Name = "label8";
+            label8.Size = new Size(554, 1);
+            label8.TabIndex = 1;
+            // 
+            // panel38
+            // 
+            panel38.Controls.Add(label9);
+            panel38.Dock = DockStyle.Fill;
+            panel38.Location = new Point(0, 0);
+            panel38.Margin = new Padding(3, 4, 3, 4);
+            panel38.Name = "panel38";
+            panel38.Size = new Size(554, 77);
+            panel38.TabIndex = 0;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label9.Location = new Point(6, 15);
+            label9.Name = "label9";
+            label9.Size = new Size(209, 41);
+            label9.TabIndex = 0;
+            label9.Text = "ITEM DETAILS";
+            // 
+            // panel35
+            // 
+            panel35.Dock = DockStyle.Right;
+            panel35.Location = new Point(595, 7);
+            panel35.Margin = new Padding(3, 4, 3, 4);
+            panel35.Name = "panel35";
+            panel35.Size = new Size(17, 511);
+            panel35.TabIndex = 13;
+            // 
+            // panel21
+            // 
+            panel21.BackColor = SystemColors.ButtonHighlight;
+            panel21.BorderStyle = BorderStyle.FixedSingle;
+            panel21.Controls.Add(labelPullOuts);
+            panel21.Controls.Add(panel5);
+            panel21.Dock = DockStyle.Right;
+            panel21.Location = new Point(612, 7);
+            panel21.Margin = new Padding(17, 4, 3, 4);
+            panel21.Name = "panel21";
+            panel21.Padding = new Padding(11, 7, 11, 7);
+            panel21.Size = new Size(395, 511);
+            panel21.TabIndex = 11;
+            // 
+            // labelPullOuts
+            // 
+            labelPullOuts.Dock = DockStyle.Fill;
+            labelPullOuts.Font = new Font("Segoe UI", 65.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelPullOuts.Location = new Point(11, 84);
+            labelPullOuts.Name = "labelPullOuts";
+            labelPullOuts.Size = new Size(371, 418);
+            labelPullOuts.TabIndex = 4;
+            labelPullOuts.Text = "0";
+            labelPullOuts.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // panel5
+            // 
+            panel5.Controls.Add(label1);
+            panel5.Controls.Add(panel12);
+            panel5.Dock = DockStyle.Top;
+            panel5.Location = new Point(11, 7);
+            panel5.Margin = new Padding(3, 4, 3, 4);
+            panel5.Name = "panel5";
+            panel5.Size = new Size(371, 77);
+            panel5.TabIndex = 3;
+            // 
+            // label1
+            // 
+            label1.BorderStyle = BorderStyle.Fixed3D;
+            label1.Dock = DockStyle.Bottom;
+            label1.Location = new Point(0, 76);
+            label1.Name = "label1";
+            label1.Size = new Size(371, 1);
+            label1.TabIndex = 1;
+            // 
+            // panel12
+            // 
+            panel12.Controls.Add(totalPullOutCmb);
+            panel12.Controls.Add(label4);
+            panel12.Dock = DockStyle.Fill;
+            panel12.Location = new Point(0, 0);
+            panel12.Margin = new Padding(3, 4, 3, 4);
+            panel12.Name = "panel12";
+            panel12.Size = new Size(371, 77);
+            panel12.TabIndex = 0;
+            // 
+            // totalPullOutCmb
+            // 
+            totalPullOutCmb.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            totalPullOutCmb.DropDownStyle = ComboBoxStyle.DropDownList;
+            totalPullOutCmb.Font = new Font("Calibri", 15.75F);
+            totalPullOutCmb.FormattingEnabled = true;
+            totalPullOutCmb.Items.AddRange(new object[] { "Daily", "Weekly", "Monthly", "Yearly" });
+            totalPullOutCmb.Location = new Point(165, 19);
+            totalPullOutCmb.Margin = new Padding(3, 4, 3, 4);
+            totalPullOutCmb.Name = "totalPullOutCmb";
+            totalPullOutCmb.Size = new Size(199, 40);
+            totalPullOutCmb.TabIndex = 3;
+            totalPullOutCmb.SelectedIndexChanged += totalPullOutCmb_SelectedIndexChanged;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label4.Location = new Point(6, 15);
+            label4.Name = "label4";
+            label4.Size = new Size(156, 41);
+            label4.TabIndex = 0;
+            label4.Text = "PULL OUT";
+            // 
+            // panel7
+            // 
+            panel7.Controls.Add(panel1);
+            panel7.Controls.Add(panel13);
+            panel7.Dock = DockStyle.Right;
+            panel7.Location = new Point(1024, 0);
+            panel7.Margin = new Padding(3, 4, 3, 4);
+            panel7.Name = "panel7";
+            panel7.Size = new Size(603, 934);
+            panel7.TabIndex = 6;
+            // 
+            // panel1
+            // 
+            panel1.Controls.Add(panel6);
+            panel1.Dock = DockStyle.Fill;
+            panel1.Location = new Point(0, 0);
+            panel1.Margin = new Padding(3, 4, 3, 4);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(603, 403);
+            panel1.TabIndex = 8;
+            // 
+            // panel6
+            // 
+            panel6.Controls.Add(panel14);
+            panel6.Dock = DockStyle.Fill;
+            panel6.Location = new Point(0, 0);
+            panel6.Margin = new Padding(3, 4, 3, 4);
+            panel6.Name = "panel6";
+            panel6.Padding = new Padding(17, 7, 17, 7);
+            panel6.Size = new Size(603, 403);
+            panel6.TabIndex = 6;
             // 
             // panel14
             // 
+            panel14.BackColor = SystemColors.ButtonHighlight;
+            panel14.BorderStyle = BorderStyle.FixedSingle;
             panel14.Controls.Add(panel16);
             panel14.Controls.Add(panel15);
             panel14.Dock = DockStyle.Fill;
-            panel14.Location = new Point(0, 458);
+            panel14.Location = new Point(17, 7);
+            panel14.Margin = new Padding(3, 4, 3, 4);
             panel14.Name = "panel14";
-            panel14.Size = new Size(1142, 350);
+            panel14.Size = new Size(569, 389);
             panel14.TabIndex = 9;
             // 
             // panel16
             // 
             panel16.Controls.Add(bestSellerGrid);
             panel16.Dock = DockStyle.Fill;
-            panel16.Location = new Point(0, 61);
+            panel16.Location = new Point(0, 81);
+            panel16.Margin = new Padding(3, 4, 3, 4);
             panel16.Name = "panel16";
-            panel16.Padding = new Padding(15, 5, 15, 20);
-            panel16.Size = new Size(1142, 289);
+            panel16.Padding = new Padding(17, 7, 17, 27);
+            panel16.Size = new Size(567, 306);
             panel16.TabIndex = 9;
             // 
             // bestSellerGrid
@@ -330,50 +936,53 @@ namespace InventorySystem.Views.Admin
             bestSellerGrid.BackgroundColor = SystemColors.ButtonHighlight;
             bestSellerGrid.BorderStyle = BorderStyle.None;
             bestSellerGrid.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = Color.SteelBlue;
-            dataGridViewCellStyle4.Font = new Font("Segoe UI", 16F);
-            dataGridViewCellStyle4.ForeColor = SystemColors.ButtonHighlight;
-            dataGridViewCellStyle4.SelectionBackColor = Color.SteelBlue;
-            dataGridViewCellStyle4.SelectionForeColor = SystemColors.ButtonHighlight;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
-            bestSellerGrid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = Color.SteelBlue;
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 11F);
+            dataGridViewCellStyle1.ForeColor = SystemColors.ButtonHighlight;
+            dataGridViewCellStyle1.SelectionBackColor = Color.SteelBlue;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.ButtonHighlight;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            bestSellerGrid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             bestSellerGrid.ColumnHeadersHeight = 45;
-            bestSellerGrid.Columns.AddRange(new DataGridViewColumn[] { Column6, dataGridViewTextBoxColumn1, dataGridViewTextBoxColumn2, dataGridViewTextBoxColumn3, Column4, Column5 });
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = SystemColors.Window;
-            dataGridViewCellStyle5.Font = new Font("Segoe UI", 16F);
-            dataGridViewCellStyle5.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.False;
-            bestSellerGrid.DefaultCellStyle = dataGridViewCellStyle5;
+            bestSellerGrid.Columns.AddRange(new DataGridViewColumn[] { Column6, dataGridViewTextBoxColumn1, dataGridViewTextBoxColumn2, Column1 });
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = SystemColors.Window;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 11F);
+            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            bestSellerGrid.DefaultCellStyle = dataGridViewCellStyle2;
             bestSellerGrid.Dock = DockStyle.Fill;
             bestSellerGrid.EnableHeadersVisualStyles = false;
             bestSellerGrid.GridColor = SystemColors.ScrollBar;
-            bestSellerGrid.Location = new Point(15, 5);
+            bestSellerGrid.Location = new Point(17, 7);
+            bestSellerGrid.Margin = new Padding(3, 4, 3, 4);
             bestSellerGrid.Name = "bestSellerGrid";
             bestSellerGrid.ReadOnly = true;
             bestSellerGrid.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = SystemColors.Control;
-            dataGridViewCellStyle6.Font = new Font("Calibri", 9F);
-            dataGridViewCellStyle6.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle6.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.True;
-            bestSellerGrid.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = SystemColors.Control;
+            dataGridViewCellStyle3.Font = new Font("Calibri", 9F);
+            dataGridViewCellStyle3.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
+            bestSellerGrid.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             bestSellerGrid.RowHeadersVisible = false;
+            bestSellerGrid.RowHeadersWidth = 51;
             bestSellerGrid.RowTemplate.Height = 45;
             bestSellerGrid.RowTemplate.Resizable = DataGridViewTriState.True;
             bestSellerGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            bestSellerGrid.Size = new Size(1112, 264);
+            bestSellerGrid.Size = new Size(533, 272);
             bestSellerGrid.TabIndex = 6;
             // 
             // Column6
             // 
             Column6.FillWeight = 71.26904F;
             Column6.HeaderText = "Rank";
+            Column6.MinimumWidth = 6;
             Column6.Name = "Column6";
             Column6.ReadOnly = true;
             // 
@@ -381,6 +990,7 @@ namespace InventorySystem.Views.Admin
             // 
             dataGridViewTextBoxColumn1.FillWeight = 71.26904F;
             dataGridViewTextBoxColumn1.HeaderText = "Item Code";
+            dataGridViewTextBoxColumn1.MinimumWidth = 6;
             dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             dataGridViewTextBoxColumn1.ReadOnly = true;
             // 
@@ -388,29 +998,16 @@ namespace InventorySystem.Views.Admin
             // 
             dataGridViewTextBoxColumn2.FillWeight = 243.654785F;
             dataGridViewTextBoxColumn2.HeaderText = "Name";
+            dataGridViewTextBoxColumn2.MinimumWidth = 6;
             dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
             dataGridViewTextBoxColumn2.ReadOnly = true;
             // 
-            // dataGridViewTextBoxColumn3
+            // Column1
             // 
-            dataGridViewTextBoxColumn3.FillWeight = 71.26904F;
-            dataGridViewTextBoxColumn3.HeaderText = "Category";
-            dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            dataGridViewTextBoxColumn3.ReadOnly = true;
-            // 
-            // Column4
-            // 
-            Column4.FillWeight = 71.26904F;
-            Column4.HeaderText = "Supplier";
-            Column4.Name = "Column4";
-            Column4.ReadOnly = true;
-            // 
-            // Column5
-            // 
-            Column5.FillWeight = 71.26904F;
-            Column5.HeaderText = "Unit";
-            Column5.Name = "Column5";
-            Column5.ReadOnly = true;
+            Column1.HeaderText = "Total Sold";
+            Column1.MinimumWidth = 6;
+            Column1.Name = "Column1";
+            Column1.ReadOnly = true;
             // 
             // panel15
             // 
@@ -418,19 +1015,20 @@ namespace InventorySystem.Views.Admin
             panel15.Controls.Add(periodCmb);
             panel15.Dock = DockStyle.Top;
             panel15.Location = new Point(0, 0);
+            panel15.Margin = new Padding(3, 4, 3, 4);
             panel15.Name = "panel15";
-            panel15.Size = new Size(1142, 61);
+            panel15.Size = new Size(567, 81);
             panel15.TabIndex = 8;
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Font = new Font("Calibri", 20.25F, FontStyle.Bold);
-            label3.Location = new Point(15, 12);
+            label3.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold);
+            label3.Location = new Point(17, 16);
             label3.Name = "label3";
-            label3.Size = new Size(135, 33);
+            label3.Size = new Size(292, 41);
             label3.TabIndex = 5;
-            label3.Text = "Best Seller";
+            label3.Text = "TOP SELLING ITEMS";
             // 
             // periodCmb
             // 
@@ -439,295 +1037,139 @@ namespace InventorySystem.Views.Admin
             periodCmb.Font = new Font("Calibri", 15.75F);
             periodCmb.FormattingEnabled = true;
             periodCmb.Items.AddRange(new object[] { "Weekly", "Monthly", "Yearly" });
-            periodCmb.Location = new Point(859, 12);
+            periodCmb.Location = new Point(350, 16);
+            periodCmb.Margin = new Padding(3, 4, 3, 4);
             periodCmb.Name = "periodCmb";
-            periodCmb.Size = new Size(268, 34);
+            periodCmb.Size = new Size(199, 40);
             periodCmb.TabIndex = 7;
             periodCmb.SelectedIndexChanged += periodCmb_SelectedIndexChanged;
             // 
-            // panel10
-            // 
-            panel10.Controls.Add(panel18);
-            panel10.Controls.Add(panel17);
-            panel10.Dock = DockStyle.Top;
-            panel10.Location = new Point(0, 0);
-            panel10.Name = "panel10";
-            panel10.Size = new Size(1142, 458);
-            panel10.TabIndex = 8;
-            // 
-            // panel18
-            // 
-            panel18.Controls.Add(panel19);
-            panel18.Dock = DockStyle.Fill;
-            panel18.Location = new Point(0, 57);
-            panel18.Name = "panel18";
-            panel18.Padding = new Padding(15, 5, 15, 5);
-            panel18.Size = new Size(1142, 401);
-            panel18.TabIndex = 4;
-            // 
-            // panel19
-            // 
-            panel19.Controls.Add(chartInventory);
-            panel19.Dock = DockStyle.Fill;
-            panel19.Location = new Point(15, 5);
-            panel19.Name = "panel19";
-            panel19.Size = new Size(1112, 391);
-            panel19.TabIndex = 2;
-            // 
-            // chartInventory
-            // 
-            chartInventory.BackColor = Color.Transparent;
-            chartArea3.AxisX.MajorGrid.LineColor = Color.LightGray;
-            chartArea3.AxisY.MajorGrid.LineColor = Color.LightGray;
-            chartArea3.AxisY.Title = "Re-stock Values";
-            chartArea3.Name = "ChartArea1";
-            chartInventory.ChartAreas.Add(chartArea3);
-            chartInventory.Dock = DockStyle.Fill;
-            chartInventory.Location = new Point(0, 0);
-            chartInventory.Name = "chartInventory";
-            series3.BackGradientStyle = GradientStyle.TopBottom;
-            series3.BorderWidth = 4;
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = SeriesChartType.Area;
-            series3.Color = Color.Blue;
-            series3.IsVisibleInLegend = false;
-            series3.IsXValueIndexed = true;
-            series3.MarkerSize = 10;
-            series3.MarkerStyle = MarkerStyle.Circle;
-            series3.Name = "Inventory Restocking";
-            series3.ShadowColor = Color.FromArgb(64, 64, 64);
-            chartInventory.Series.Add(series3);
-            chartInventory.Size = new Size(1112, 391);
-            chartInventory.TabIndex = 1;
-            chartInventory.Text = "chart1";
-            title2.Font = new Font("Microsoft Sans Serif", 21.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            title2.Name = "Title1";
-            title2.Text = "Inventory Re-stocking";
-            chartInventory.Titles.Add(title2);
-            // 
-            // panel17
-            // 
-            panel17.Controls.Add(inventoryRestockingCmb);
-            panel17.Dock = DockStyle.Top;
-            panel17.Location = new Point(0, 0);
-            panel17.Name = "panel17";
-            panel17.Size = new Size(1142, 57);
-            panel17.TabIndex = 3;
-            // 
-            // inventoryRestockingCmb
-            // 
-            inventoryRestockingCmb.DropDownStyle = ComboBoxStyle.DropDownList;
-            inventoryRestockingCmb.Font = new Font("Calibri", 15.75F);
-            inventoryRestockingCmb.FormattingEnabled = true;
-            inventoryRestockingCmb.Items.AddRange(new object[] { "Daily", "Weekly", "Monthly" });
-            inventoryRestockingCmb.Location = new Point(16, 12);
-            inventoryRestockingCmb.Name = "inventoryRestockingCmb";
-            inventoryRestockingCmb.Size = new Size(268, 34);
-            inventoryRestockingCmb.TabIndex = 2;
-            inventoryRestockingCmb.SelectedIndexChanged += inventoryRestockingCmb_SelectedIndexChanged;
-            // 
-            // panel7
-            // 
-            panel7.Controls.Add(panel4);
-            panel7.Controls.Add(panel1);
-            panel7.Dock = DockStyle.Right;
-            panel7.Location = new Point(1142, 0);
-            panel7.Name = "panel7";
-            panel7.Size = new Size(425, 808);
-            panel7.TabIndex = 6;
-            // 
-            // panel4
-            // 
-            panel4.Controls.Add(panel13);
-            panel4.Controls.Add(panel12);
-            panel4.Dock = DockStyle.Fill;
-            panel4.Location = new Point(0, 458);
-            panel4.Name = "panel4";
-            panel4.Size = new Size(425, 350);
-            panel4.TabIndex = 7;
-            // 
             // panel13
             // 
-            panel13.Controls.Add(panel22);
-            panel13.Dock = DockStyle.Fill;
-            panel13.Location = new Point(0, 61);
+            panel13.BackColor = SystemColors.Control;
+            panel13.Controls.Add(panel20);
+            panel13.Dock = DockStyle.Bottom;
+            panel13.Location = new Point(0, 403);
+            panel13.Margin = new Padding(3, 4, 3, 4);
             panel13.Name = "panel13";
-            panel13.Padding = new Padding(15, 5, 15, 20);
-            panel13.Size = new Size(425, 289);
+            panel13.Padding = new Padding(17, 7, 17, 13);
+            panel13.Size = new Size(603, 531);
             panel13.TabIndex = 7;
+            // 
+            // panel20
+            // 
+            panel20.BackColor = SystemColors.ButtonHighlight;
+            panel20.BorderStyle = BorderStyle.FixedSingle;
+            panel20.Controls.Add(transactionCountLabel);
+            panel20.Controls.Add(panel22);
+            panel20.Dock = DockStyle.Fill;
+            panel20.Location = new Point(17, 7);
+            panel20.Margin = new Padding(3, 4, 3, 4);
+            panel20.Name = "panel20";
+            panel20.Padding = new Padding(11, 7, 11, 7);
+            panel20.Size = new Size(569, 511);
+            panel20.TabIndex = 4;
+            // 
+            // transactionCountLabel
+            // 
+            transactionCountLabel.Dock = DockStyle.Fill;
+            transactionCountLabel.Font = new Font("Segoe UI", 65.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            transactionCountLabel.Location = new Point(11, 84);
+            transactionCountLabel.Name = "transactionCountLabel";
+            transactionCountLabel.Size = new Size(545, 418);
+            transactionCountLabel.TabIndex = 5;
+            transactionCountLabel.Text = "0";
+            transactionCountLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // panel22
             // 
-            panel22.BackColor = SystemColors.ButtonHighlight;
-            panel22.Controls.Add(label6);
-            panel22.Dock = DockStyle.Fill;
-            panel22.Location = new Point(15, 5);
+            panel22.Controls.Add(label2);
+            panel22.Controls.Add(panel23);
+            panel22.Dock = DockStyle.Top;
+            panel22.Location = new Point(11, 7);
+            panel22.Margin = new Padding(3, 4, 3, 4);
             panel22.Name = "panel22";
-            panel22.Size = new Size(395, 264);
-            panel22.TabIndex = 2;
-            // 
-            // label6
-            // 
-            label6.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            label6.AutoSize = true;
-            label6.Font = new Font("Segoe UI", 50.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label6.ForeColor = Color.Red;
-            label6.Location = new Point(124, 112);
-            label6.Name = "label6";
-            label6.Size = new Size(155, 89);
-            label6.TabIndex = 1;
-            label6.Text = "300";
-            // 
-            // panel12
-            // 
-            panel12.Controls.Add(label1);
-            panel12.Controls.Add(linkTransaction);
-            panel12.Dock = DockStyle.Top;
-            panel12.Location = new Point(0, 0);
-            panel12.Name = "panel12";
-            panel12.Size = new Size(425, 61);
-            panel12.TabIndex = 6;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Calibri", 20.25F, FontStyle.Bold);
-            label1.Location = new Point(6, 13);
-            label1.Name = "label1";
-            label1.Size = new Size(334, 33);
-            label1.TabIndex = 3;
-            label1.Text = "Below Minimum Stock Level";
-            // 
-            // linkTransaction
-            // 
-            linkTransaction.AutoSize = true;
-            linkTransaction.Font = new Font("Segoe UI", 18F);
-            linkTransaction.Location = new Point(479, 23);
-            linkTransaction.Name = "linkTransaction";
-            linkTransaction.Size = new Size(128, 32);
-            linkTransaction.TabIndex = 5;
-            linkTransaction.TabStop = true;
-            linkTransaction.Text = "View more";
-            linkTransaction.LinkClicked += linkTransaction_LinkClicked;
-            // 
-            // panel1
-            // 
-            panel1.Controls.Add(panel6);
-            panel1.Controls.Add(panel5);
-            panel1.Dock = DockStyle.Top;
-            panel1.Location = new Point(0, 0);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(425, 458);
-            panel1.TabIndex = 6;
-            // 
-            // panel6
-            // 
-            panel6.Controls.Add(pieChartInventory);
-            panel6.Dock = DockStyle.Fill;
-            panel6.Location = new Point(0, 57);
-            panel6.Name = "panel6";
-            panel6.Padding = new Padding(15, 5, 15, 5);
-            panel6.Size = new Size(425, 401);
-            panel6.TabIndex = 6;
-            // 
-            // pieChartInventory
-            // 
-            pieChartInventory.BackColor = SystemColors.ButtonHighlight;
-            pieChartInventory.BorderlineColor = SystemColors.WindowFrame;
-            chartArea4.Name = "ChartArea1";
-            pieChartInventory.ChartAreas.Add(chartArea4);
-            pieChartInventory.Dock = DockStyle.Fill;
-            legend2.Alignment = StringAlignment.Center;
-            legend2.Docking = Docking.Bottom;
-            legend2.LegendStyle = LegendStyle.Row;
-            legend2.Name = "Legend1";
-            pieChartInventory.Legends.Add(legend2);
-            pieChartInventory.Location = new Point(15, 5);
-            pieChartInventory.Name = "pieChartInventory";
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = SeriesChartType.Pie;
-            series4.IsValueShownAsLabel = true;
-            series4.LabelFormat = "0.00%";
-            series4.Legend = "Legend1";
-            series4.Name = "pieChart";
-            pieChartInventory.Series.Add(series4);
-            pieChartInventory.Size = new Size(395, 391);
-            pieChartInventory.TabIndex = 2;
-            pieChartInventory.Text = "chart1";
-            // 
-            // panel5
-            // 
-            panel5.Controls.Add(label2);
-            panel5.Dock = DockStyle.Top;
-            panel5.Location = new Point(0, 0);
-            panel5.Name = "panel5";
-            panel5.Size = new Size(425, 57);
-            panel5.TabIndex = 5;
+            panel22.Size = new Size(545, 77);
+            panel22.TabIndex = 4;
             // 
             // label2
             // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Calibri", 20.25F, FontStyle.Bold);
-            label2.Location = new Point(6, 13);
+            label2.BorderStyle = BorderStyle.Fixed3D;
+            label2.Dock = DockStyle.Bottom;
+            label2.Location = new Point(0, 76);
             label2.Name = "label2";
-            label2.Size = new Size(141, 33);
-            label2.TabIndex = 4;
-            label2.Text = "Stock Level";
+            label2.Size = new Size(545, 1);
+            label2.TabIndex = 1;
+            // 
+            // panel23
+            // 
+            panel23.Controls.Add(filterComboBox);
+            panel23.Controls.Add(label6);
+            panel23.Dock = DockStyle.Fill;
+            panel23.Location = new Point(0, 0);
+            panel23.Margin = new Padding(3, 4, 3, 4);
+            panel23.Name = "panel23";
+            panel23.Size = new Size(545, 77);
+            panel23.TabIndex = 0;
+            // 
+            // filterComboBox
+            // 
+            filterComboBox.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            filterComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            filterComboBox.Font = new Font("Calibri", 15.75F);
+            filterComboBox.FormattingEnabled = true;
+            filterComboBox.Items.AddRange(new object[] { "Daily", "Weekly", "Monthly", "Yearly" });
+            filterComboBox.Location = new Point(339, 15);
+            filterComboBox.Margin = new Padding(3, 4, 3, 4);
+            filterComboBox.Name = "filterComboBox";
+            filterComboBox.Size = new Size(199, 40);
+            filterComboBox.TabIndex = 4;
+            filterComboBox.SelectedIndexChanged += filterComboBox_SelectedIndexChanged;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label6.Location = new Point(6, 15);
+            label6.Name = "label6";
+            label6.Size = new Size(240, 41);
+            label6.TabIndex = 0;
+            label6.Text = "TRANSACTIONS";
             // 
             // panel9
             // 
-            panel9.BorderStyle = BorderStyle.FixedSingle;
             panel9.Controls.Add(refreshButton);
             panel9.Dock = DockStyle.Top;
-            panel9.Location = new Point(0, 0);
+            panel9.Location = new Point(17, 13);
+            panel9.Margin = new Padding(3, 4, 3, 4);
             panel9.Name = "panel9";
-            panel9.Size = new Size(1569, 71);
+            panel9.Size = new Size(1627, 95);
             panel9.TabIndex = 5;
             // 
             // refreshButton
             // 
             refreshButton.Font = new Font("Calibri", 14.25F);
             refreshButton.Image = Properties.Resources.refresh;
-            refreshButton.Location = new Point(16, 10);
+            refreshButton.Location = new Point(18, 13);
+            refreshButton.Margin = new Padding(3, 4, 3, 4);
             refreshButton.Name = "refreshButton";
-            refreshButton.Padding = new Padding(10, 4, 4, 10);
-            refreshButton.Size = new Size(136, 52);
+            refreshButton.Padding = new Padding(11, 5, 5, 13);
+            refreshButton.Size = new Size(155, 69);
             refreshButton.TabIndex = 0;
             refreshButton.Text = "Refresh";
             refreshButton.TextImageRelation = TextImageRelation.ImageBeforeText;
             refreshButton.UseVisualStyleBackColor = true;
             refreshButton.Click += refreshButton_Click;
             // 
-            // settingsBtn
-            // 
-            settingsBtn.Cursor = Cursors.Hand;
-            settingsBtn.Dock = DockStyle.Top;
-            settingsBtn.FlatAppearance.BorderSize = 0;
-            settingsBtn.FlatAppearance.MouseOverBackColor = SystemColors.ActiveCaption;
-            settingsBtn.FlatStyle = FlatStyle.Flat;
-            settingsBtn.Font = new Font("Calibri", 18F);
-            settingsBtn.ForeColor = SystemColors.ButtonHighlight;
-            settingsBtn.Image = Properties.Resources.settings__3_;
-            settingsBtn.ImageAlign = ContentAlignment.MiddleLeft;
-            settingsBtn.Location = new Point(0, 332);
-            settingsBtn.Name = "settingsBtn";
-            settingsBtn.Padding = new Padding(5);
-            settingsBtn.Size = new Size(230, 83);
-            settingsBtn.TabIndex = 6;
-            settingsBtn.Text = "Settings";
-            settingsBtn.TextAlign = ContentAlignment.MiddleRight;
-            settingsBtn.TextImageRelation = TextImageRelation.ImageBeforeText;
-            settingsBtn.UseVisualStyleBackColor = true;
-            settingsBtn.Click += settingsBtn_Click;
-            // 
             // Admin
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1799, 881);
+            ClientSize = new Size(1924, 1055);
             Controls.Add(adminPanels);
             Controls.Add(sidebar);
             Icon = (Icon)resources.GetObject("$this.Icon");
+            Margin = new Padding(3, 4, 3, 4);
             Name = "Admin";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Admin";
@@ -741,28 +1183,47 @@ namespace InventorySystem.Views.Admin
             adminPanels.ResumeLayout(false);
             panel11.ResumeLayout(false);
             panel8.ResumeLayout(false);
-            panel14.ResumeLayout(false);
-            panel16.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)bestSellerGrid).EndInit();
-            panel15.ResumeLayout(false);
-            panel15.PerformLayout();
+            panel24.ResumeLayout(false);
             panel10.ResumeLayout(false);
             panel18.ResumeLayout(false);
             panel19.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)chartInventory).EndInit();
             panel17.ResumeLayout(false);
-            panel7.ResumeLayout(false);
             panel4.ResumeLayout(false);
-            panel13.ResumeLayout(false);
-            panel22.ResumeLayout(false);
-            panel22.PerformLayout();
+            panel36.ResumeLayout(false);
+            panel39.ResumeLayout(false);
+            panel40.ResumeLayout(false);
+            panel25.ResumeLayout(false);
+            panel26.ResumeLayout(false);
+            panel27.ResumeLayout(false);
+            panel41.ResumeLayout(false);
+            panel42.ResumeLayout(false);
+            panel43.ResumeLayout(false);
+            panel44.ResumeLayout(false);
+            panel45.ResumeLayout(false);
+            panel46.ResumeLayout(false);
+            panel47.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pieChartInventory).EndInit();
+            panel37.ResumeLayout(false);
+            panel38.ResumeLayout(false);
+            panel38.PerformLayout();
+            panel21.ResumeLayout(false);
+            panel5.ResumeLayout(false);
             panel12.ResumeLayout(false);
             panel12.PerformLayout();
+            panel7.ResumeLayout(false);
             panel1.ResumeLayout(false);
             panel6.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pieChartInventory).EndInit();
-            panel5.ResumeLayout(false);
-            panel5.PerformLayout();
+            panel14.ResumeLayout(false);
+            panel16.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)bestSellerGrid).EndInit();
+            panel15.ResumeLayout(false);
+            panel15.PerformLayout();
+            panel13.ResumeLayout(false);
+            panel20.ResumeLayout(false);
+            panel22.ResumeLayout(false);
+            panel23.ResumeLayout(false);
+            panel23.PerformLayout();
             panel9.ResumeLayout(false);
             ResumeLayout(false);
         }
@@ -778,26 +1239,17 @@ namespace InventorySystem.Views.Admin
         private Button transactionsBtn;
         private Button logoutBtn;
         private System.Windows.Forms.DataVisualization.Charting.Chart chartInventory;
-        private System.Windows.Forms.DataVisualization.Charting.Chart pieChartInventory;
         private Panel panel9;
         private Panel panel7;
         private Panel panel8;
         private Button refreshButton;
         private Panel panel11;
-        private Label label1;
-        private Label label2;
         private Label label3;
         private ComboBox inventoryRestockingCmb;
-        private LinkLabel linkTransaction;
         private DataGridView bestSellerGrid;
         private ComboBox periodCmb;
         private Button employeeBtn;
-        private Panel panel4;
-        private Panel panel1;
-        private Panel panel5;
         private Panel panel6;
-        private Panel panel13;
-        private Panel panel12;
         private Panel panel14;
         private Panel panel16;
         private Panel panel15;
@@ -806,14 +1258,53 @@ namespace InventorySystem.Views.Admin
         private Panel panel18;
         private Button logsBtn;
         private Panel panel19;
+        private Button settingsBtn;
+        private Panel panel13;
+        private Panel panel20;
+        private Panel panel23;
         private Panel panel22;
-        private Label label6;
+        private Label label2;
+        private Panel panel4;
+        private Panel panel24;
+        private Panel panel1;
+        private Panel panel21;
+        private Panel panel35;
+        private Panel panel36;
+        private Panel panel39;
+        private Panel panel40;
+        private Panel panel41;
+        private Panel panel42;
+        private Label label10;
+        private Panel panel43;
+        private Label totalItems;
+        private Panel panel44;
+        private Panel panel45;
+        private Label label12;
+        private Panel panel46;
+        private Label NUMBER_MIN_STOCK_LEVEL;
+        private Panel panel47;
+        private Chart pieChartInventory;
+        private Panel panel37;
+        private Label label8;
+        private Panel panel38;
+        private Label label9;
+        private Panel panel5;
+        private Label label1;
+        private Panel panel12;
+        private Label label4;
+        private Panel panel25;
+        private Panel panel26;
+        private Label label5;
+        private Panel panel27;
+        private Label damagedItems;
         private DataGridViewTextBoxColumn Column6;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private DataGridViewTextBoxColumn Column4;
-        private DataGridViewTextBoxColumn Column5;
-        private Button settingsBtn;
+        private Label label6;
+        private ComboBox totalPullOutCmb;
+        private Label labelPullOuts;
+        private Label transactionCountLabel;
+        private ComboBox filterComboBox;
+        private DataGridViewTextBoxColumn Column1;
     }
 }

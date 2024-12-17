@@ -1,4 +1,6 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using InventorySystem.Controllers;
+using InventorySystem.Models;
+using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,6 +16,7 @@ namespace InventorySystem.Views.Modals.InventoryUser
 {
     public partial class RestoreModal : Form
     {
+        private LogController LogController = new LogController();
         public RestoreModal()
         {
             InitializeComponent();
@@ -148,25 +151,58 @@ namespace InventorySystem.Views.Modals.InventoryUser
             string dataFilePath = Path.Combine(AppDomain.CurrentDomain.GetData("DataDirectory").ToString(), $"{targetDatabaseName}.mdf");
             string logFilePath = Path.Combine(AppDomain.CurrentDomain.GetData("DataDirectory").ToString(), $"{targetDatabaseName}_log.ldf");
 
-            using (SqlConnection con = new SqlConnection(@"Server=(LocalDB)\MSSQLLocalDB;Integrated Security=True;Connect Timeout=30;"))
+            try
             {
-                con.Open();
-                // Set the database to single user mode
-                SetDatabaseToSingleUserMode(targetDatabaseName, con);
-                SqlCommand cmd = new SqlCommand($@"
-                    RESTORE DATABASE [{targetDatabaseName}] FROM DISK = @BackupPath WITH 
-                    MOVE @DataLogicalName TO @DataFilePath, 
-                    MOVE @LogLogicalName TO @LogFilePath, 
-                    REPLACE", con);
+                using (SqlConnection con = new SqlConnection(@"Server=(LocalDB)\MSSQLLocalDB;Integrated Security=True;Connect Timeout=30;"))
+                {
+                    con.Open();
+                    // Set the database to single user mode
+                    SetDatabaseToSingleUserMode(targetDatabaseName, con);
+                    SqlCommand cmd = new SqlCommand($@"
+                RESTORE DATABASE [{targetDatabaseName}] FROM DISK = @BackupPath WITH 
+                MOVE @DataLogicalName TO @DataFilePath, 
+                MOVE @LogLogicalName TO @LogFilePath, 
+                REPLACE", con);
 
-                cmd.Parameters.AddWithValue("@BackupPath", backupFilePath);
-                cmd.Parameters.AddWithValue("@DataLogicalName", dataLogicalName);
-                cmd.Parameters.AddWithValue("@DataFilePath", dataFilePath);
-                cmd.Parameters.AddWithValue("@LogLogicalName", logLogicalName);
-                cmd.Parameters.AddWithValue("@LogFilePath", logFilePath);
-                cmd.ExecuteNonQuery();
+                    cmd.Parameters.AddWithValue("@BackupPath", backupFilePath);
+                    cmd.Parameters.AddWithValue("@DataLogicalName", dataLogicalName);
+                    cmd.Parameters.AddWithValue("@DataFilePath", dataFilePath);
+                    cmd.Parameters.AddWithValue("@LogLogicalName", logLogicalName);
+                    cmd.Parameters.AddWithValue("@LogFilePath", logFilePath);
+                    cmd.ExecuteNonQuery();
+
+                    // Log the restore action
+                    Log log = new Log
+                    {
+                        TableAffected = "tbDatabase", // You can change this if you want a specific table to track the restore
+                        RecordID = 0, // No specific record ID for the restore action
+                        ModuleName = "Database Management",
+                        Description = $"Restored database '{targetDatabaseName}' from backup file '{backupFilePath}'.",
+                        Status = "Success",
+                        ActionType = "Restore Database" // ActionType set to "Restore Database"
+                    };
+                    LogController.LogUpdate(log.TableAffected, log.RecordID, log.ModuleName, log.Description, log.Status, log.ActionType);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log the failure if there's an issue during the restore process
+                Log log = new Log
+                {
+                    TableAffected = "tbDatabase", // You can change this if you want a specific table to track the restore failure
+                    RecordID = 0, // No specific record ID for the restore failure
+                    ModuleName = "Database Management",
+                    Description = $"Failed to restore database '{targetDatabaseName}' from backup. Error: {ex.Message}",
+                    Status = "Failure",
+                    ActionType = "Restore Database" // ActionType set to "Restore Database"
+                };
+                LogController.LogUpdate(log.TableAffected, log.RecordID, log.ModuleName, log.Description, log.Status, log.ActionType);
+
+                // Show error message
+                MessageBox.Show("Error: " + ex.Message, "Database Restore Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
         private void SetDatabaseToSingleUserMode(string databaseName, SqlConnection connection)
         {

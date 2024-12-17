@@ -16,22 +16,36 @@ namespace InventorySystem.Controllers
         Log log;
 
 
-        public List<Log> GetLogsFromDatabase()
+        public static List<Log> GetLogsFromDatabase(string statusFilter = null)
         {
+            List<Log> logs = new List<Log>();
+
+            string query = "SELECT * FROM tbLogs";
+
+            // Add filtering if statusFilter is provided
+            if (!string.IsNullOrEmpty(statusFilter))
+            {
+                query += " WHERE status = @status";
+            }
+
             try
             {
-                List<Log> logs = new List<Log>();
-                string query = "SELECT * FROM tbLogs";
-
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    SqlCommand cmd = new SqlCommand(query, connection);
                     connection.Open();
-                    SqlDataReader reader = cmd.ExecuteReader();
+                    SqlCommand command = new SqlCommand(query, connection);
+
+                    // Add the status filter parameter if necessary
+                    if (!string.IsNullOrEmpty(statusFilter))
+                    {
+                        command.Parameters.AddWithValue("@status", statusFilter);
+                    }
+
+                    SqlDataReader reader = command.ExecuteReader();
 
                     while (reader.Read())
                     {
-                        log = new Log
+                        Log log = new Log
                         {
                             LogID = Convert.ToInt32(reader["log_id"]),
                             TimeStamp = Convert.ToDateTime(reader["timestamp"]),
@@ -42,23 +56,106 @@ namespace InventorySystem.Controllers
                             Description = reader["description"].ToString(),
                             Status = reader["status"].ToString()
                         };
-
                         logs.Add(log);
                     }
                 }
-
-                return logs;
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return null;
-
+                MessageBox.Show("Error: " + ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
+            return logs;
+        }
+
+        public static List<Log> SearchLogsByLogIdOrUserId(string searchTerm)
+        {
+            List<Log> logs = new List<Log>();
+
+            // Build the query to search by LogID or UserID
+            string query = "SELECT * FROM tbLogs WHERE log_id LIKE @searchTerm OR user_id LIKE @searchTerm";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    SqlCommand command = new SqlCommand(query, connection);
+
+                    // Add the search term parameter (wrap it with '%' for LIKE)
+                    command.Parameters.AddWithValue("@searchTerm", "%" + searchTerm + "%");
+
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        Log log = new Log
+                        {
+                            LogID = Convert.ToInt32(reader["log_id"]),
+                            TimeStamp = Convert.ToDateTime(reader["timestamp"]),
+                            UserID = Convert.ToInt32(reader["user_id"]),
+                            ActionType = reader["action_type"].ToString(),
+                            RecordID = Convert.ToInt32(reader["record_id"]),
+                            ModuleName = reader["module_name"].ToString(),
+                            Description = reader["description"].ToString(),
+                            Status = reader["status"].ToString()
+                        };
+                        logs.Add(log);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            return logs;
         }
 
 
-        public void LogUpdate(string tableName, int recordId, string moduleName, string description, string status)
+        //public List<Log> GetLogsFromDatabase()
+        //{
+        //    try
+        //    {
+        //        List<Log> logs = new List<Log>();
+        //        string query = "SELECT * FROM tbLogs";
+
+        //        using (SqlConnection connection = new SqlConnection(connectionString))
+        //        {
+        //            SqlCommand cmd = new SqlCommand(query, connection);
+        //            connection.Open();
+        //            SqlDataReader reader = cmd.ExecuteReader();
+
+        //            while (reader.Read())
+        //            {
+        //                log = new Log
+        //                {
+        //                    LogID = Convert.ToInt32(reader["log_id"]),
+        //                    TimeStamp = Convert.ToDateTime(reader["timestamp"]),
+        //                    UserID = Convert.ToInt32(reader["user_id"]),
+        //                    ActionType = reader["action_type"].ToString(),
+        //                    RecordID = Convert.ToInt32(reader["record_id"]),
+        //                    ModuleName = reader["module_name"].ToString(),
+        //                    Description = reader["description"].ToString(),
+        //                    Status = reader["status"].ToString()
+        //                };
+
+        //                logs.Add(log);
+        //            }
+        //        }
+
+        //        return logs;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //        return null;
+
+        //    }
+        //}
+
+
+        public void LogUpdate(string tableName, int recordId, string moduleName, string description, string status, string actionType)
         {
             try
             {
@@ -68,7 +165,7 @@ namespace InventorySystem.Controllers
 
                     TimeStamp = DateTime.Now,
                     UserID = SessionData.UserId,
-                    ActionType = "Update",
+                    ActionType = actionType,
                     TableAffected = tableName,
                     RecordID = recordId,
                     Description = description,
@@ -88,14 +185,14 @@ namespace InventorySystem.Controllers
                
         }
 
-        private void LogUserLogin(int userId, bool success, string role, bool isFirstLogin)
+        public void LogUserLogin(int userId, bool success, string role, bool isFirstLogin)
         {
             // Create log entry for user login attempt
             Log logEntry = new Log
             {
                 TimeStamp = DateTime.Now,
                 UserID = userId,
-                ActionType = success ? "Login Success" : "Login Failed",
+                ActionType = success ? "Login" : "Login",
                 TableAffected = "tbUser",
                 RecordID = userId,
                 Description = success

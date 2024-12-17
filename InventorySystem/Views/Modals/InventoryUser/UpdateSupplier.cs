@@ -50,7 +50,7 @@ namespace InventorySystem.Views.Modals.InventoryUser
                     try
                     {
                         SupplierController supplierController = new SupplierController();
-                        supplierController.UpdateSupplier(supplierId, supplierName, supplierContact, supplierAddress);
+                        supplierController.UpdateSupplier(Convert.ToInt32(supplierId), supplierName, supplierContact, supplierAddress);
                         MessageBox.Show("Supplier updated successfully");
                         this.Close();
                     }

@@ -66,7 +66,7 @@ namespace InventorySystem.Views.Modals.Admin
             try
             {
                 supplierComboBox.Items.Clear();
-                List<string> supplierNames = supplierController.GetAllSupplierNames();
+                List<Supplier> supplierNames = supplierController.GetAllSupplierNames();
                 if (supplierNames != null && supplierNames.Count > 0)
                 {
                     foreach (var name in supplierNames)

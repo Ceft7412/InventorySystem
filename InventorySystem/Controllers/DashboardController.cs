@@ -27,7 +27,67 @@ namespace InventorySystem.Controllers
     {
         private string connectionString = ConfigurationManager.ConnectionStrings["InventoryDb"].ConnectionString;
 
-        // For piechart
+
+        public int GetTransactionTotalsByFilter(string filter)
+        {
+            try
+            {
+                int totalTransactions = 0;
+                string query = "";
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    // Adjust SQL query based on filter
+                    switch (filter)
+                    {
+                        case "Daily":
+                            query = @"SELECT COUNT(*) AS TotalTransactions 
+                              FROM tbTransaction 
+                              WHERE CAST(timestamp AS DATE) = CAST(GETDATE() AS DATE)";
+                            break;
+
+                        case "Weekly":
+                            query = @"SELECT COUNT(*) AS TotalTransactions 
+                              FROM tbTransaction 
+                              WHERE DATEPART(WEEK, timestamp) = DATEPART(WEEK, GETDATE()) AND 
+                                    DATEPART(YEAR, timestamp) = DATEPART(YEAR, GETDATE())";
+                            break;
+
+                        case "Monthly":
+                            query = @"SELECT COUNT(*) AS TotalTransactions 
+                              FROM tbTransaction 
+                              WHERE DATEPART(MONTH, timestamp) = DATEPART(MONTH, GETDATE()) AND 
+                                    DATEPART(YEAR, timestamp) = DATEPART(YEAR, GETDATE())";
+                            break;
+
+                        case "Yearly":
+                            query = @"SELECT COUNT(*) AS TotalTransactions 
+                              FROM tbTransaction 
+                              WHERE DATEPART(YEAR, timestamp) = DATEPART(YEAR, GETDATE())";
+                            break;
+
+                        default:
+                            throw new ArgumentException("Invalid filter selected.");
+                    }
+
+                    // Execute the query
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        totalTransactions = Convert.ToInt32(command.ExecuteScalar() ?? 0);
+                    }
+                }
+
+                return totalTransactions;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return 0;
+            }
+        }
+
         public List<ProductRecord> FetchInventoryData()
         {
             var products = new List<ProductRecord>();
@@ -67,7 +127,71 @@ namespace InventorySystem.Controllers
             return products;
         }
 
-        public Dictionary<string, int> GroupByDaily(List<StockRecord> records)
+        public int GetPullOutTotalsByFilter(string filter)
+        {
+            try
+            {
+                int pullOuts = 0;
+                string query = "";
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    // Adjust SQL query based on filter
+                    switch (filter)
+                    {
+                        case "Daily":
+                            query = @"SELECT SUM(quantity) AS TotalPullOuts 
+                              FROM tbBatchItems 
+                              WHERE type = 'OUT' AND CAST(date AS DATE) = CAST(GETDATE() AS DATE)";
+                            break;
+
+                        case "Weekly":
+                            query = @"SELECT SUM(quantity) AS TotalPullOuts 
+                              FROM tbBatchItems 
+                              WHERE type = 'OUT' AND 
+                                    DATEPART(WEEK, date) = DATEPART(WEEK, GETDATE()) AND 
+                                    DATEPART(YEAR, date) = DATEPART(YEAR, GETDATE())";
+                            break;
+
+                        case "Monthly":
+                            query = @"SELECT SUM(quantity) AS TotalPullOuts 
+                              FROM tbBatchItems 
+                              WHERE type = 'OUT' AND 
+                                    DATEPART(MONTH, date) = DATEPART(MONTH, GETDATE()) AND 
+                                    DATEPART(YEAR, date) = DATEPART(YEAR, GETDATE())";
+                            break;
+
+                        case "Yearly":
+                            query = @"SELECT SUM(quantity) AS TotalPullOuts 
+                              FROM tbBatchItems 
+                              WHERE type = 'OUT' AND 
+                                    DATEPART(YEAR, date) = DATEPART(YEAR, GETDATE())";
+                            break;
+
+                        default:
+                            throw new ArgumentException("Invalid filter selected.");
+                    }
+
+                    // Execute Query
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        object result = command.ExecuteScalar();
+                        pullOuts = result == DBNull.Value || result == null ? 0 : Convert.ToInt32(result);
+                    }
+                }
+
+                return pullOuts;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return 0;
+            }
+        }
+
+    public Dictionary<string, int> GroupByDaily(List<StockRecord> records)
         {
             // Get the current date (truncate to date only)
             DateTime today = DateTime.Today;

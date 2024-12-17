@@ -25,6 +25,7 @@ namespace InventorySystem.Views.Admin
         private DashboardController InventoryProcessor = new DashboardController();
         private BatchController BatchController = new BatchController();
         private AuthenticationService AuthService = new AuthenticationService();
+        private ItemController ItemController = new ItemController();
         private BatchItemController BatchItemController = new BatchItemController();
         private bool alreadyAsked = false;
         private bool isLoggingOut = false;
@@ -47,14 +48,53 @@ namespace InventorySystem.Views.Admin
             }
             InitializeChart("daily");
             InitializePieChart();
+
+            totalPullOutCmb.SelectedIndex = 0; // Set "Daily" as default selected item
+            filterComboBox.SelectedIndex = 0;
+            // Load data for the default filter
+            LoadPullOutData("Daily");
+            // Set default filter to Daily
+
+            // Load the total transactions for the "Daily" filter on form load
+            LoadTransactionData("Daily");
             //InitializeRecentTransactionData();
             InitializeBestSellerData("weekly");
+            ITEM_BELOW_MIN_LEVEL();
+            TOTAL_ITEMS();
             inventoryRestockingCmb.SelectedIndex = 0;
             periodCmb.SelectedIndex = 0;
 
 
         }
 
+        private void TOTAL_ITEMS()
+        {
+            try
+            {
+                totalItems.Text = ItemController.CountItems().ToString();
+                damagedItems.Text = ItemController.GetDamagedItemCount().ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error message: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+        }
+
+
+
+        private void ITEM_BELOW_MIN_LEVEL()
+        {
+            try
+            {
+                NUMBER_MIN_STOCK_LEVEL.Text = ItemController.CountBelowMinimumStock().ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error message: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+        }
         private void Admin_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason == CloseReason.WindowsShutDown) return;
@@ -133,23 +173,16 @@ namespace InventorySystem.Views.Admin
 
                 bestSellerGrid.Rows.Clear();
                 int index = 1;
+
                 foreach (var product in bestSellers)
                 {
-                    bestSellerGrid.Rows.Add(index, product.ProductCode, product.ProductDescription, product.Category, product.Supplier, product.Unit);
+                    // Calculate the total sold quantity for the current period (weekly, monthly, yearly)
+                    int totalSold = batchItemController.GetTotalSoldForProductInPeriod(product.ProductCode, period);
+
+                    // Add the product data along with the total sold value to the DataGridView
+                    bestSellerGrid.Rows.Add(index, product.ProductCode, product.ProductDescription, totalSold);
                     index++;
                 }
-
-
-
-                //List<Item> products = BatchItemController.GetBestSeller();
-                //bestSellerGrid.Rows.Clear();
-
-                //int index = 1;
-                //foreach (var product in products)
-                //{
-                //    bestSellerGrid.Rows.Add(index.ToString(), product.ProductCode, product.ProductDescription, product.Category, product.Supplier, product.Unit);
-                //    index++;
-                //}
             }
             catch (Exception ex)
             {
@@ -157,6 +190,7 @@ namespace InventorySystem.Views.Admin
                 return;
             }
         }
+
         private void InitializeChart(string timePeriod)
         {
             chartInventory.Series["Inventory Restocking"].Points.Clear();
@@ -205,7 +239,7 @@ namespace InventorySystem.Views.Admin
                 {
                     outOfStock++;
                 }
-                else if (product.ProductQuantity <= product.MinimumStockLevel)
+                else if (product.ProductQuantity <   product.MinimumStockLevel)
                 {
                     lowStock++;
                 }
@@ -321,5 +355,51 @@ namespace InventorySystem.Views.Admin
             logsAdmin.ShowDialog();
 
         }
+
+        private void panel33_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void totalPullOutCmb_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string selectedFilter = totalPullOutCmb.SelectedItem.ToString();
+            int pullOuts = InventoryProcessor.GetPullOutTotalsByFilter(selectedFilter);
+
+            labelPullOuts.Text = pullOuts.ToString();
+        }
+
+        private void LoadPullOutData(string filter)
+        {
+            int pullOuts = InventoryProcessor.GetPullOutTotalsByFilter(filter);
+            labelPullOuts.Text = pullOuts.ToString();
+        }
+
+        private void filterComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Load transaction data based on the selected filter
+            string selectedFilter = filterComboBox.SelectedItem.ToString();
+            LoadTransactionData(selectedFilter);
+        }
+
+        private void LoadTransactionData(string filter)
+        {
+            try
+            {
+                // Fetch the total transactions based on the filter
+                int totalTransactions = InventoryProcessor.GetTransactionTotalsByFilter(filter);
+
+                // Update the dashboard label or display area
+                transactionCountLabel.Text = totalTransactions.ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred while loading data: {ex.Message}",
+                                "Error",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+            }
+        }
+
     }
 }

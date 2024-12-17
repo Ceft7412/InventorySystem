@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "InventorySystem": {
+      "commandName": "Project",
+      "sqlDebugging": true
+    }
+  }
+}

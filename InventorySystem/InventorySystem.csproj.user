@@ -16,6 +16,9 @@
     <Compile Update="Views\Modals\Admin\AddEmployee.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Views\Modals\Admin\ArchiveEmployeeAdmin.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Views\Modals\Admin\ChangePasswordAdmin.cs">
       <SubType>Form</SubType>
     </Compile>

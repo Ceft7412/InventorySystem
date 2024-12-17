@@ -17,8 +17,134 @@ namespace InventorySystem.Controllers
 
         Item item;
 
+        public int GetDamagedItemCount()
+        {
+            try
+            {
+                int damagedItemCount = 0;
+
+                // Connect to the database
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    // SQL query to count damaged items
+                    string query = "SELECT COUNT(*) AS DamagedItemCount FROM tbBatchItems WHERE reason = 'damaged'";
+
+                    // Execute the query and get the result
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        // Execute the scalar query to get the count
+                        damagedItemCount = (int)command.ExecuteScalar();
+                    }
+                }
+
+                return damagedItemCount;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return 0; // Return 0 in case of an error
+            }
+        }
 
 
+        public int CountBelowMinimumStock()
+        {
+            try
+            {
+                int belowMinimumCount = 0;
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    string query = "SELECT COUNT(*) AS BelowMinimumCount FROM tbItem WHERE productQuantity < minimumstocklevel";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        belowMinimumCount = (int)command.ExecuteScalar();
+                    }
+                }
+
+                return belowMinimumCount;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return 0;
+            }
+        }
+
+        public int CountItems()
+        {
+            try
+            {
+                int itemCount = 0;
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    string query = "SELECT COUNT(*) AS ItemCount FROM tbItem";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        itemCount = (int)command.ExecuteScalar();
+                    }
+                }
+
+                return itemCount;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return 0;
+            }
+        }
+
+        public int CountSlowMovingItems(DateTime startDate, DateTime endDate, int threshold = 5)
+        {
+            int slowMovingItemsCount = 0;
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    string query = @"
+                SELECT 
+                    COUNT(DISTINCT tbItem.item_id) AS SlowMovingItemsCount
+                FROM 
+                    tbItem
+                LEFT JOIN 
+                    tbBatchItems 
+                ON 
+                    tbItem.item_id = tbBatchItems.item_id AND tbBatchItems.type = 'OUT' 
+                AND 
+                    tbBatchItems.date BETWEEN @startDate AND @endDate
+                GROUP BY 
+                    tbItem.item_id
+                HAVING 
+                    COUNT(tbBatchItems.batchItemId) <= @threshold";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@startDate", startDate);
+                        command.Parameters.AddWithValue("@endDate", endDate);
+                        command.Parameters.AddWithValue("@threshold", threshold);
+
+                        // Execute the query and get the result
+                        slowMovingItemsCount = (int)command.ExecuteScalar();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            return slowMovingItemsCount;
+        }
 
 
         public Item QueryItemByItemId(int item_id)
@@ -64,7 +190,23 @@ namespace InventorySystem.Controllers
             try
             {
                 List<Item> items = new List<Item>();
-                string query = "SELECT item_id, productCode, productDescription, productQuantity, category, supplier, unit, minimumstocklevel FROM tbItem WHERE status = @status";
+                string query = @"
+            SELECT 
+                i.item_id, 
+                i.productCode, 
+                i.productDescription, 
+                i.productQuantity, 
+                i.category, 
+                i.unit, 
+                i.minimumstocklevel,
+                -- Concatenate supplier names into a single string
+                STRING_AGG(s.supplierName, ', ') AS SupplierNames
+            FROM tbItem i
+            LEFT JOIN tbItemSupplier isup ON i.item_id = isup.ItemId
+            LEFT JOIN tbSupplier s ON isup.SupplierId = s.supplierId
+            WHERE i.status = @status
+            GROUP BY i.item_id, i.productCode, i.productDescription, i.productQuantity, i.category, i.unit, i.minimumstocklevel
+        ";
 
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
@@ -77,20 +219,18 @@ namespace InventorySystem.Controllers
                         items.Add(new Item
                         {
                             ItemId = Convert.ToInt32(reader["item_id"]),
-                            ProductCode = reader["productCode"] as string ?? "", // Safely cast to string, if null then use ""
+                            ProductCode = reader["productCode"] as string ?? "",
                             ProductDescription = reader["productDescription"] as string ?? "",
-                            Quantity = reader["productQuantity"] != DBNull.Value ? Convert.ToInt32(reader["productQuantity"]) : 0, // Check for DBNull
+                            Quantity = reader["productQuantity"] != DBNull.Value ? Convert.ToInt32(reader["productQuantity"]) : 0,
                             Category = reader["category"] as string ?? "",
-                            Supplier = reader["supplier"] as string ?? "",
+                            Supplier = reader["SupplierNames"] as string ?? "", // Now this will contain the comma-separated supplier names
                             Unit = reader["unit"] as string ?? "",
-                            MinimumStock = reader["minimumstocklevel"] != DBNull.Value ? Convert.ToInt32(reader["minimumstocklevel"]) : 0 // Check for DBNull
+                            MinimumStock = reader["minimumstocklevel"] != DBNull.Value ? Convert.ToInt32(reader["minimumstocklevel"]) : 0
                         });
                     }
                     reader.Close();
-
                 }
                 return items;
-
             }
             catch (Exception ex)
             {
@@ -101,49 +241,54 @@ namespace InventorySystem.Controllers
 
 
 
+
         // Get specific item data from the database
         public Item GetItemData(string item_id)
         {
+            Item item = null;
             try
             {
-                MessageBox.Show(item_id);
-                string query = "SELECT item_id, productCode, productDescription, category, supplier, unit, minimumstocklevel FROM tbItem WHERE item_id = @item_id";
+                string query = @"
+            SELECT i.item_id, i.productCode, i.productDescription, i.category, i.unit, i.minimumstocklevel,
+                   STRING_AGG(s.supplierName, ', ') AS SupplierNames, 
+                   STRING_AGG(CAST(s.supplierId AS VARCHAR), ', ') AS SupplierIds
+            FROM tbItem i
+            LEFT JOIN tbItemSupplier isup ON i.item_id = isup.ItemId
+            LEFT JOIN tbSupplier s ON isup.SupplierId = s.supplierId
+            WHERE i.item_id = @item_id
+            GROUP BY i.item_id, i.productCode, i.productDescription, i.category, i.unit, i.minimumstocklevel";
 
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    int id = Convert.ToInt32(item_id);
                     SqlCommand command = new SqlCommand(query, connection);
-                    command.Parameters.AddWithValue("@item_id", id);
+                    command.Parameters.AddWithValue("@item_id", item_id);
                     connection.Open();
 
                     SqlDataReader reader = command.ExecuteReader();
-                    while (reader.Read())
+
+                    if (reader.Read())
                     {
-
-                        // Check if the reader has any rows
-                        if (!reader.HasRows)
-                        {
-                            return null;
-                        }
-
                         item = new Item
                         {
-                            ItemId = reader["item_id"] != DBNull.Value ? Convert.ToInt32(reader["item_id"]) : 0,
+                            ItemId = Convert.ToInt32(reader["item_id"]),
                             ProductCode = reader["productCode"] as string ?? "",
                             ProductDescription = reader["productDescription"] as string ?? "",
                             Category = reader["category"] as string ?? "",
-                            Supplier = reader["supplier"] as string ?? "",
                             Unit = reader["unit"] as string ?? "",
                             MinimumStock = reader["minimumstocklevel"] != DBNull.Value ? Convert.ToInt32(reader["minimumstocklevel"]) : 0
                         };
+
+                        // Get the supplier names and IDs as comma-separated values
+                        string supplierNamesString = reader["SupplierNames"] as string ?? "";
+                        string supplierIdsString = reader["SupplierIds"] as string ?? "";
+
+                        // Convert the comma-separated values to lists
+                        item.SupplierNames = supplierNamesString.Split(',').Select(s => s.Trim()).ToList();
+                        item.SupplierIds = supplierIdsString.Split(',').Select(s => s.Trim()).ToList();
                     }
-
-
-
 
                     reader.Close();
                 }
-
             }
             catch (Exception ex)
             {
@@ -152,6 +297,8 @@ namespace InventorySystem.Controllers
 
             return item;
         }
+
+
 
         public List<string> GetAllUnits()
         {
@@ -194,24 +341,57 @@ namespace InventorySystem.Controllers
             List<Item> filteredItems = new List<Item>();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                StringBuilder query = new StringBuilder("SELECT * FROM tbItem WHERE status = 'active'");
+                // Build the base query to select items
+                StringBuilder query = new StringBuilder(@"
+            SELECT 
+                i.item_id, 
+                i.productCode, 
+                i.productDescription, 
+                i.productQuantity, 
+                i.category, 
+                i.unit, 
+                i.minimumstocklevel,
+                -- Concatenate supplier names into a single string
+                STRING_AGG(s.supplierName, ', ') AS SupplierNames
+            FROM tbItem i
+            LEFT JOIN tbItemSupplier isup ON i.item_id = isup.ItemId
+            LEFT JOIN tbSupplier s ON isup.SupplierId = s.supplierId
+            WHERE i.status = 'active'");
+
                 List<SqlParameter> parameters = new List<SqlParameter>();
 
+                // Filter by category if provided
                 if (!string.IsNullOrEmpty(category))
                 {
-                    query.Append(" AND category = @category");
+                    query.Append(" AND i.category = @category");
                     parameters.Add(new SqlParameter("@category", category));
                 }
+
+                // Filter by supplier if provided (specific supplier)
                 if (!string.IsNullOrEmpty(supplier))
                 {
-                    query.Append(" AND supplier = @supplier");
+                    query.Append(" AND s.supplierName = @supplier");  // Ensure we filter by specific supplier
                     parameters.Add(new SqlParameter("@supplier", supplier));
                 }
+
+                // Filter by unit if provided
                 if (!string.IsNullOrEmpty(unit))
                 {
-                    query.Append(" AND unit = @unit");
+                    query.Append(" AND i.unit = @unit");
                     parameters.Add(new SqlParameter("@unit", unit));
                 }
+
+                // Group by item columns to aggregate suppliers into a single string
+                query.Append(@"
+            GROUP BY 
+                i.item_id, 
+                i.productCode, 
+                i.productDescription, 
+                i.productQuantity, 
+                i.category, 
+                i.unit, 
+                i.minimumstocklevel");
+
                 SqlCommand command = new SqlCommand(query.ToString(), connection);
                 command.Parameters.AddRange(parameters.ToArray());
 
@@ -221,11 +401,13 @@ namespace InventorySystem.Controllers
                 {
                     filteredItems.Add(new Item
                     {
+
+                        ItemId = Convert.ToInt32(reader["item_id"]),
                         ProductCode = reader["productCode"] as string ?? "",
                         ProductDescription = reader["productDescription"] as string ?? "",
                         Quantity = reader["productQuantity"] != DBNull.Value ? Convert.ToInt32(reader["productQuantity"]) : 0,
                         Category = reader["category"] as string ?? "",
-                        Supplier = reader["supplier"] as string ?? "",
+                        Supplier = reader["SupplierNames"] as string ?? "", // Comma-separated list of supplier names
                         Unit = reader["unit"] as string ?? "",
                         MinimumStock = reader["minimumstocklevel"] != DBNull.Value ? Convert.ToInt32(reader["minimumstocklevel"]) : 0
                     });
@@ -235,36 +417,37 @@ namespace InventorySystem.Controllers
             return filteredItems;
         }
 
-        public List<Item> SearchItem(string searchQuery, string status, string category = null, string supplier = null, string unit = null)
+
+
+
+        public List<Item> SearchItem(string searchQuery, string status)
         {
             List<Item> results = new List<Item>();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                StringBuilder query = new StringBuilder("SELECT * FROM tbItem WHERE status = @status");
+                // Query to join tbItem, tbItemSupplier, and tbSupplier to fetch the supplier names as comma-separated values
+                StringBuilder query = new StringBuilder(@"
+            SELECT i.item_id, 
+                   i.productCode, 
+                   i.productDescription, 
+                   i.productQuantity, 
+                   i.category, 
+                   i.unit, 
+                   i.minimumstocklevel, 
+                   i.status,
+                   STRING_AGG(s.supplierName, ', ') AS SupplierNames
+            FROM tbItem i
+            LEFT JOIN tbItemSupplier isup ON i.item_id = isup.ItemId
+            LEFT JOIN tbSupplier s ON isup.SupplierId = s.supplierId
+            WHERE i.status = @status");
 
                 // Add search query if provided
                 if (!string.IsNullOrEmpty(searchQuery))
                 {
-                    query.Append(" AND (productCode LIKE @searchQuery OR productDescription LIKE @searchQuery)");
+                    query.Append(" AND (i.productCode LIKE @searchQuery OR i.productDescription LIKE @searchQuery OR i.item_id LIKE @searchQuery)");
                 }
 
-                // Add category filter if provided
-                if (!string.IsNullOrEmpty(category))
-                {
-                    query.Append(" AND category = @category");
-                }
-
-                // Add supplier filter if provided
-                if (!string.IsNullOrEmpty(supplier))
-                {
-                    query.Append(" AND supplier = @supplier");
-                }
-
-                // Add unit filter if provided
-                if (!string.IsNullOrEmpty(unit))
-                {
-                    query.Append(" AND unit = @unit");
-                }
+                query.Append(" GROUP BY i.item_id, i.productCode, i.productDescription, i.productQuantity, i.category, i.unit, i.minimumstocklevel, i.status");
 
                 SqlCommand command = new SqlCommand(query.ToString(), connection);
 
@@ -274,31 +457,21 @@ namespace InventorySystem.Controllers
                 {
                     command.Parameters.AddWithValue("@searchQuery", "%" + searchQuery + "%");
                 }
-                if (!string.IsNullOrEmpty(category))
-                {
-                    command.Parameters.AddWithValue("@category", category);
-                }
-                if (!string.IsNullOrEmpty(supplier))
-                {
-                    command.Parameters.AddWithValue("@supplier", supplier);
-                }
-                if (!string.IsNullOrEmpty(unit))
-                {
-                    command.Parameters.AddWithValue("@unit", unit);
-                }
 
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
 
                 while (reader.Read())
                 {
+                    // Create an Item object for each row in the result
                     results.Add(new Item
                     {
+                        ItemId = Convert.ToInt32(reader["item_id"]),
                         ProductCode = reader["productCode"] as string ?? "",
                         ProductDescription = reader["productDescription"] as string ?? "",
                         Quantity = reader["productQuantity"] != DBNull.Value ? Convert.ToInt32(reader["productQuantity"]) : 0,
                         Category = reader["category"] as string ?? "",
-                        Supplier = reader["supplier"] as string ?? "",
+                        Supplier = reader["SupplierNames"] as string ?? "",  // Fetch the comma-separated supplier names
                         Unit = reader["unit"] as string ?? "",
                         MinimumStock = reader["minimumstocklevel"] != DBNull.Value ? Convert.ToInt32(reader["minimumstocklevel"]) : 0
                     });
@@ -308,6 +481,8 @@ namespace InventorySystem.Controllers
             }
             return results;
         }
+
+
 
 
         // Set inactive status for an item
@@ -323,9 +498,34 @@ namespace InventorySystem.Controllers
                     connection.Open();
                     archiveCommand.ExecuteNonQuery();
                 }
+
+                // Log the archiving action
+                Log log = new Log
+                {
+                    TableAffected = "tbItem",
+                    RecordID = Convert.ToInt32(item_id),
+                    ModuleName = "Inventory",
+                    Description = $"Archived item with ID {item_id}",
+                    Status = "Success",
+                    ActionType = "Archive"
+                };
+
+                // Call the logging method
+                LogController.LogUpdate(log.TableAffected, log.RecordID, log.ModuleName, log.Description, log.Status, log.ActionType);
             }
             catch (Exception ex)
             {
+                // Log the failure
+                Log log = new Log
+                {
+                    TableAffected = "tbItem",
+                    RecordID = Convert.ToInt32(item_id),
+                    ModuleName = "Inventory",
+                    Description = $"Failed to archive item with ID {item_id}. Error: {ex.Message}",
+                    Status = "Failure",
+                    ActionType = "Archive"
+                };
+                LogController.LogUpdate(log.TableAffected, log.RecordID, log.ModuleName, log.Description, log.Status, log.ActionType);
 
                 MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -336,6 +536,7 @@ namespace InventorySystem.Controllers
             try
             {
                 string query = "UPDATE tbItem SET status = 'active' WHERE productCode = @productCode";
+
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     SqlCommand unarchiveCommand = new SqlCommand(query, connection);
@@ -344,17 +545,42 @@ namespace InventorySystem.Controllers
                     unarchiveCommand.ExecuteNonQuery();
                 }
 
+                // Log the unarchiving action
+                Log log = new Log
+                {
+                    TableAffected = "tbItem",
+                    RecordID = 0, // Assuming you don't have a specific ID for the log
+                    ModuleName = "Item Management",
+                    Description = $"Unarchived item with Product Code: {productCode}",
+                    Status = "Success",
+                    ActionType = "Unarchive"
+                };
+                LogController.LogUpdate(log.TableAffected, log.RecordID, log.ModuleName, log.Description, log.Status, log.ActionType);
             }
             catch (Exception ex)
             {
+                // Log the failure
+                Log log = new Log
+                {
+                    TableAffected = "tbItem",
+                    RecordID = 0, // Assuming you don't have a specific ID for the log
+                    ModuleName = "Item Management",
+                    Description = $"Failed to unarchive item with Product Code: {productCode}. Error: {ex.Message}",
+                    Status = "Failure",
+                    ActionType = "Unarchive"
+                };
+                LogController.LogUpdate(log.TableAffected, log.RecordID, log.ModuleName, log.Description, log.Status, log.ActionType);
+
+                // Show error message
                 MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
+
         // Add item to the database
         public void AddItem(Item item)
         {
-            string query = "INSERT INTO tbItem (item_id, productCode, productDescription, productQuantity, category, supplier, unit, minimumstocklevel, status, created_at) VALUES (@item_id, @productCode, @productDescription, @productQuantity, @category, @supplier, @unit, @minimumstocklevel, @status, @created_at)";
+            string query = "INSERT INTO tbItem (item_id, productCode, productDescription, productQuantity, category, unit, minimumstocklevel, status, created_at) VALUES (@item_id, @productCode, @productDescription, @productQuantity, @category, @unit, @minimumstocklevel, @status, @created_at)";
             DateTime dateTime = DateTime.Now;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -365,7 +591,6 @@ namespace InventorySystem.Controllers
                 addCommand.Parameters.AddWithValue("@productQuantity", item.Quantity);
                 addCommand.Parameters.AddWithValue("@unit", item.Unit);
                 addCommand.Parameters.AddWithValue("@category", item.Category);
-                addCommand.Parameters.AddWithValue("@supplier", item.Supplier);
                 addCommand.Parameters.AddWithValue("@minimumstocklevel", item.MinimumStock);
                 addCommand.Parameters.AddWithValue("@status", "active");
                 addCommand.Parameters.AddWithValue("@created_at", dateTime);
@@ -373,12 +598,26 @@ namespace InventorySystem.Controllers
                 connection.Open();
                 addCommand.ExecuteNonQuery();
             }
+
+            Log log = new Log
+            {
+                TableAffected = "tbItem",
+                RecordID = item.ItemId,
+                ModuleName = "Inventory",
+                Description = $"Added new item: ID {item.ItemId}, Code {item.ProductCode}, Name {item.ProductDescription}",
+                Status = "Success",
+                ActionType = "Add"
+            };
+
+            // Call the logging method
+            LogController.LogUpdate(log.TableAffected, log.RecordID, log.ModuleName, log.Description, log.Status, log.ActionType);
+
         }
 
 
 
         // Update an existing item in the database
-        public void UpdateItem(string item_id, string productDescription, string category, string supplier, string unit, int minimumstocklevel)
+        public void UpdateItem(string item_id, string productDescription, string category, List<int> supplierIds, string unit, int minimumstocklevel)
         {
             try
             {
@@ -391,20 +630,39 @@ namespace InventorySystem.Controllers
                 // Retrieve the existing item data before update to compare with the new data
                 Item existingItem = GetItemById(item_id);
 
-                string query = "UPDATE tbItem SET productDescription = @productDescription, category = @category, supplier = @supplier, unit = @unit, minimumstocklevel = @minimumstocklevel, updated_at = @updated_at WHERE item_id = @item_id";
+                string query = "UPDATE tbItem SET productDescription = @productDescription, category = @category, unit = @unit, minimumstocklevel = @minimumstocklevel, updated_at = @updated_at WHERE item_id = @item_id";
                 DateTime dateTime = DateTime.Now;
+
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
+                    // Update the tbItem table
                     SqlCommand updateCommand = new SqlCommand(query, connection);
                     updateCommand.Parameters.AddWithValue("@item_id", item_id);
                     updateCommand.Parameters.AddWithValue("@productDescription", productDescription);
-                    updateCommand.Parameters.AddWithValue("@unit", unit);
                     updateCommand.Parameters.AddWithValue("@category", category);
-                    updateCommand.Parameters.AddWithValue("@supplier", supplier);
+                    updateCommand.Parameters.AddWithValue("@unit", unit);
                     updateCommand.Parameters.AddWithValue("@minimumstocklevel", minimumstocklevel);
                     updateCommand.Parameters.AddWithValue("@updated_at", dateTime);
+
                     connection.Open();
                     updateCommand.ExecuteNonQuery();
+
+                    // Update the tbItemSupplier table
+                    // Remove existing relationships for this item_id
+                    string deleteQuery = "DELETE FROM tbItemSupplier WHERE ItemId = @itemId";
+                    SqlCommand deleteCommand = new SqlCommand(deleteQuery, connection);
+                    deleteCommand.Parameters.AddWithValue("@itemId", item_id);
+                    deleteCommand.ExecuteNonQuery();
+
+                    // Insert new relationships for the selected suppliers
+                    string insertQuery = "INSERT INTO tbItemSupplier (ItemId, SupplierId) VALUES (@itemId, @supplierId)";
+                    foreach (int supplierId in supplierIds)
+                    {
+                        SqlCommand insertCommand = new SqlCommand(insertQuery, connection);
+                        insertCommand.Parameters.AddWithValue("@itemId", item_id);
+                        insertCommand.Parameters.AddWithValue("@supplierId", supplierId);
+                        insertCommand.ExecuteNonQuery();
+                    }
                 }
 
                 // Log the update in the log table
@@ -413,7 +671,8 @@ namespace InventorySystem.Controllers
                     TableAffected = "tbItem",
                     RecordID = Convert.ToInt32(item_id),
                     ModuleName = "Inventory",
-                    Status = "Success"
+                    Status = "Success",
+                    ActionType = "Update"
                 };
 
                 // Generate a detailed description of the changes
@@ -425,20 +684,20 @@ namespace InventorySystem.Controllers
                 if (existingItem.Category != category)
                     changes.Add($"Category: {existingItem.Category} -> {category}");
 
-                if (existingItem.Supplier != supplier)
-                    changes.Add($"Supplier: {existingItem.Supplier} -> {supplier}");
-
                 if (existingItem.Unit != unit)
                     changes.Add($"Unit: {existingItem.Unit} -> {unit}");
 
                 if (existingItem.MinimumStock != minimumstocklevel)
                     changes.Add($"Minimum Stock Level: {existingItem.MinimumStock} -> {minimumstocklevel}");
 
+                // Add supplier changes
+                changes.Add($"Suppliers updated: {string.Join(", ", supplierIds)}");
+
                 // Join the changes and add to the log description
                 log.Description = $"Updated Item ID {item_id}: {string.Join(", ", changes)}";
 
                 // Call a method to save the log entry
-                LogController.LogUpdate(log.TableAffected, log.RecordID, log.ModuleName, log.Description, log.Status);
+                LogController.LogUpdate(log.TableAffected, log.RecordID, log.ModuleName, log.Description, log.Status, log.ActionType);
             }
             catch (Exception ex)
             {
@@ -446,38 +705,68 @@ namespace InventorySystem.Controllers
             }
         }
 
+
         private Item GetItemById(string item_id)
         {
-            // Replace with your logic to fetch the existing item from the database by ID
-            // This is just a placeholder for fetching the data
-            string query = "SELECT * FROM tbItem WHERE item_id = @item_id";
+            string itemQuery = "SELECT * FROM tbItem WHERE item_id = @item_id";
+            string supplierQuery = "SELECT supplierId FROM tbItemSupplier WHERE itemId = @itemId";
+
             Item item = null;
+            List<string> supplierIds = new List<string>();
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@item_id", item_id);
                 connection.Open();
 
-                SqlDataReader reader = command.ExecuteReader();
-                if (reader.Read())
+                // Fetch the item details
+                using (SqlCommand itemCommand = new SqlCommand(itemQuery, connection))
                 {
-                    item = new Item
+                    itemCommand.Parameters.AddWithValue("@item_id", item_id);
+
+                    SqlDataReader reader = itemCommand.ExecuteReader();
+                    if (reader.Read())
                     {
-                        ItemId = Convert.ToInt32(reader["item_id"]),
-                        ProductCode = reader["productCode"].ToString(),
-                        ProductDescription = reader["productDescription"].ToString(),
-                        Category = reader["category"].ToString(),
-                        Supplier = reader["supplier"].ToString(),
-                        Unit = reader["unit"].ToString(),
-                        MinimumStock = Convert.ToInt32(reader["minimumstocklevel"])
-                    };
+                        item = new Item
+                        {
+                            ItemId = Convert.ToInt32(reader["item_id"]),
+                            ProductCode = reader["productCode"].ToString(),
+                            ProductDescription = reader["productDescription"].ToString(),
+                            Category = reader["category"].ToString(),
+                            // Supplier is now a list, will fetch below
+                            Unit = reader["unit"].ToString(),
+                            MinimumStock = Convert.ToInt32(reader["minimumstocklevel"])
+                        };
+                    }
+                    reader.Close();
                 }
-                reader.Close();
+
+                if (item == null)
+                {
+                    // If the item is not found, return null
+                    return null;
+                }
+
+                // Fetch associated suppliers
+                using (SqlCommand supplierCommand = new SqlCommand(supplierQuery, connection))
+                {
+                    supplierCommand.Parameters.AddWithValue("@itemId", item_id);
+
+                    SqlDataReader supplierReader = supplierCommand.ExecuteReader();
+                    while (supplierReader.Read())
+                    {
+                        supplierIds.Add(supplierReader["supplierId"].ToString());
+                    }
+                    supplierReader.Close();
+                }
             }
+
+            // Add the supplier IDs as a list of strings to the item object
+            item.SupplierIds = supplierIds;
 
             return item;
         }
+
+
         public static int GenerateItemId()
         {
             try

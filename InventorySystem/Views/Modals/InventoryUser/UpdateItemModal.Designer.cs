@@ -32,7 +32,8 @@
             panel1 = new Panel();
             label1 = new Label();
             panel2 = new Panel();
-            updateItemSupplierInput = new ComboBox();
+            updateItemIdInput = new TextBox();
+            label8 = new Label();
             label6 = new Label();
             updateItemUnitInput = new ComboBox();
             updateMinimumStockLevelInput = new TextBox();
@@ -46,8 +47,7 @@
             label2 = new Label();
             updateItemDescriptionInput = new TextBox();
             label7 = new Label();
-            updateItemIdInput = new TextBox();
-            label8 = new Label();
+            supplierPanel = new Panel();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             SuspendLayout();
@@ -76,9 +76,9 @@
             // 
             // panel2
             // 
+            panel2.Controls.Add(supplierPanel);
             panel2.Controls.Add(updateItemIdInput);
             panel2.Controls.Add(label8);
-            panel2.Controls.Add(updateItemSupplierInput);
             panel2.Controls.Add(label6);
             panel2.Controls.Add(updateItemUnitInput);
             panel2.Controls.Add(updateMinimumStockLevelInput);
@@ -95,18 +95,27 @@
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(0, 78);
             panel2.Name = "panel2";
-            panel2.Size = new Size(598, 631);
+            panel2.Size = new Size(598, 695);
             panel2.TabIndex = 4;
             // 
-            // updateItemSupplierInput
+            // updateItemIdInput
             // 
-            updateItemSupplierInput.DropDownStyle = ComboBoxStyle.DropDownList;
-            updateItemSupplierInput.Font = new Font("Calibri", 17F);
-            updateItemSupplierInput.FormattingEnabled = true;
-            updateItemSupplierInput.Location = new Point(40, 397);
-            updateItemSupplierInput.Name = "updateItemSupplierInput";
-            updateItemSupplierInput.Size = new Size(514, 36);
-            updateItemSupplierInput.TabIndex = 16;
+            updateItemIdInput.Font = new Font("Calibri", 17F);
+            updateItemIdInput.Location = new Point(40, 55);
+            updateItemIdInput.Name = "updateItemIdInput";
+            updateItemIdInput.ReadOnly = true;
+            updateItemIdInput.Size = new Size(238, 35);
+            updateItemIdInput.TabIndex = 18;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Font = new Font("Calibri", 18F);
+            label8.Location = new Point(40, 20);
+            label8.Name = "label8";
+            label8.Size = new Size(84, 29);
+            label8.TabIndex = 17;
+            label8.Text = "Item ID";
             // 
             // label6
             // 
@@ -132,7 +141,7 @@
             // updateMinimumStockLevelInput
             // 
             updateMinimumStockLevelInput.Font = new Font("Calibri", 17F);
-            updateMinimumStockLevelInput.Location = new Point(38, 481);
+            updateMinimumStockLevelInput.Location = new Point(37, 546);
             updateMinimumStockLevelInput.Name = "updateMinimumStockLevelInput";
             updateMinimumStockLevelInput.Size = new Size(516, 35);
             updateMinimumStockLevelInput.TabIndex = 13;
@@ -141,7 +150,7 @@
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Calibri", 18F);
-            label5.Location = new Point(38, 446);
+            label5.Location = new Point(37, 511);
             label5.Name = "label5";
             label5.Size = new Size(224, 29);
             label5.TabIndex = 12;
@@ -182,7 +191,7 @@
             cancelUpdateItemButton.FlatStyle = FlatStyle.Flat;
             cancelUpdateItemButton.Font = new Font("Calibri", 15F);
             cancelUpdateItemButton.ForeColor = SystemColors.ButtonHighlight;
-            cancelUpdateItemButton.Location = new Point(248, 550);
+            cancelUpdateItemButton.Location = new Point(247, 615);
             cancelUpdateItemButton.Name = "cancelUpdateItemButton";
             cancelUpdateItemButton.Size = new Size(142, 54);
             cancelUpdateItemButton.TabIndex = 7;
@@ -197,7 +206,7 @@
             updateItemButton.FlatStyle = FlatStyle.Flat;
             updateItemButton.Font = new Font("Calibri", 15F);
             updateItemButton.ForeColor = SystemColors.ButtonHighlight;
-            updateItemButton.Location = new Point(408, 550);
+            updateItemButton.Location = new Point(407, 615);
             updateItemButton.Name = "updateItemButton";
             updateItemButton.Size = new Size(142, 54);
             updateItemButton.TabIndex = 6;
@@ -242,30 +251,20 @@
             label7.TabIndex = 0;
             label7.Text = "Item Description";
             // 
-            // updateItemIdInput
+            // supplierPanel
             // 
-            updateItemIdInput.Font = new Font("Calibri", 17F);
-            updateItemIdInput.Location = new Point(40, 55);
-            updateItemIdInput.Name = "updateItemIdInput";
-            updateItemIdInput.ReadOnly = true;
-            updateItemIdInput.Size = new Size(238, 35);
-            updateItemIdInput.TabIndex = 18;
-            // 
-            // label8
-            // 
-            label8.AutoSize = true;
-            label8.Font = new Font("Calibri", 18F);
-            label8.Location = new Point(40, 20);
-            label8.Name = "label8";
-            label8.Size = new Size(84, 29);
-            label8.TabIndex = 17;
-            label8.Text = "Item ID";
+            supplierPanel.AutoScroll = true;
+            supplierPanel.BackColor = SystemColors.Window;
+            supplierPanel.Location = new Point(40, 394);
+            supplierPanel.Name = "supplierPanel";
+            supplierPanel.Size = new Size(514, 95);
+            supplierPanel.TabIndex = 19;
             // 
             // UpdateItemModal
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(598, 709);
+            ClientSize = new Size(598, 773);
             Controls.Add(panel2);
             Controls.Add(panel1);
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -284,7 +283,6 @@
         private Panel panel1;
         private Label label1;
         private Panel panel2;
-        private ComboBox updateItemSupplierInput;
         private Label label6;
         private ComboBox updateItemUnitInput;
         private TextBox updateMinimumStockLevelInput;
@@ -300,5 +298,6 @@
         private Label label7;
         private TextBox updateItemIdInput;
         private Label label8;
+        private Panel supplierPanel;
     }
 }

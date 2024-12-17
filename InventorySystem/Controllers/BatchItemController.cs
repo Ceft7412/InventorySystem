@@ -14,6 +14,7 @@ namespace InventorySystem.Controllers
     {
         private string connectionString = ConfigurationManager.ConnectionStrings["InventoryDb"].ConnectionString;
         private NotificationController NotificationController = new NotificationController();
+        private LogController LogController = new LogController();
         private List<BatchItem> batchItems = new List<BatchItem>();
         public List<BatchItem> GetBatchItems()
         {
@@ -202,6 +203,59 @@ namespace InventorySystem.Controllers
             }
 
             return items;
+        }
+
+        public int GetTotalSoldForProductInPeriod(string productCode, string period)
+        {
+            // Define the start and end date based on the selected period
+            DateTime startDate, endDate;
+            DateTime today = DateTime.Today;
+
+            switch (period.ToLower())
+            {
+                case "weekly":
+                    // Get the start and end of the current week
+                    startDate = today.AddDays(-(int)today.DayOfWeek + 1); // Monday of current week
+                    endDate = startDate.AddDays(7); // Sunday of current week
+                    break;
+
+                case "monthly":
+                    // Get the start and end of the current month
+                    startDate = new DateTime(today.Year, today.Month, 1);
+                    endDate = startDate.AddMonths(1);
+                    break;
+
+                case "yearly":
+                    // Get the start and end of the current year
+                    startDate = new DateTime(today.Year, 1, 1);
+                    endDate = startDate.AddYears(1);
+                    break;
+
+                default:
+                    throw new ArgumentException("Invalid period specified");
+            }
+
+            // Query the database to sum the sold quantity for the given product within the period
+            string query = @"
+        SELECT SUM(quantity) 
+        FROM tbBatchItems 
+        WHERE productCode = @productCode 
+        AND date >= @startDate 
+        AND date < @endDate 
+        AND reason = 'SOLD' 
+        AND type = 'OUT'";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@productCode", productCode);
+                command.Parameters.AddWithValue("@startDate", startDate);
+                command.Parameters.AddWithValue("@endDate", endDate);
+
+                connection.Open();
+                var result = command.ExecuteScalar();
+                return result != DBNull.Value ? Convert.ToInt32(result) : 0;
+            }
         }
 
         public List<Item> GroupByWeekly(List<BatchItem> batchItems, List<Item> items)
@@ -447,7 +501,7 @@ namespace InventorySystem.Controllers
 
                     DateTime dateTime = DateTime.Now;
 
-
+                    // Insert transaction into tbTransaction table
                     string transactionQuery = "INSERT INTO tbTransaction(transaction_id, employee_id, type, timestamp) VALUES(@transaction_id, @employee_id, @type, @timestamp)";
                     using (SqlCommand addTransactionCommand = new SqlCommand(transactionQuery, connection))
                     {
@@ -458,7 +512,7 @@ namespace InventorySystem.Controllers
                         addTransactionCommand.ExecuteNonQuery();
                     }
 
-
+                    // Insert the batch record into tbBatches table
                     string batchQuery = "INSERT INTO tbBatches(batchId, date, transaction_id) VALUES(@batchId, @date, @transaction_id)";
                     using (SqlCommand addCommand = new SqlCommand(batchQuery, connection))
                     {
@@ -468,6 +522,20 @@ namespace InventorySystem.Controllers
                         addCommand.ExecuteNonQuery();
                     }
 
+                    // Log the transaction action (IN or OUT)
+                    string actionType = transaction_type == "IN" ? "Stock In" : "Stock Out";
+                    Log log = new Log
+                    {
+                        TableAffected = "tbTransaction",
+                        RecordID = transaction_id,
+                        ModuleName = "Inventory Management",
+                        Description = $"{actionType} by employee {employee_id} at {dateTime}.",
+                        Status = "Success",
+                        ActionType = actionType  // ActionType is set to 'Stock In' or 'Stock Out'
+                    };
+                    LogController.LogUpdate(log.TableAffected, log.RecordID, log.ModuleName, log.Description, log.Status, log.ActionType);
+
+                    // Handle batch items and update stock
                     foreach (BatchItem item in batchItems)
                     {
                         // Check current stock if the transaction is "OUT"
@@ -489,7 +557,7 @@ namespace InventorySystem.Controllers
                             }
                         }
 
-                        // Insert batch item
+                        // Insert batch item record into tbBatchItems table
                         string batchItemsQuery = "INSERT INTO tbBatchItems(batchItemId, batchId, transaction_id, productCode, quantity, type, reason, date, unit) " +
                                                   "VALUES(@batchItemId, @batchId, @transaction_id, @productCode, @quantity, @type, @reason, @date, @unit)";
                         using (SqlCommand addCommand = new SqlCommand(batchItemsQuery, connection))
@@ -503,11 +571,10 @@ namespace InventorySystem.Controllers
                             addCommand.Parameters.AddWithValue("@type", transaction_type);
                             addCommand.Parameters.AddWithValue("@reason", item.Reason);
                             addCommand.Parameters.AddWithValue("@date", item.Date);
-                            
                             addCommand.ExecuteNonQuery();
                         }
 
-                        // Update product stock considering unit
+                        // Update product stock based on the transaction type
                         string updateProductQuery = "UPDATE tbItem SET productQuantity = productQuantity + @quantity WHERE item_id = @item_id AND productCode = @productCode AND unit = @unit";
                         if (transaction_type == "OUT")
                         {
@@ -524,6 +591,7 @@ namespace InventorySystem.Controllers
                         }
                     }
 
+                    // Display success message
                     MessageBox.Show("Save items successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     // Check and generate stock alerts
                     NotificationController.UpdateCompletedStockAlerts();
@@ -534,8 +602,21 @@ namespace InventorySystem.Controllers
             catch (Exception ex)
             {
                 MessageBox.Show($"An error occurred: {ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                // Log the failure transaction attempt
+                Log log = new Log
+                {
+                    TableAffected = "tbTransaction",
+                    RecordID = 0,  // No specific record ID for the failure case
+                    ModuleName = "Inventory Management",
+                    Description = $"Failed to save transaction of type {transaction_type}. Error: {ex.Message}",
+                    Status = "Failure",
+                    ActionType = transaction_type == "IN" ? "Stock In" : "Stock Out" // Log action type (Stock In or Stock Out) even if failed
+                };
+                LogController.LogUpdate(log.TableAffected, log.RecordID, log.ModuleName, log.Description, log.Status, log.ActionType);
             }
         }
+
 
     }
 }

@@ -34,8 +34,11 @@
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EmployeeAdmin));
             topbarStockInOutPanel = new Panel();
+            archivedEmployeeBtn = new Button();
             label1 = new Label();
             panel1 = new Panel();
+            panel5 = new Panel();
+            employeeTxt = new TextBox();
             panel4 = new Panel();
             exportExcelBtn = new Button();
             archiveEmployeeBtn = new Button();
@@ -51,6 +54,7 @@
             Column3 = new DataGridViewTextBoxColumn();
             topbarStockInOutPanel.SuspendLayout();
             panel1.SuspendLayout();
+            panel5.SuspendLayout();
             panel4.SuspendLayout();
             panel2.SuspendLayout();
             panel3.SuspendLayout();
@@ -61,19 +65,42 @@
             // 
             topbarStockInOutPanel.BackColor = Color.Transparent;
             topbarStockInOutPanel.BackgroundImage = Properties.Resources.panelBackground;
+            topbarStockInOutPanel.BorderStyle = BorderStyle.FixedSingle;
+            topbarStockInOutPanel.Controls.Add(archivedEmployeeBtn);
             topbarStockInOutPanel.Controls.Add(label1);
             topbarStockInOutPanel.Dock = DockStyle.Top;
             topbarStockInOutPanel.Location = new Point(0, 0);
             topbarStockInOutPanel.Name = "topbarStockInOutPanel";
-            topbarStockInOutPanel.Size = new Size(1665, 99);
+            topbarStockInOutPanel.Size = new Size(1665, 137);
             topbarStockInOutPanel.TabIndex = 2;
+            // 
+            // archivedEmployeeBtn
+            // 
+            archivedEmployeeBtn.Cursor = Cursors.Hand;
+            archivedEmployeeBtn.FlatAppearance.BorderSize = 0;
+            archivedEmployeeBtn.FlatAppearance.MouseOverBackColor = SystemColors.ActiveCaption;
+            archivedEmployeeBtn.FlatStyle = FlatStyle.Flat;
+            archivedEmployeeBtn.Font = new Font("Calibri", 18F);
+            archivedEmployeeBtn.ForeColor = SystemColors.ButtonHighlight;
+            archivedEmployeeBtn.Image = Properties.Resources.employee;
+            archivedEmployeeBtn.ImageAlign = ContentAlignment.TopCenter;
+            archivedEmployeeBtn.Location = new Point(218, 11);
+            archivedEmployeeBtn.Name = "archivedEmployeeBtn";
+            archivedEmployeeBtn.Padding = new Padding(5);
+            archivedEmployeeBtn.Size = new Size(164, 109);
+            archivedEmployeeBtn.TabIndex = 5;
+            archivedEmployeeBtn.Text = "Archive";
+            archivedEmployeeBtn.TextAlign = ContentAlignment.BottomCenter;
+            archivedEmployeeBtn.TextImageRelation = TextImageRelation.ImageAboveText;
+            archivedEmployeeBtn.UseVisualStyleBackColor = true;
+            archivedEmployeeBtn.Click += archivedEmployeeBtn_Click;
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Calibri", 26F);
             label1.ForeColor = SystemColors.ButtonHighlight;
-            label1.Location = new Point(24, 31);
+            label1.Location = new Point(24, 50);
             label1.Name = "label1";
             label1.Size = new Size(157, 42);
             label1.TabIndex = 0;
@@ -81,12 +108,33 @@
             // 
             // panel1
             // 
+            panel1.Controls.Add(panel5);
             panel1.Controls.Add(panel4);
             panel1.Dock = DockStyle.Top;
-            panel1.Location = new Point(0, 99);
+            panel1.Location = new Point(0, 137);
             panel1.Name = "panel1";
             panel1.Size = new Size(1665, 91);
             panel1.TabIndex = 3;
+            // 
+            // panel5
+            // 
+            panel5.BackColor = SystemColors.Control;
+            panel5.Controls.Add(employeeTxt);
+            panel5.Dock = DockStyle.Fill;
+            panel5.Location = new Point(0, 0);
+            panel5.Name = "panel5";
+            panel5.Size = new Size(615, 91);
+            panel5.TabIndex = 2;
+            // 
+            // employeeTxt
+            // 
+            employeeTxt.Font = new Font("Segoe UI", 16F);
+            employeeTxt.Location = new Point(25, 36);
+            employeeTxt.Name = "employeeTxt";
+            employeeTxt.PlaceholderText = "Search employee";
+            employeeTxt.Size = new Size(335, 36);
+            employeeTxt.TabIndex = 0;
+            employeeTxt.TextChanged += employeeTxt_TextChanged;
             // 
             // panel4
             // 
@@ -169,10 +217,10 @@
             panel2.BackColor = SystemColors.ControlLight;
             panel2.Controls.Add(panel3);
             panel2.Dock = DockStyle.Fill;
-            panel2.Location = new Point(0, 190);
+            panel2.Location = new Point(0, 228);
             panel2.Name = "panel2";
             panel2.Padding = new Padding(25);
-            panel2.Size = new Size(1665, 638);
+            panel2.Size = new Size(1665, 600);
             panel2.TabIndex = 4;
             // 
             // panel3
@@ -182,7 +230,7 @@
             panel3.Dock = DockStyle.Fill;
             panel3.Location = new Point(25, 25);
             panel3.Name = "panel3";
-            panel3.Size = new Size(1615, 588);
+            panel3.Size = new Size(1615, 550);
             panel3.TabIndex = 0;
             // 
             // dataGridViewEmployees
@@ -230,7 +278,7 @@
             dataGridViewEmployees.RowsDefaultCellStyle = dataGridViewCellStyle4;
             dataGridViewEmployees.RowTemplate.Height = 30;
             dataGridViewEmployees.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridViewEmployees.Size = new Size(1615, 588);
+            dataGridViewEmployees.Size = new Size(1615, 550);
             dataGridViewEmployees.TabIndex = 2;
             dataGridViewEmployees.CellClick += selectedRowCellClick;
             dataGridViewEmployees.CellContentClick += dataGridViewEmployees_CellContentClick;
@@ -281,6 +329,8 @@
             topbarStockInOutPanel.ResumeLayout(false);
             topbarStockInOutPanel.PerformLayout();
             panel1.ResumeLayout(false);
+            panel5.ResumeLayout(false);
+            panel5.PerformLayout();
             panel4.ResumeLayout(false);
             panel2.ResumeLayout(false);
             panel3.ResumeLayout(false);
@@ -306,5 +356,8 @@
         private Button updateEmployeeBtnRedirect;
         private Button archiveEmployeeBtn;
         private Button exportExcelBtn;
+        private Panel panel5;
+        private Button archivedEmployeeBtn;
+        private TextBox employeeTxt;
     }
 }

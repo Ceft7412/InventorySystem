@@ -38,7 +38,7 @@ namespace InventorySystem.Views.Auth
                 }
 
                 // Attempt to log in and get role and first login status
-                var (Success, Role, UserID, IsFirstLogin) = AuthController.LOGINUSER(username, password);
+                var (Success, Role, UserID, IsFirstLogin, ErrorMessage) = AuthController.LOGINUSER(username, password);
                 if (Success)
                 {
                     if (IsFirstLogin)
@@ -76,7 +76,8 @@ namespace InventorySystem.Views.Auth
                 }
                 else
                 {
-                    MessageBox.Show("Invalid username or password.", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    // Show the error message returned by LOGINUSER
+                    MessageBox.Show(ErrorMessage, "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)
@@ -84,6 +85,7 @@ namespace InventorySystem.Views.Auth
                 MessageBox.Show("Error message: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
         //private void UpdateFirstLoginStatus(string username)
         //{

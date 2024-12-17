@@ -28,5 +28,9 @@ namespace InventorySystem.Models
         public int MinimumStock { get; set; }
 
         public StockSeverity Severity { get; set; }
+
+        // Use List<string> instead of Array for SupplierNames and SupplierIds
+        public List<string> SupplierNames { get; set; }
+        public List<string> SupplierIds { get; set; }
     }
 }

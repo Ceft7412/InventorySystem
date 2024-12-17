@@ -20,22 +20,21 @@ namespace InventorySystem.Views.Modals.InventoryUser
 
         private void createNewSupplierButton_Click(object sender, EventArgs e)
         {
-            string supplierId = supplierIdInput.Text;
             string supplierName = supplierNameInput.Text;
             string supplierContact = supplierContactInput.Text;
             string supplierAddress = supplierAddressInput.Text;
 
-            if (supplierId == "" || supplierName == "")
+            if (supplierName == "")
             {
-                MessageBox.Show("Please fill in all fields");
+                MessageBox.Show("Please fill the supplier name.");
             }
             else
             {
                 try
                 {
                     SupplierController supplierController = new SupplierController();
-                    supplierController.CreateSupplier(supplierId, supplierName, supplierContact, supplierAddress);
-                    MessageBox.Show("Supplier created successfully");
+                    supplierController.CreateSupplier(supplierName, supplierContact, supplierAddress);
+                    MessageBox.Show("Supplier created successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.Close();
                 }
                 catch (Exception ex)

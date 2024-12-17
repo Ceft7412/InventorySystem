@@ -4,6 +4,7 @@ using InventorySystem.Models;
 using InventorySystem.Services;
 using InventorySystem.Views.Auth;
 using InventorySystem.Views.Modals.InventoryUser;
+using Microsoft.Office.Interop.Excel;
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
 namespace InventorySystem
@@ -14,6 +15,7 @@ namespace InventorySystem
         private SupplierController supplierController = new SupplierController();
         private AuthenticationService AuthenticationService = new AuthenticationService();
         NotificationController notificationController = new NotificationController();
+        LogController LogController = new LogController();
         private string selectedItemCodeRow;
         private string selectedRows;
         private bool alreadyAsked = false;
@@ -118,7 +120,8 @@ namespace InventorySystem
                         else
                         {
                             alreadyAsked = true;
-                            Application.Exit();
+                            System.Windows.Forms.Application.Exit();
+                          
 
                         }
                     }
@@ -175,13 +178,17 @@ namespace InventorySystem
             try
             {
                 supplierComboBox.Items.Clear();
-                List<string> supplierNames = supplierController.GetAllSupplierNames();
-                if (supplierNames != null && supplierNames.Count > 0)
+                List<Supplier> suppliers = supplierController.GetAllSupplierNames();
+
+                if (suppliers != null && suppliers.Count > 0)
                 {
-                    foreach (var name in supplierNames)
-                    {
-                        supplierComboBox.Items.Add(name);
-                    }
+                    
+                    // Bind the data directly to the ComboBox
+                    supplierComboBox.DataSource = suppliers;
+                    supplierComboBox.DisplayMember = "SupplierName"; // What is displayed
+                    supplierComboBox.ValueMember = "SupplierId";     // The hidden value
+                                                                     // Ensure no item is selected when the ComboBox is loaded
+                    supplierComboBox.SelectedIndex = -1;
                 }
                 else
                 {
@@ -199,13 +206,18 @@ namespace InventorySystem
         {
             try
             {
-                unitComboBox.Items.Clear();
-                List<string> units = itemController.GetAllUnits();
+                unitComboBox.Items.Clear(); // Clear any existing items
+                List<string> units = itemController.GetAllUnits(); // Get the list of units
+
                 if (units != null && units.Count > 0)
                 {
+                    // Ensure no empty or null units are added
                     foreach (var unit in units)
                     {
-                        unitComboBox.Items.Add(unit);
+                        if (!string.IsNullOrWhiteSpace(unit)) // Add only non-empty strings
+                        {
+                            unitComboBox.Items.Add(unit);
+                        }
                     }
                 }
                 else
@@ -221,16 +233,20 @@ namespace InventorySystem
 
         public void LoadCategoriesIntoComboBox()
         {
-
             try
             {
-                categoryComboBox.Items.Clear();
-                List<string> categories = itemController.GetAllCategories();
+                categoryComboBox.Items.Clear(); // Clear any existing items
+                List<string> categories = itemController.GetAllCategories(); // Get the list of categories
+
                 if (categories != null && categories.Count > 0)
                 {
+                    // Ensure no empty or null categories are added
                     foreach (var category in categories)
                     {
-                        categoryComboBox.Items.Add(category);
+                        if (!string.IsNullOrWhiteSpace(category)) // Add only non-empty strings
+                        {
+                            categoryComboBox.Items.Add(category);
+                        }
                     }
                 }
                 else
@@ -244,22 +260,21 @@ namespace InventorySystem
             }
         }
 
+
         private void PerformSearch(string searchQuery)
         {
-            string category = categoryComboBox.SelectedItem as string;
-            string supplier = supplierComboBox.SelectedItem as string;
-            string unit = unitComboBox.SelectedItem as string;
             if (searchQuery != null)
             {
                 try
                 {
                     dataGridViewItems.Rows.Clear();
-                    List<Item> items = itemController.SearchItem(searchQuery, "active", category, supplier, unit);
+                    List<Item> items = itemController.SearchItem(searchQuery, "active");
                     if (items != null && items.Count > 0)
                     {
                         foreach (var item in items)
                         {
                             dataGridViewItems.Rows.Add(
+                                item.ItemId,
                                 item.ProductCode,
                                 item.ProductDescription,
                                 item.Quantity.ToString(),
@@ -314,15 +329,50 @@ namespace InventorySystem
             var result = MessageBox.Show("Are you sure you want to logout?", "Logout", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
-                // Set the logout flag
-                isLoggingOut = true;
-                AuthenticationService.Destroy();
-                this.Close();
-                Login login = new Login();
-                login.Show();
-            }
+                try
+                {
+                    // Log the logout action
+                    string userId = SessionData.UserId.ToString(); // Assuming SessionData stores the user ID
+                    Log log = new Log
+                    {
+                        TableAffected = "tbUser", // This could be changed if you have a specific table to track logouts
+                        RecordID = Convert.ToInt32(userId), // Assuming user ID is an integer
+                        ModuleName = "Authentication",
+                        Description = $"User with ID {userId} logged out.",
+                        Status = "Success",
+                        ActionType = "Logout"
+                    };
+                    LogController.LogUpdate(log.TableAffected, log.RecordID, log.ModuleName, log.Description, log.Status, log.ActionType);
 
+                    // Proceed with logout
+                    isLoggingOut = true;
+                    AuthenticationService.Destroy();
+                    this.Close();
+
+                    // Show login screen
+                    Login login = new Login();
+                    login.Show();
+                }
+                catch (Exception ex)
+                {
+                    // Log the failure if there's an issue during the logout process
+                    Log log = new Log
+                    {
+                        TableAffected = "tbUser", // This could be changed if you have a specific table to track logouts
+                        RecordID = 0, // No specific record ID for logout failure
+                        ModuleName = "Authentication",
+                        Description = $"Failed logout attempt. Error: {ex.Message}",
+                        Status = "Failure",
+                        ActionType = "Logout"
+                    };
+                    LogController.LogUpdate(log.TableAffected, log.RecordID, log.ModuleName, log.Description, log.Status, log.ActionType);
+
+                    // Show error message
+                    MessageBox.Show("Error: " + ex.Message, "Logout Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
+
 
         private void addItemButton_Click(object sender, EventArgs e)
         {
@@ -400,7 +450,6 @@ namespace InventorySystem
         {
             try
             {
-
                 var message = MessageBox.Show("Are you sure you want to export the data?", "Export to Excel", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                 if (message == DialogResult.No)
@@ -438,39 +487,89 @@ namespace InventorySystem
                 System.Runtime.InteropServices.Marshal.ReleaseComObject(workbook);
                 System.Runtime.InteropServices.Marshal.ReleaseComObject(excelApp);
 
+                // Log the successful export action
+                Log log = new Log
+                {
+                    TableAffected = "tbItem",
+                    RecordID = 0, // No specific record ID for batch operations
+                    ModuleName = "Inventory",
+                    Description = $"Exported {dataGridViewItems.Rows.Count} items to Excel.",
+                    Status = "Success",
+                    ActionType = "Export"
+                };
+                LogController.LogUpdate(log.TableAffected, log.RecordID, log.ModuleName, log.Description, log.Status, log.ActionType);
+
                 MessageBox.Show("Data exported successfully!", "Export to Excel", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
+                // Log the failure
+                Log log = new Log
+                {
+                    TableAffected = "tbItem",
+                    RecordID = 0, // No specific record ID for batch operations
+                    ModuleName = "Inventory",
+                    Description = $"Failed to export data to Excel. Error: {ex.Message}",
+                    Status = "Failure",
+                    ActionType = "Export"
+                };
+                LogController.LogUpdate(log.TableAffected, log.RecordID, log.ModuleName, log.Description, log.Status, log.ActionType);
+
                 MessageBox.Show($"Error message: {ex.Message}", "Export to Excel", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
+
         private void categoryComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // Get the selected category from the ComboBox
             string category = categoryComboBox.SelectedItem as string;
-            string supplier = supplierComboBox.SelectedItem as string;
+
+            // Get the selected supplier and unit
+            Supplier selectedSupplier = supplierComboBox.SelectedItem as Supplier;
+            string supplier = selectedSupplier?.SupplierName ?? string.Empty;  // Default to empty if no selection
+
             string unit = unitComboBox.SelectedItem as string;
-            var filterItems = itemController.FilterItems(category, supplier, unit);
-            UpdateDisplay(filterItems);
+
+            // Perform the filtering when category is selected
+            FilterItemsAndUpdateDisplay(category, supplier, unit);
         }
 
         private void supplierComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // Get the selected supplier as a Supplier object
+            Supplier selectedSupplier = supplierComboBox.SelectedItem as Supplier;
+
+            // If a supplier is selected, retrieve its properties
+            string supplierName = selectedSupplier?.SupplierName ?? string.Empty;  // Default to empty if no selection
+
+            // Get the selected category and unit
             string category = categoryComboBox.SelectedItem as string;
-            string supplier = supplierComboBox.SelectedItem as string;
             string unit = unitComboBox.SelectedItem as string;
-            var filterItems = itemController.FilterItems(category, supplier, unit);
-            UpdateDisplay(filterItems);
+
+            // Perform the filtering when supplier is selected
+            FilterItemsAndUpdateDisplay(category, supplierName, unit);
         }
 
         private void unitComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // Get the selected category and supplier
             string category = categoryComboBox.SelectedItem as string;
             string supplier = supplierComboBox.SelectedItem as string;
+
+            // Get the selected unit
             string unit = unitComboBox.SelectedItem as string;
+
+            // Perform the filtering when unit is selected
+            FilterItemsAndUpdateDisplay(category, supplier, unit);
+        }
+
+        private void FilterItemsAndUpdateDisplay(string category, string supplier, string unit)
+        {
+            // Only proceed if we have selections to filter by
+            // This will silently filter without popping up any messages
             var filterItems = itemController.FilterItems(category, supplier, unit);
-            UpdateDisplay(filterItems);
+            UpdateDisplay(filterItems);  // Update the UI with the filtered items
         }
 
         private void UpdateDisplay(List<Item> items)
@@ -488,6 +587,7 @@ namespace InventorySystem
             foreach (Item item in items)
             {
                 dataGridViewItems.Rows.Add(new object[] {
+                    item.ItemId.ToString(),
                     item.ProductCode,
                     item.ProductDescription,
                     item.Quantity.ToString(),
@@ -647,6 +747,7 @@ namespace InventorySystem
                 List<Item> items = new List<Item>();
                 HashSet<string> existingItemCodesAndUnits = new HashSet<string>(); // Track unique combinations of itemCode and unit
                 HashSet<string> exportedItemCodesAndUnits = new HashSet<string>(); // Track itemCode and unit combinations for exported items
+                int skippedItems = 0; // Counter for skipped items due to duplicates or issues
 
                 // First, populate the HashSet with the existing itemCode and unit combinations in the DataGridView
                 foreach (DataGridViewRow row in dataGridViewItems.Rows)
@@ -669,7 +770,7 @@ namespace InventorySystem
                     // Check for duplicate Item Code and Unit combination
                     if (exportedItemCodesAndUnits.Contains(itemCodeUnitCombo))
                     {
-                        MessageBox.Show($"Duplicate Item Code and Unit found: {itemCode} - {unit}. Skipping this item.", "Duplicate Detected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        skippedItems++;
                         continue;
                     }
 
@@ -700,17 +801,42 @@ namespace InventorySystem
                 LoadUnitsIntoComboBox();
                 LoadSupplierNamesIntoComboBox();
 
+                // Log the successful save action
+                Log log = new Log
+                {
+                    TableAffected = "tbItem",
+                    RecordID = 0, // No specific record ID for batch operations
+                    ModuleName = "Inventory",
+                    Description = $"Imported {items.Count} items into the database. Skipped {skippedItems} items due to duplicates.",
+                    Status = "Success",
+                    ActionType = "Import"
+                };
+                LogController.LogUpdate(log.TableAffected, log.RecordID, log.ModuleName, log.Description, log.Status, log.ActionType);
+
                 MessageBox.Show("Data successfully saved to the database!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             }
             catch (Exception ex)
             {
+                // Log the failure
+                Log log = new Log
+                {
+                    TableAffected = "tbItem",
+                    RecordID = 0, // No specific record ID for batch operations
+                    ModuleName = "Inventory",
+                    Description = $"Failed to save imported data. Error: {ex.Message}",
+                    Status = "Failure",
+                    ActionType = "Import"
+                };
+                LogController.LogUpdate(log.TableAffected, log.RecordID, log.ModuleName, log.Description, log.Status, log.ActionType);
+
                 MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        
 
-        
+
+
+
     }
 }

@@ -32,7 +32,7 @@
             panel1 = new Panel();
             label1 = new Label();
             panel2 = new Panel();
-            itemSupplierInput = new ComboBox();
+            supplierPanel = new Panel();
             label6 = new Label();
             itemUnitInput = new ComboBox();
             itemMSLInput = new TextBox();
@@ -74,7 +74,7 @@
             // 
             // panel2
             // 
-            panel2.Controls.Add(itemSupplierInput);
+            panel2.Controls.Add(supplierPanel);
             panel2.Controls.Add(label6);
             panel2.Controls.Add(itemUnitInput);
             panel2.Controls.Add(itemMSLInput);
@@ -91,18 +91,17 @@
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(0, 78);
             panel2.Name = "panel2";
-            panel2.Size = new Size(598, 631);
+            panel2.Size = new Size(598, 695);
             panel2.TabIndex = 3;
             // 
-            // itemSupplierInput
+            // supplierPanel
             // 
-            itemSupplierInput.DropDownStyle = ComboBoxStyle.DropDownList;
-            itemSupplierInput.Font = new Font("Calibri", 16F);
-            itemSupplierInput.FormattingEnabled = true;
-            itemSupplierInput.Location = new Point(40, 397);
-            itemSupplierInput.Name = "itemSupplierInput";
-            itemSupplierInput.Size = new Size(514, 34);
-            itemSupplierInput.TabIndex = 16;
+            supplierPanel.AutoScroll = true;
+            supplierPanel.BackColor = SystemColors.Window;
+            supplierPanel.Location = new Point(40, 402);
+            supplierPanel.Name = "supplierPanel";
+            supplierPanel.Size = new Size(514, 95);
+            supplierPanel.TabIndex = 16;
             // 
             // label6
             // 
@@ -128,7 +127,7 @@
             // itemMSLInput
             // 
             itemMSLInput.Font = new Font("Calibri", 16F);
-            itemMSLInput.Location = new Point(38, 481);
+            itemMSLInput.Location = new Point(38, 555);
             itemMSLInput.Name = "itemMSLInput";
             itemMSLInput.Size = new Size(516, 34);
             itemMSLInput.TabIndex = 13;
@@ -137,7 +136,7 @@
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Calibri", 18F);
-            label5.Location = new Point(38, 446);
+            label5.Location = new Point(38, 520);
             label5.Name = "label5";
             label5.Size = new Size(224, 29);
             label5.TabIndex = 12;
@@ -178,7 +177,7 @@
             cancelCreateItemButton.FlatStyle = FlatStyle.Flat;
             cancelCreateItemButton.Font = new Font("Calibri", 15F);
             cancelCreateItemButton.ForeColor = SystemColors.ButtonHighlight;
-            cancelCreateItemButton.Location = new Point(248, 550);
+            cancelCreateItemButton.Location = new Point(248, 624);
             cancelCreateItemButton.Name = "cancelCreateItemButton";
             cancelCreateItemButton.Size = new Size(142, 54);
             cancelCreateItemButton.TabIndex = 7;
@@ -193,7 +192,7 @@
             createNewItemButton.FlatStyle = FlatStyle.Flat;
             createNewItemButton.Font = new Font("Calibri", 15F);
             createNewItemButton.ForeColor = SystemColors.ButtonHighlight;
-            createNewItemButton.Location = new Point(408, 550);
+            createNewItemButton.Location = new Point(408, 624);
             createNewItemButton.Name = "createNewItemButton";
             createNewItemButton.Size = new Size(142, 54);
             createNewItemButton.TabIndex = 6;
@@ -241,7 +240,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(598, 709);
+            ClientSize = new Size(598, 773);
             Controls.Add(panel2);
             Controls.Add(panel1);
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -260,7 +259,6 @@
         private Panel panel1;
         private Label label1;
         private Panel panel2;
-        private ComboBox itemSupplierInput;
         private Label label6;
         private ComboBox itemUnitInput;
         private TextBox itemMSLInput;
@@ -274,5 +272,6 @@
         private Label label2;
         private TextBox itemDescriptionInput;
         private Label label7;
+        private Panel supplierPanel;
     }
 }

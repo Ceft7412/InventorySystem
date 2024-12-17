@@ -21,43 +21,72 @@ namespace InventorySystem.Controllers
         private AuthenticationService AuthService = new AuthenticationService();
         private LogController LogController = new LogController();
 
-        public (bool Success, string Role, string UserID, bool IsFirstLogin) LOGINUSER(string username, string password)
+        public (bool Success, string Role, string UserID, bool IsFirstLogin, string ErrorMessage) LOGINUSER(string username, string password)
         {
             try
             {
-                string query = @"SELECT password, username, firstname, lastname, contact_number, address, role, user_id, is_first_login FROM tbUser WHERE username = @username";
+                // Query to retrieve user data including the status field
+                string query = @"SELECT password, username, firstname, lastname, contact_number, address, role, user_id, is_first_login, status 
+                         FROM tbUser WHERE username = @username";
+
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     SqlCommand cmd = new SqlCommand(query, connection);
                     cmd.Parameters.AddWithValue("@username", username);
                     connection.Open();
+
                     SqlDataReader reader = cmd.ExecuteReader();
+
                     if (reader.Read())
                     {
+                        // Check if user is inactive
+                        string status = reader["status"] as string;
+                        if (status == "inactive")
+                        {
+                            // If inactive, return a failure result and message
+                            return (false, null, null, false, "Your account is inactive. Please contact support.");
+                        }
 
+                        // Password verification
                         string storedHash = reader["password"] as string;
                         if (BCrypt.Net.BCrypt.Verify(password, storedHash))
                         {
+                            // Retrieve user information after successful password verification
                             string role = reader["role"] as string;
                             int userId = reader["user_id"] != DBNull.Value ? Convert.ToInt32(reader["user_id"]) : 0;
                             string toStringId = userId.ToString();
                             bool isFirstLogin = (bool)reader["is_first_login"];
 
                             // Log the successful login
-                            //LogController.LogUserLogin(userId, true, role, isFirstLogin);
+                            LogController.LogUserLogin(userId, true, role, isFirstLogin);
 
+                            // Proceed with authentication
                             AuthService.Authenticated();
-                            return (true, role, toStringId, isFirstLogin);
+
+                            // Return success result
+                            return (true, role, toStringId, isFirstLogin, null);
                         }
+                        else
+                        {
+                            // Invalid password
+                            return (false, null, null, false, "Invalid username or password.");
+                        }
+                    }
+                    else
+                    {
+                        // Username not found
+                        return (false, null, null, false, "Invalid username or password.");
                     }
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error: " + ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return (false, null, null, false, "An error occurred during the login process.");
             }
-            return (false, null, null, false);
         }
+
+
 
         public void UpdateFirstLoginStatus(string username)
         {

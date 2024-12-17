@@ -173,5 +173,61 @@ namespace InventorySystem.Views.Modals.Admin
             }
 
         }
+
+        private void archivedEmployeeBtn_Click(object sender, EventArgs e)
+        {
+            ArchiveEmployeeAdmin archiveEmployeeAdmin = new ArchiveEmployeeAdmin();
+            archiveEmployeeAdmin.ShowDialog();
+            FETCHEMPLOYEES();
+        }
+
+        private void employeeTxt_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                SEARCH_AND_DISPLAY_EMPLOYEES();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message, "Search Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void SEARCH_AND_DISPLAY_EMPLOYEES()
+        {
+            try
+            {
+                dataGridViewEmployees.Rows.Clear();
+
+                // Get the search query from the employeeTxt textbox
+                string searchText = employeeTxt.Text.Trim();
+
+                // Call the search method to get matching employees
+                List<Employee> employees = employeeController.SEARCH_EMPLOYEE(searchText);
+
+                // If employees are found, display them in the DataGridView
+                if (employees != null && employees.Count > 0)
+                {
+                    foreach (var employee in employees)
+                    {
+                        dataGridViewEmployees.Rows.Add(
+                            employee.EmployeeID,
+                            employee.Firstname + " " + employee.Lastname,
+                            employee.Username,
+                            employee.Contact,
+                            employee.Address
+                        );
+                    }
+                }
+                else
+                {
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error message: " + ex.Message, "Search Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }   
+        }
     }
 }
