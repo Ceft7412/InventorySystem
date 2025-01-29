@@ -15,43 +15,43 @@ namespace InventorySystem.Controllers
         private string connectionString = ConfigurationManager.ConnectionStrings["InventoryDb"].ConnectionString;
         private LogController LogController = new LogController();
 
-        public Employee GET_EMPLOYEE_DATA(string employeeID)
-        {
-            try
-            {
-                string query = @"SELECT user_id, firstname, lastname, username, contact_number, address FROM tbUser WHERE user_id = @user_id";
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                public Employee GET_EMPLOYEE_DATA(string employeeID)
                 {
-                    connection.Open();
-                    SqlCommand command = new SqlCommand(query, connection);
-                    command.Parameters.AddWithValue("@user_id", employeeID);
-                    SqlDataReader reader = command.ExecuteReader();
-                    if (reader.Read())
+                    try
                     {
-                        return new Employee()
+                        string query = @"SELECT user_id, firstname, lastname, username, contact_number, address FROM tbUser WHERE user_id = @user_id";
+                        using (SqlConnection connection = new SqlConnection(connectionString))
                         {
-                            EmployeeID = reader["user_id"].ToString(),
-                            Firstname = reader["firstname"].ToString(),
-                            Lastname = reader["lastname"].ToString(),
-                            Username = reader["username"].ToString(),
-                            Contact = reader["contact_number"].ToString(),
-                            Address = reader["address"].ToString()
-                        };
+                            connection.Open();
+                            SqlCommand command = new SqlCommand(query, connection);
+                            command.Parameters.AddWithValue("@user_id", employeeID);
+                            SqlDataReader reader = command.ExecuteReader();
+                            if (reader.Read())
+                            {
+                                return new Employee()
+                                {
+                                    EmployeeID = reader["user_id"].ToString(),
+                                    Firstname = reader["firstname"].ToString(),
+                                    Lastname = reader["lastname"].ToString(),
+                                    Username = reader["username"].ToString(),
+                                    Contact = reader["contact_number"].ToString(),
+                                    Address = reader["address"].ToString()
+                                };
+                            }
+                            else
+                            {
+                                return null;
+                            }
+                        }
+
                     }
-                    else
+                    catch (Exception ex)
                     {
+                        MessageBox.Show("Error message: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return null;
                     }
+
                 }
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error message: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return null;
-            }
-
-        }
 
         public List<Employee> FETCH_EMPLOYEES()
         {
@@ -222,9 +222,9 @@ namespace InventorySystem.Controllers
 
 
 
-
+            
         public void ADDEMPLOYEE(string firstname, string lastname, long? contact, string address)
-        {
+        {   
             try
             {
                 var employeeDetails = GENERATE_EMPLOYEE_DETAILS(firstname.ToLower());
@@ -505,73 +505,73 @@ namespace InventorySystem.Controllers
        
 
 
-        public bool ARCHIVE_EMPLOYEE(string employeeID)
-        {
-            try
+            public bool ARCHIVE_EMPLOYEE(string employeeID)
             {
-                string query = @"UPDATE tbUser SET status = 'inactive' WHERE user_id = @user_id";
-
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                try
                 {
-                    connection.Open();
-                    SqlCommand command = new SqlCommand(query, connection);
-                    command.Parameters.AddWithValue("@user_id", employeeID);
-                    int rowsAffected = command.ExecuteNonQuery();
+                    string query = @"UPDATE tbUser SET status = 'inactive' WHERE user_id = @user_id";
 
-                    if (rowsAffected > 0)
+                    using (SqlConnection connection = new SqlConnection(connectionString))
                     {
-                        // Log the archiving action if successful
-                        Log log = new Log
-                        {
-                            TableAffected = "tbUser",
-                            RecordID = Convert.ToInt32(employeeID), // Assuming employeeID is an integer
-                            ModuleName = "Employee Management",
-                            Description = $"Employee with ID {employeeID} archived (status changed to 'inactive').",
-                            Status = "Success",
-                            ActionType = "Archive Employee"
-                        };
+                        connection.Open();
+                        SqlCommand command = new SqlCommand(query, connection);
+                        command.Parameters.AddWithValue("@user_id", employeeID);
+                        int rowsAffected = command.ExecuteNonQuery();
 
-                        LogController.LogUpdate(log.TableAffected, log.RecordID, log.ModuleName, log.Description, log.Status, log.ActionType);
-                        return true;
-                    }
-                    else
-                    {
-                        // If no rows were affected, it might indicate an issue with the employee ID
-                        Log log = new Log
+                        if (rowsAffected > 0)
                         {
-                            TableAffected = "tbUser",
-                            RecordID = Convert.ToInt32(employeeID),
-                            ModuleName = "Employee Management",
-                            Description = $"Failed to archive employee with ID {employeeID} - employee not found or already archived.",
-                            Status = "Failure",
-                            ActionType = "Archive Employee"
-                        };
+                            // Log the archiving action if successful
+                            Log log = new Log
+                            {
+                                TableAffected = "tbUser",
+                                RecordID = Convert.ToInt32(employeeID), // Assuming employeeID is an integer
+                                ModuleName = "Employee Management",
+                                Description = $"Employee with ID {employeeID} archived (status changed to 'inactive').",
+                                Status = "Success",
+                                ActionType = "Archive Employee"
+                            };
 
-                        LogController.LogUpdate(log.TableAffected, log.RecordID, log.ModuleName, log.Description, log.Status, log.ActionType);
-                        return false;
+                            LogController.LogUpdate(log.TableAffected, log.RecordID, log.ModuleName, log.Description, log.Status, log.ActionType);
+                            return true;
+                        }
+                        else
+                        {
+                            // If no rows were affected, it might indicate an issue with the employee ID
+                            Log log = new Log
+                            {
+                                TableAffected = "tbUser",
+                                RecordID = Convert.ToInt32(employeeID),
+                                ModuleName = "Employee Management",
+                                Description = $"Failed to archive employee with ID {employeeID} - employee not found or already archived.",
+                                Status = "Failure",
+                                ActionType = "Archive Employee"
+                            };
+
+                            LogController.LogUpdate(log.TableAffected, log.RecordID, log.ModuleName, log.Description, log.Status, log.ActionType);
+                            return false;
+                        }
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                // Log the failure due to exception
-                Log log = new Log
+                catch (Exception ex)
                 {
-                    TableAffected = "tbUser",
-                    RecordID = Convert.ToInt32(employeeID),
-                    ModuleName = "Employee Management",
-                    Description = $"Failed to archive employee with ID {employeeID}. Error: {ex.Message}",
-                    Status = "Failure",
-                    ActionType = "Archive Employee"
-                };
+                    // Log the failure due to exception
+                    Log log = new Log
+                    {
+                        TableAffected = "tbUser",
+                        RecordID = Convert.ToInt32(employeeID),
+                        ModuleName = "Employee Management",
+                        Description = $"Failed to archive employee with ID {employeeID}. Error: {ex.Message}",
+                        Status = "Failure",
+                        ActionType = "Archive Employee"
+                    };
 
-                LogController.LogUpdate(log.TableAffected, log.RecordID, log.ModuleName, log.Description, log.Status, log.ActionType);
+                    LogController.LogUpdate(log.TableAffected, log.RecordID, log.ModuleName, log.Description, log.Status, log.ActionType);
 
-                // Show error message to the user
-                MessageBox.Show("Error message: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
+                    // Show error message to the user
+                    MessageBox.Show("Error message: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
             }
-        }
 
 
         public int GENERATE_EMPLOYEE_ID()

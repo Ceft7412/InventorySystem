@@ -52,25 +52,26 @@ namespace InventorySystem.Controllers
         {
             try
             {
-                int damagedItemCount = 0;
+                int totalDamagedQuantity = 0;
 
                 // Connect to the database
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
 
-                    // SQL query to count damaged items
-                    string query = "SELECT COUNT(*) AS DamagedItemCount FROM tbBatchItems WHERE reason = 'damaged'";
+                    // SQL query to sum the quantity of damaged items
+                    string query = "SELECT SUM(quantity) AS TotalDamagedQuantity FROM tbBatchItems WHERE reason = 'damaged'";
 
                     // Execute the query and get the result
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        // Execute the scalar query to get the count
-                        damagedItemCount = (int)command.ExecuteScalar();
+                        // Execute the scalar query to get the total quantity
+                        object result = command.ExecuteScalar();
+                        totalDamagedQuantity = result != DBNull.Value ? Convert.ToInt32(result) : 0;
                     }
                 }
 
-                return damagedItemCount;
+                return totalDamagedQuantity;
             }
             catch (Exception ex)
             {
@@ -450,67 +451,67 @@ namespace InventorySystem.Controllers
 
 
 
-        public List<Item> SearchItem(string searchQuery, string status)
-        {
-            List<Item> results = new List<Item>();
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            public List<Item> SearchItem(string searchQuery, string status)
             {
-                // Query to join tbItem, tbItemSupplier, and tbSupplier to fetch the supplier names as comma-separated values
-                StringBuilder query = new StringBuilder(@"
-            SELECT i.item_id, 
-                   i.productCode, 
-                   i.productDescription, 
-                   i.productQuantity, 
-                   i.category, 
-                   i.unit, 
-                   i.minimumstocklevel, 
-                   i.status,
-                   STRING_AGG(s.supplierName, ', ') AS SupplierNames
-            FROM tbItem i
-            LEFT JOIN tbItemSupplier isup ON i.item_id = isup.ItemId
-            LEFT JOIN tbSupplier s ON isup.SupplierId = s.supplierId
-            WHERE i.status = @status");
-
-                // Add search query if provided
-                if (!string.IsNullOrEmpty(searchQuery))
+                List<Item> results = new List<Item>();
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    query.Append(" AND (i.productCode LIKE @searchQuery OR i.productDescription LIKE @searchQuery OR i.item_id LIKE @searchQuery)");
-                }
+                    // Query to join tbItem, tbItemSupplier, and tbSupplier to fetch the supplier names as comma-separated values
+                    StringBuilder query = new StringBuilder(@"
+                SELECT i.item_id, 
+                       i.productCode, 
+                       i.productDescription, 
+                       i.productQuantity, 
+                       i.category, 
+                       i.unit, 
+                       i.minimumstocklevel, 
+                       i.status,
+                       STRING_AGG(s.supplierName, ', ') AS SupplierNames
+                FROM tbItem i
+                LEFT JOIN tbItemSupplier isup ON i.item_id = isup.ItemId
+                LEFT JOIN tbSupplier s ON isup.SupplierId = s.supplierId
+                WHERE i.status = @status");
 
-                query.Append(" GROUP BY i.item_id, i.productCode, i.productDescription, i.productQuantity, i.category, i.unit, i.minimumstocklevel, i.status");
-
-                SqlCommand command = new SqlCommand(query.ToString(), connection);
-
-                // Add parameters to avoid SQL injection    
-                command.Parameters.AddWithValue("@status", status);
-                if (!string.IsNullOrEmpty(searchQuery))
-                {
-                    command.Parameters.AddWithValue("@searchQuery", "%" + searchQuery + "%");
-                }
-
-                connection.Open();
-                SqlDataReader reader = command.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    // Create an Item object for each row in the result
-                    results.Add(new Item
+                    // Add search query if provided
+                    if (!string.IsNullOrEmpty(searchQuery))
                     {
-                        ItemId = Convert.ToInt32(reader["item_id"]),
-                        ProductCode = reader["productCode"] as string ?? "",
-                        ProductDescription = reader["productDescription"] as string ?? "",
-                        Quantity = reader["productQuantity"] != DBNull.Value ? Convert.ToInt32(reader["productQuantity"]) : 0,
-                        Category = reader["category"] as string ?? "",
-                        Supplier = reader["SupplierNames"] as string ?? "",  // Fetch the comma-separated supplier names
-                        Unit = reader["unit"] as string ?? "",
-                        MinimumStock = reader["minimumstocklevel"] != DBNull.Value ? Convert.ToInt32(reader["minimumstocklevel"]) : 0
-                    });
-                }
+                        query.Append(" AND (i.productCode LIKE @searchQuery OR i.productDescription LIKE @searchQuery OR i.item_id LIKE @searchQuery)");
+                    }
 
-                reader.Close();
+                    query.Append(" GROUP BY i.item_id, i.productCode, i.productDescription, i.productQuantity, i.category, i.unit, i.minimumstocklevel, i.status");
+
+                    SqlCommand command = new SqlCommand(query.ToString(), connection);
+
+                    // Add parameters to avoid SQL injection    
+                    command.Parameters.AddWithValue("@status", status);
+                    if (!string.IsNullOrEmpty(searchQuery))
+                    {
+                        command.Parameters.AddWithValue("@searchQuery", "%" + searchQuery + "%");
+                    }
+
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        // Create an Item object for each row in the result
+                        results.Add(new Item
+                        {
+                            ItemId = Convert.ToInt32(reader["item_id"]),
+                            ProductCode = reader["productCode"] as string ?? "",
+                            ProductDescription = reader["productDescription"] as string ?? "",
+                            Quantity = reader["productQuantity"] != DBNull.Value ? Convert.ToInt32(reader["productQuantity"]) : 0,
+                            Category = reader["category"] as string ?? "",
+                            Supplier = reader["SupplierNames"] as string ?? "",  // Fetch the comma-separated supplier names
+                            Unit = reader["unit"] as string ?? "",
+                            MinimumStock = reader["minimumstocklevel"] != DBNull.Value ? Convert.ToInt32(reader["minimumstocklevel"]) : 0
+                        });
+                    }
+
+                    reader.Close();
+                }
+                return results;
             }
-            return results;
-        }
 
 
 
@@ -879,8 +880,8 @@ namespace InventorySystem.Controllers
 
                     // If item doesn't exist with the same productCode and unit, insert the new item
                     string query = @"
-                INSERT INTO tbItem (item_id, productCode, productDescription, unit, productQuantity, supplier, category, minimumstocklevel, status, created_at)
-                VALUES (@ItemId, @ItemCode, @ItemName, @Unit, @Quantity, @Supplier, @Category, @MinimumStockLevel, @Status, @Created_at)";
+                INSERT INTO tbItem (item_id, productCode, productDescription, unit, productQuantity, category, minimumstocklevel, status, created_at)
+                VALUES (@ItemId, @ItemCode, @ItemName, @Unit, @Quantity, @Category, @MinimumStockLevel, @Status, @Created_at)";
 
                     using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
@@ -889,7 +890,6 @@ namespace InventorySystem.Controllers
                         cmd.Parameters.AddWithValue("@ItemName", item.ProductDescription);
                         cmd.Parameters.AddWithValue("@Unit", item.Unit);
                         cmd.Parameters.AddWithValue("@Quantity", item.Quantity);
-                        cmd.Parameters.AddWithValue("@Supplier", item.Supplier);
                         cmd.Parameters.AddWithValue("@Category", item.Category);
                         cmd.Parameters.AddWithValue("@MinimumStockLevel", item.MinimumStock);
                         cmd.Parameters.AddWithValue("@Status", "active");

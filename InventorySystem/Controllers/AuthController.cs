@@ -27,7 +27,7 @@ namespace InventorySystem.Controllers
             {
                 // Query to retrieve user data including the status field
                 string query = @"SELECT password, username, firstname, lastname, contact_number, address, role, user_id, is_first_login, status 
-                         FROM tbUser WHERE username = @username";
+                         FROM tbPersonnel WHERE username = @username";
 
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
@@ -187,27 +187,27 @@ namespace InventorySystem.Controllers
             }
         }
 
-        public bool UpdatePasswordAdmin(int user_id, string newPassword)
-        {
-            try
+            public bool UpdatePasswordAdmin(int user_id, string newPassword)
             {
-                string query = @"UPDATE tbUser SET password = @password WHERE user_id = @user_id";
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                try
                 {
-                    SqlCommand cmd = new SqlCommand(query, connection);
-                    cmd.Parameters.AddWithValue("@password", BCrypt.Net.BCrypt.HashPassword(newPassword));
-                    cmd.Parameters.AddWithValue("@user_id", user_id);
-                    connection.Open();
-                    cmd.ExecuteNonQuery();
+                    string query = @"UPDATE tbUser SET password = @password WHERE user_id = @user_id";
+                    using (SqlConnection connection = new SqlConnection(connectionString))
+                    {
+                        SqlCommand cmd = new SqlCommand(query, connection);
+                        cmd.Parameters.AddWithValue("@password", BCrypt.Net.BCrypt.HashPassword(newPassword));
+                        cmd.Parameters.AddWithValue("@user_id", user_id);
+                        connection.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                    return true;
                 }
-                return true;
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error: " + ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-        }
 
         public bool UpdateAdminInfo(int user_id, string firstname, string lastname, string username)
         {

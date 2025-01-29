@@ -56,7 +56,7 @@ namespace InventorySystem.Views.Modals.Admin
                         dataGridViewTransactions.Rows.Add(
                             batchItem.BatchItemId,
                             batchItem.BatchId,
-                            batchItem.ProductCode,
+                            batchItem.ItemId.ToString(),
                             batchItem.Quantity.ToString(),
                             batchItem.Type,
                             batchItem.Reason,
@@ -86,7 +86,7 @@ namespace InventorySystem.Views.Modals.Admin
                         dataGridViewTransactions.Rows.Add(
                             batchItem.BatchItemId,
                             batchItem.BatchId,
-                            batchItem.ProductCode,
+                            batchItem.ItemId,
                             batchItem.Quantity.ToString(),
                                batchItem.Type,
                             batchItem.Reason,
@@ -120,7 +120,7 @@ namespace InventorySystem.Views.Modals.Admin
                         dataGridViewTransactions.Rows.Add(
                             batchItem.BatchItemId,
                             batchItem.BatchId,
-                            batchItem.ProductCode,
+                            batchItem.ItemId,
                             batchItem.Quantity.ToString(),
                             batchItem.Type,
                             batchItem.Reason,

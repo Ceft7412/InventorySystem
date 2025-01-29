@@ -326,7 +326,7 @@ namespace InventorySystem
 
         private void logoutNavigationButton_Click(object sender, EventArgs e)
         {
-            var result = MessageBox.Show("Are you sure you want to logout?", "Logout", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                var result = MessageBox.Show("Are you sure you want to logout?", "Logout", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
                 try
@@ -631,7 +631,7 @@ namespace InventorySystem
                 string filePath = openFileDialog.FileName;
 
                 // Load Excel Data
-                LoadExcelIntoDataGridView(filePath);
+                LoadExcelIntoDataGridView(filePath);    
             }
         }
 
@@ -688,7 +688,7 @@ namespace InventorySystem
                 var message_result = MessageBox.Show("Do you want to save the data to the database?", "Save to Database", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (message_result == DialogResult.Yes)
                 {
-                    SaveToDatabase();
+                    SaveToDatabase(); // Do not do this for now.
                 }
                 else
                 {

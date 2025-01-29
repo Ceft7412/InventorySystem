@@ -28,7 +28,7 @@ namespace InventorySystem.Controllers
 
             string query = @"
             SELECT 
-                bi.productCode, 
+                bi.item_id, 
                 bi.quantity, 
                 bi.date
             FROM 
@@ -49,7 +49,7 @@ namespace InventorySystem.Controllers
                 {
                     batchItems.Add(new BatchItem
                     {
-                        ProductCode = reader["productCode"].ToString(),
+                        ItemId = Convert.ToInt32(reader["item_id"]),
                         Quantity = Convert.ToInt32(reader["quantity"]),
                         Date = Convert.ToDateTime(reader["date"])
                     });
@@ -79,7 +79,7 @@ namespace InventorySystem.Controllers
                         {
                             BatchItemId = reader["batchItemId"].ToString(),
                             BatchId = reader["batchId"].ToString(),
-                            ProductCode = reader["productCode"].ToString(),
+                            ItemId = Convert.ToInt32(reader["item_id"]),
                             Quantity = Convert.ToInt32(reader["quantity"]),
                             Type = reader["type"].ToString(),
                             Reason = reader["reason"].ToString(),
@@ -101,7 +101,7 @@ namespace InventorySystem.Controllers
             try
             {
                 List<BatchItem> rowsBatchItems = new List<BatchItem>();
-                string queryString = @"SELECT * FROM tbBatchItems WHERE batchItemId LIKE @query OR batchId LIKE @query OR productCode LIKE @query";
+                string queryString = @"SELECT * FROM tbBatchItems WHERE batchItemId LIKE @query OR batchId LIKE @query OR item_id LIKE @query";
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     SqlCommand command = new SqlCommand(queryString, connection);
@@ -114,7 +114,7 @@ namespace InventorySystem.Controllers
                         {
                             BatchItemId = reader["batchItemId"].ToString(),
                             BatchId = reader["batchId"].ToString(),
-                            ProductCode = reader["productCode"].ToString(),
+                            ItemId = Convert.ToInt32(reader["item_id"]),
                             Quantity = Convert.ToInt32(reader["quantity"]),
                             Type = reader["type"].ToString(),
                             Reason = reader["reason"].ToString(),
@@ -149,7 +149,7 @@ namespace InventorySystem.Controllers
                         {
                             BatchItemId = reader["batchItemId"].ToString(),
                             BatchId = reader["batchId"].ToString(),
-                            ProductCode = reader["productCode"].ToString(),
+                            ItemId = Convert.ToInt32(reader["item_id"]),
                             Quantity = Convert.ToInt32(reader["quantity"]),
                             Type = reader["type"].ToString(),
                             Reason = reader["reason"].ToString(),
@@ -173,7 +173,7 @@ namespace InventorySystem.Controllers
 
             string query = @"
             SELECT 
-                productCode, 
+                item_id, 
                 productDescription, 
                 category, 
                 unit
@@ -190,7 +190,7 @@ namespace InventorySystem.Controllers
                 {
                     items.Add(new Item
                     {
-                        ProductCode = reader["productCode"].ToString(),
+                        ItemId = Convert.ToInt32(reader["item_id"]),
                         ProductDescription = reader["productDescription"].ToString(),
                         Category = reader["category"].ToString(),
                         Unit = reader["unit"].ToString()
@@ -203,7 +203,7 @@ namespace InventorySystem.Controllers
             return items;
         }
 
-        public int GetTotalSoldForProductInPeriod(string productCode, string period)
+        public int GetTotalSoldForProductInPeriod(string item_id, string period)
         {
             // Define the start and end date based on the selected period
             DateTime startDate, endDate;
@@ -237,7 +237,7 @@ namespace InventorySystem.Controllers
             string query = @"
         SELECT SUM(quantity) 
         FROM tbBatchItems 
-        WHERE productCode = @productCode 
+        WHERE item_id = @item_id 
         AND date >= @startDate 
         AND date < @endDate 
         AND reason = 'SOLD' 
@@ -246,7 +246,7 @@ namespace InventorySystem.Controllers
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@productCode", productCode);
+                command.Parameters.AddWithValue("@item_id", Convert.ToInt32(item_id));
                 command.Parameters.AddWithValue("@startDate", startDate);
                 command.Parameters.AddWithValue("@endDate", endDate);
 
@@ -258,25 +258,22 @@ namespace InventorySystem.Controllers
 
         public List<Item> GroupByWeekly(List<BatchItem> batchItems, List<Item> items)
         {
-            // Filter for current week
             DateTime today = DateTime.Today;
             DateTime startOfWeek = today.AddDays(-(int)today.DayOfWeek + 1); // Monday
             DateTime endOfWeek = startOfWeek.AddDays(7);
 
-            // Filter and group data
             var grouped = batchItems
                 .Where(bi => bi.Date >= startOfWeek && bi.Date < endOfWeek)
-                .GroupBy(bi => bi.ProductCode)
+                .GroupBy(bi => bi.ItemId) // Use ItemId for grouping
                 .Select(g => new
                 {
-                    ProductCode = g.Key,
+                    ItemId = g.Key,
                     TotalSold = g.Sum(bi => bi.Quantity)
                 })
                 .OrderByDescending(g => g.TotalSold)
                 .Take(5);
 
-            // Join with product data
-            return grouped.Select(g => items.FirstOrDefault(i => i.ProductCode == g.ProductCode)).ToList();
+            return grouped.Select(g => items.FirstOrDefault(i => i.ItemId == g.ItemId)).ToList();
         }
 
         public List<Item> GroupByMonthly(List<BatchItem> batchItems, List<Item> items)
@@ -287,16 +284,16 @@ namespace InventorySystem.Controllers
 
             var grouped = batchItems
                 .Where(bi => bi.Date >= startOfMonth && bi.Date < endOfMonth)
-                .GroupBy(bi => bi.ProductCode)
+                .GroupBy(bi => bi.ItemId)
                 .Select(g => new
                 {
-                    ProductCode = g.Key,
+                    ItemId = g.Key,
                     TotalSold = g.Sum(bi => bi.Quantity)
                 })
                 .OrderByDescending(g => g.TotalSold)
                 .Take(5);
 
-            return grouped.Select(g => items.FirstOrDefault(i => i.ProductCode == g.ProductCode)).ToList();
+            return grouped.Select(g => items.FirstOrDefault(i => i.ItemId == g.ItemId)).ToList();
         }
 
         public List<Item> GroupByYearly(List<BatchItem> batchItems, List<Item> items)
@@ -307,16 +304,16 @@ namespace InventorySystem.Controllers
 
             var grouped = batchItems
                 .Where(bi => bi.Date >= startOfYear && bi.Date < endOfYear)
-                .GroupBy(bi => bi.ProductCode)
+                .GroupBy(bi => bi.ItemId)
                 .Select(g => new
                 {
-                    ProductCode = g.Key,
+                    ItemId = g.Key,
                     TotalSold = g.Sum(bi => bi.Quantity)
                 })
                 .OrderByDescending(g => g.TotalSold)
                 .Take(5);
 
-            return grouped.Select(g => items.FirstOrDefault(i => i.ProductCode == g.ProductCode)).ToList();
+            return grouped.Select(g => items.FirstOrDefault(i => i.ItemId == g.ItemId)).ToList();
         }
 
         public void RemoveBatchItem(string productCode)
@@ -391,7 +388,7 @@ namespace InventorySystem.Controllers
 
                 };
                 batchItems.Add(batchItem);
-            }
+            }   
         }
 
         public void ClearBatchItems()
@@ -493,7 +490,7 @@ namespace InventorySystem.Controllers
 
                     // First, create the batch and get the batch ID
                     string batchId = GenerateUniqueBatchId(connection);
-                    string batchItemId = GenerateUniqueBatchItemId(connection);
+                    
                     int transaction_id = GenerateUniqueTransactionID();
 
                     int employee_id = SessionData.UserId;
@@ -538,6 +535,7 @@ namespace InventorySystem.Controllers
                     foreach (BatchItem item in batchItems)
                     {
                         // Check current stock if the transaction is "OUT"
+                        string batchItemId = GenerateUniqueBatchItemId(connection);
                         if (transaction_type == "OUT")
                         {
                             // Modified query to check stock for both productCode and unit combination
@@ -557,14 +555,14 @@ namespace InventorySystem.Controllers
                         }
 
                         // Insert batch item record into tbBatchItems table
-                        string batchItemsQuery = "INSERT INTO tbBatchItems(batchItemId, batchId, transaction_id, productCode, quantity, type, reason, date, unit, supplierName) " +
-                                                  "VALUES(@batchItemId, @batchId, @transaction_id, @productCode, @quantity, @type, @reason, @date, @unit, @supplier)";
+                        string batchItemsQuery = "INSERT INTO tbBatchItems(batchItemId, batchId, transaction_id, item_id, quantity, type, reason, date, unit, supplierName) " +
+                                                  "VALUES(@batchItemId, @batchId, @transaction_id, @item_id, @quantity, @type, @reason, @date, @unit, @supplier)";
                         using (SqlCommand addCommand = new SqlCommand(batchItemsQuery, connection))
                         {
                             addCommand.Parameters.AddWithValue("@batchItemId", batchItemId);
                             addCommand.Parameters.AddWithValue("@batchId", batchId);
                             addCommand.Parameters.AddWithValue("@transaction_id", transaction_id);
-                            addCommand.Parameters.AddWithValue("@productCode", item.ProductCode);
+                            addCommand.Parameters.AddWithValue("@item_id", item.ItemId);
                             addCommand.Parameters.AddWithValue("@quantity", item.Quantity);
                             addCommand.Parameters.AddWithValue("@unit", item.Unit);
                             addCommand.Parameters.AddWithValue("@type", transaction_type);

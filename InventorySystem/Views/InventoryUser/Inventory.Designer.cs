@@ -36,7 +36,6 @@
             navigationPanel = new Panel();
             panel3 = new Panel();
             notificationBtn = new PictureBox();
-            informationBtn = new PictureBox();
             logoutNavigationButton = new Button();
             settingsNavigationButton = new Button();
             archiveNavigationButton = new Button();
@@ -71,7 +70,6 @@
             navigationPanel.SuspendLayout();
             panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)notificationBtn).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)informationBtn).BeginInit();
             ((System.ComponentModel.ISupportInitialize)companyLogo).BeginInit();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
@@ -99,7 +97,6 @@
             // 
             panel3.BackColor = Color.Transparent;
             panel3.Controls.Add(notificationBtn);
-            panel3.Controls.Add(informationBtn);
             panel3.Dock = DockStyle.Right;
             panel3.Location = new Point(1364, 0);
             panel3.Name = "panel3";
@@ -112,7 +109,7 @@
             notificationBtn.BackColor = Color.Transparent;
             notificationBtn.Cursor = Cursors.Hand;
             notificationBtn.Image = Properties.Resources.bell__1_;
-            notificationBtn.Location = new Point(60, 42);
+            notificationBtn.Location = new Point(155, 40);
             notificationBtn.Name = "notificationBtn";
             notificationBtn.Size = new Size(64, 64);
             notificationBtn.SizeMode = PictureBoxSizeMode.AutoSize;
@@ -120,19 +117,6 @@
             notificationBtn.TabStop = false;
             notificationBtn.Visible = false;
             notificationBtn.Click += notificationBtn_Click;
-            // 
-            // informationBtn
-            // 
-            informationBtn.Anchor = AnchorStyles.Top;
-            informationBtn.BackColor = Color.Transparent;
-            informationBtn.Cursor = Cursors.Hand;
-            informationBtn.Image = Properties.Resources.info;
-            informationBtn.Location = new Point(152, 42);
-            informationBtn.Name = "informationBtn";
-            informationBtn.Size = new Size(64, 64);
-            informationBtn.SizeMode = PictureBoxSizeMode.AutoSize;
-            informationBtn.TabIndex = 8;
-            informationBtn.TabStop = false;
             // 
             // logoutNavigationButton
             // 
@@ -583,7 +567,6 @@
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)notificationBtn).EndInit();
-            ((System.ComponentModel.ISupportInitialize)informationBtn).EndInit();
             ((System.ComponentModel.ISupportInitialize)companyLogo).EndInit();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
@@ -619,7 +602,6 @@
         private Button refreshData;
         private Button importExcelBtn;
         private PictureBox notificationBtn;
-        private PictureBox informationBtn;
         private Panel panel3;
         private DataGridViewTextBoxColumn Column8;
         private DataGridViewTextBoxColumn Column1;

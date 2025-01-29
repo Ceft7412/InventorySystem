@@ -171,16 +171,17 @@ namespace InventorySystem.Views.Admin
                     _ => throw new ArgumentException("Invalid period specified")
                 };
 
+
                 bestSellerGrid.Rows.Clear();
                 int index = 1;
 
                 foreach (var product in bestSellers)
                 {
                     // Calculate the total sold quantity for the current period (weekly, monthly, yearly)
-                    int totalSold = batchItemController.GetTotalSoldForProductInPeriod(product.ProductCode, period);
+                    int totalSold = batchItemController.GetTotalSoldForProductInPeriod(product.ItemId.ToString(), period);
 
                     // Add the product data along with the total sold value to the DataGridView
-                    bestSellerGrid.Rows.Add(index, product.ProductCode, product.ProductDescription, totalSold);
+                    bestSellerGrid.Rows.Add(index, product.ItemId, product.ProductDescription, totalSold);
                     index++;
                 }
             }

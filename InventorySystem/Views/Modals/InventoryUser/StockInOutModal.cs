@@ -70,7 +70,7 @@ namespace InventorySystem.Views.Modals.InventoryUser
 
         private void stockInSaveButton_Click(object sender, EventArgs e)
         {
-            if (!int.TryParse(stockInItemIdInput.Text.Trim(), out int item_id) || string.IsNullOrEmpty(stockInProductCodeInput.Text.Trim()))
+                if (!int.TryParse(stockInItemIdInput.Text.Trim(), out int item_id) || string.IsNullOrEmpty(stockInProductCodeInput.Text.Trim()))
             {
                 MessageBox.Show("Please enter valid data.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -357,12 +357,12 @@ namespace InventorySystem.Views.Modals.InventoryUser
             try
             {
 
-                var selectedRows = dataGridViewBatchItems.SelectedRows;
-                if (selectedRows.Count < 0)
-                {
-                    MessageBox.Show("No items to clear.", "No items", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
+                    var selectedRows = dataGridViewBatchItems.SelectedRows;
+                    if (selectedRows.Count < 0)
+                    {
+                        MessageBox.Show("No items to clear.", "No items", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
                 else
                 {
 

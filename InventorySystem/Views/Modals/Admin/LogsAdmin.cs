@@ -50,7 +50,7 @@ namespace InventorySystem.Views.Modals.Admin
                 }
                 else
                 {
-                    MessageBox.Show("No logs found for the search term.", "No Results", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
                 }
             }
             catch (Exception ex)
